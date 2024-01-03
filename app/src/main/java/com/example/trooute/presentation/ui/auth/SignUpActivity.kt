@@ -1,0 +1,202 @@
+package com.example.trooute.presentation.ui.auth
+
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import com.example.trooute.R
+import com.example.trooute.core.util.Constants.EMAIL
+import com.example.trooute.core.util.Resource
+import com.example.trooute.core.util.UploadMultipart.imgRequestBody
+import com.example.trooute.data.model.auth.request.SignupRequest
+import com.example.trooute.databinding.ActivitySignUpBinding
+import com.example.trooute.presentation.utils.ImagePicker
+import com.example.trooute.presentation.utils.Loader
+import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
+import com.example.trooute.presentation.utils.isConfirmPasswordValid
+import com.example.trooute.presentation.utils.isEmailValid
+import com.example.trooute.presentation.utils.isFieldValid
+import com.example.trooute.presentation.utils.isPasswordValid
+import com.example.trooute.presentation.utils.isPhoneNumberValid
+import com.example.trooute.presentation.utils.showErrorMessage
+import com.example.trooute.presentation.utils.showSuccessMessage
+import com.example.trooute.presentation.viewmodel.authviewmodel.SignUpViewModel
+import com.google.android.material.internal.ViewUtils
+import com.hbisoft.pickit.PickiT
+import com.hbisoft.pickit.PickiTCallbacks
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.registerImagePicker
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import java.io.File
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
+
+    private val TAG = "SignUpActivity"
+
+    private lateinit var binding: ActivitySignUpBinding
+    private lateinit var imagePicker: ImagePicker
+
+    private var profileImageFile: File? = null
+    private var pickiT: PickiT? = null
+    private var isImageAdded = false
+
+    private val signUpViewModel: SignUpViewModel by viewModels()
+
+    @Inject
+    lateinit var loader: Loader
+
+    private var imageUri: Uri? = null
+    private val imagePickerLauncher = registerImagePicker { images ->
+        if (images.isNotEmpty()) {
+            val sampleImage = images[0]
+            imageUri = sampleImage.uri
+            imageUri?.let {
+                isImageAdded = true
+                binding.imgUserProfile.setImageURI(imageUri)
+                binding.imgUserProfile.setContentPadding(0, 0, 0, 0)
+                pickiT?.getPath(imageUri, Build.VERSION.SDK_INT)
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        statusBarColor(R.color.white)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
+        imagePicker = ImagePicker(this, imagePickerLauncher)
+        pickiT = PickiT(this, this, this)
+
+        binding.apply {
+            imgUserProfile.setOnClickListener {
+                imagePicker.openDialog()
+            }
+
+            btnSignup.setOnClickListener {
+                if (
+                    isFieldValid(teFullName, "Full name")
+                    && isEmailValid(teEmailAddress)
+                    && isPhoneNumberValid(tePhoneNumber)
+                    && isPasswordValid(true, tePassword)
+                    && isConfirmPasswordValid(tePassword, teRetypePassword)
+                ) {
+                    if (isImageAdded) {
+                        signUpViewModel.signUp(
+                            MultipartBody.Builder().setType(MultipartBody.FORM)
+                                .addFormDataPart("name", teFullName.text.toString())
+                                .addFormDataPart("email", teEmailAddress.text.toString())
+                                .addFormDataPart("password", tePassword.toString())
+                                .addFormDataPart("phoneNumber", tePhoneNumber.text.toString())
+                                .addFormDataPart(
+                                    "photo",
+                                    profileImageFile?.name,
+                                    imgRequestBody(profileImageFile)
+                                )
+                                .build()
+                        )
+                    }else {
+                        signUpViewModel.signUp(
+                            MultipartBody.Builder().setType(MultipartBody.FORM)
+                                .addFormDataPart("name", teFullName.text.toString())
+                                .addFormDataPart("email", teEmailAddress.text.toString())
+                                .addFormDataPart("password", tePassword.toString())
+                                .addFormDataPart("phoneNumber", tePhoneNumber.text.toString())
+                                .build()
+                        )
+                    }
+
+                    bindSignUpObserver()
+                }
+            }
+
+            tvSingin.setOnClickListener {
+                startActivity(Intent(this@SignUpActivity, SignInActivity::class.java))
+                finish()
+            }
+        }
+    }
+
+    private fun bindSignUpObserver() {
+        lifecycleScope.launch {
+            signUpViewModel.signUpState.collect {
+                loader.cancel()
+                when (it) {
+                    is Resource.ERROR -> {
+                        Toast(this@SignUpActivity).showErrorMessage(
+                            this@SignUpActivity,
+                            it.message.toString()
+                        )
+                        Log.e(TAG, "bindAuthObserver: Error: " + it.message.toString())
+                    }
+
+                    Resource.LOADING -> {
+                        loader.show()
+                    }
+
+                    is Resource.SUCCESS -> {
+                        Toast(this@SignUpActivity).showSuccessMessage(
+                            this@SignUpActivity,
+                            it.data.message.toString()
+                        )
+                        startActivity(
+                            Intent(
+                                this@SignUpActivity,
+                                AuthVerificationActivity::class.java
+                            ).putExtra(EMAIL, binding.teEmailAddress.text.toString())
+                        )
+                        Log.e(TAG, "bindAuthObserver: success : " + it.data)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun PickiTonUriReturned() {
+
+    }
+
+    override fun PickiTonStartListener() {
+
+    }
+
+    override fun PickiTonProgressUpdate(progress: Int) {
+
+    }
+
+    override fun PickiTonCompleteListener(
+        path: String?,
+        wasDriveFile: Boolean,
+        wasUnknownProvider: Boolean,
+        wasSuccessful: Boolean,
+        Reason: String?
+    ) {
+        // Check if the conversion was successful
+        if (wasSuccessful) {
+            profileImageFile = File(path.toString())
+        } else {
+            // Handle the conversion failure
+        }
+    }
+
+    override fun PickiTonMultipleCompleteListener(
+        paths: ArrayList<String>?, wasSuccessful: Boolean, Reason: String?
+    ) {
+
+    }
+
+    @SuppressLint("RestrictedApi")
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        ViewUtils.hideKeyboard(binding.ltRoot)
+        return super.dispatchTouchEvent(ev)
+    }
+}

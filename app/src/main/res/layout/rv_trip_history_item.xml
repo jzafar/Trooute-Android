@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/ElevatedCardViewStyle">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary_mirage_color"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_bottom_rounded"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTripsHistoryId"
+                        style="@style/HeadLine_5"
+                        android:layout_width="wrap_content"
+                        tools:text="Trip # GY7OI2937KDBC80HC" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTripsHistoryDateTime"
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        tools:text="21 August 2023 - 10: 30 AM"
+                        android:textColor="@color/secondary_lynch_color" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_6"
+                        android:text="@string/passengers" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPassengers"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:visibility="visible"
+                        tools:listitem="@layout/rv_passengers_primary_item" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvNoPassengersAvailable"
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/passengers_not_available"
+                        android:textColor="@color/secondary_cadet_blue_color"
+                        android:visibility="gone" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <include
+                    android:id="@+id/includeTripRouteLayout"
+                    layout="@layout/trip_route_item" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                    android:paddingVertical="@dimen/default_screen_vertical_space">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPricePerPerson"
+                        style="@style/HeadLine_3"
+                        android:layout_width="wrap_content"
+                        tools:text="€200"
+                        android:textColor="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:text="@string/person"
+                        android:textColor="@color/white" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                    android:paddingVertical="@dimen/default_screen_vertical_space">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTotalPrice"
+                        style="@style/HeadLine_3"
+                        android:layout_width="wrap_content"
+                        tools:text="€200"
+                        android:textColor="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:text=" Total"
+                        android:textColor="@color/white" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

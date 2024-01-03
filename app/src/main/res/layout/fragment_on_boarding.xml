@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="description"
+            type="String" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_30sdp"
+        app:divider="@drawable/divider_default_space"
+        app:showDividers="middle"
+        tools:context=".presentation.ui.onboarding.OnBoardingFragment">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                style="@style/HeadLine_1"
+                android:text="@{title}"
+                android:textColor="@color/primary_color"
+                tools:text="@string/onboarding_title_1" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_2sdp"
+                app:dividerColor="@color/on_primary_tree_poppy_color" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            style="@style/Body_6"
+            android:text="@{description}"
+            tools:text="@string/onboarding_desc_1" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

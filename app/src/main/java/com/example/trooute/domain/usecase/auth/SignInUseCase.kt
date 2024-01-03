@@ -1,0 +1,13 @@
+package com.example.trooute.domain.usecase.auth
+
+import com.example.trooute.core.util.Resource
+import com.example.trooute.data.model.auth.request.LoginRequest
+import com.example.trooute.data.model.auth.response.AuthResponse
+import com.example.trooute.domain.repository.AuthRepository
+import javax.inject.Inject
+
+class SignInUseCase @Inject constructor(private val authRepository: AuthRepository) {
+    suspend operator fun invoke(request: LoginRequest): Resource<AuthResponse>{
+        return authRepository.signIn(request)
+    }
+}

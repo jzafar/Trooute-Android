@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.faltenreich.skeletonlayout.SkeletonLayout
+        android:id="@+id/skeletonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/ltRoot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            tools:context=".presentation.ui.trip.HomeFragment">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_default_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ltHeaderSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgAuthProfile"
+                            style="@style/CircleProfileImageStyle"
+                            app:srcCompat="@drawable/profile_place_holder" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvAuthName"
+                            style="@style/HeadLine_6"
+                            tools:text="Hi John," />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <include
+                        android:id="@+id/includeTripDestinationLayout"
+                        layout="@layout/trip_editable_route_item" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTripsTitle"
+                        style="@style/HeadLine_4"
+                        android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                        android:text="@string/trips_around_you" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvNoTripsAvailable"
+                        style="@style/NoDataMessageStyle"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                        android:paddingVertical="@dimen/default_screen_vertical_space"
+                        android:text="@string/no_trips_around_you" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvTrips"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        tools:listitem="@layout/rv_trips_item" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </com.faltenreich.skeletonlayout.SkeletonLayout>
+
+</layout>

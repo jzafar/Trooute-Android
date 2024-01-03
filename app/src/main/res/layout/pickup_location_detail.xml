@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardTripRoute"
+        style="@style/ElevatedCardViewStyle">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/default_space"
+            app:divider="@drawable/divider_default_space"
+            app:showDividers="middle">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:drawableStart="@drawable/ic_location_where_to"
+                    android:text="@string/from"
+                    android:textColor="@color/secondary_cadet_blue_color" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAddressFrom"
+                    style="@style/HeadLine_6"
+                    android:text="Kings Cross Under Statiotion" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCityName"
+                    style="@style/Body_6"
+                    android:text="New York" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_space"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:text="@string/other_relevant_details_about_the_trip"
+                    android:textColor="@color/secondary_cadet_blue_color" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvOtherRelevantDetails"
+                    style="@style/Body_6"
+                    android:text="@string/not_provided" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

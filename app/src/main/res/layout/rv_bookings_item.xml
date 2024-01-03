@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView style="@style/ElevatedCardViewStyle">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary_mirage_color"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_bottom_rounded"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStatus"
+                        style="@style/Body_5"
+                        android:layout_width="wrap_content"
+                        android:drawableStart="@drawable/ic_status_waiting"
+                        tools:text="@string/waiting" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBookingId"
+                        style="@style/HeadLine_5"
+                        android:layout_width="wrap_content"
+                        tools:text="Booking # GY7OI2937KDBC80HC" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDepartureDate"
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/secondary_lynch_color"
+                        tools:text="21 August 2023 - 10: 30 AM" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <include
+                    android:id="@+id/includeUserInfoLayout"
+                    layout="@layout/user_info_item" />
+
+                <include
+                    android:id="@+id/includeDriverSideUserInfoLayout"
+                    layout="@layout/user_detail_item" />
+
+                <include
+                    android:id="@+id/includeTripRouteLayout"
+                    layout="@layout/trip_route_item" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <RelativeLayout
+                android:id="@+id/ltNxSeats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNxSeats"
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/n_x_seats"
+                    android:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNxSeatsPrice"
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    tools:text="€0.99" />
+
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/includeDivider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/divider_item" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPricePerPerson"
+                    style="@style/HeadLine_3"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    tools:text="€200" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPersonLabel"
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:text="@string/person"
+                    android:textColor="@color/white" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

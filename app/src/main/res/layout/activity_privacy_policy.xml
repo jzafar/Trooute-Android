@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.general.PrivacyPolicyActivity">
+
+        <include
+            android:id="@+id/includeAppBar"
+            layout="@layout/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_default_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_sub_section_space"
+                    app:showDividers="middle">
+
+                    <TextView
+                        style="@style/HeadLine_5"
+                        android:text="1. Information Collection" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="1.1. Personal Information: The App collects and stores user-provided information, including but not limited to names, contact details, and profile information." />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="1.2. Location Data: The App may collect and use location data to facilitate ride-sharing services, including determining the user's current location and destination." />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_sub_section_space"
+                    app:showDividers="middle">
+
+                    <TextView
+                        style="@style/HeadLine_5"
+                        android:text="2. Use of Information" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="2.1. Accident/Incident Reports: In the event of an accident or incident, users acknowledge that Trooute may use information provided, including user profiles and ride details, for incident reporting and resolution." />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="2.2. Email Communication: Users agree to receive communication from Trooute via the provided email address (trooute@outlook.com) for app-related matters." />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_sub_section_space"
+                    app:showDividers="middle">
+
+                    <TextView
+                        style="@style/HeadLine_5"
+                        android:text="3. Data Security" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="3.1. User Responsibility: Users are responsible for maintaining the confidentiality of their account information. Trooute employs industry-standard security measures, but users acknowledge that no method of transmission over the internet is completely secure." />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_sub_section_space"
+                    app:showDividers="middle">
+
+                    <TextView
+                        style="@style/HeadLine_5"
+                        android:text="4. Third-Party Services" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="The App may integrate with third-party services. Users acknowledge that Trooute is not responsible for the privacy practices of these third-party services." />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_sub_section_space"
+                    app:showDividers="middle">
+
+                    <TextView
+                        style="@style/HeadLine_5"
+                        android:text="5. Changes to the Privacy Policy" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="Trooute may update the Privacy Policy periodically. Users are encouraged to review the Privacy Policy regularly for any changes." />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

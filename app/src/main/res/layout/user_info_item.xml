@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/ltRoot"
+        style="@style/ElevatedCardViewStyle"
+        app:cardBackgroundColor="@color/secondary_athens_gray_color"
+        app:cardElevation="0dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            app:divider="@drawable/divider_section_space"
+            app:showDividers="middle">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgUserProfile"
+                style="@style/CircleProfileImageStyle"
+                android:layout_width="@dimen/_75sdp"
+                android:layout_height="@dimen/_75sdp"
+                app:srcCompat="@drawable/profile_place_holder" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvUserName"
+                            style="@style/HeadLine_6"
+                            android:layout_width="wrap_content"
+                            android:drawableEnd="@drawable/ic_verified_done"
+                            android:text="@string/not_provided" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:divider="@drawable/divider_section_space"
+                            app:showDividers="middle">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                app:divider="@drawable/divider_sub_section_space"
+                                app:showDividers="middle"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatRatingBar
+                                    style="@style/RatingBarTheme"
+                                    android:isIndicator="true"
+                                    android:numStars="1"
+                                    android:layout_marginStart="@dimen/rating_bar_start_space"
+                                    android:rating="1" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvAvgRating"
+                                    style="@style/Body_6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTotalReviews"
+                                style="@style/Body_6"
+                                android:layout_width="wrap_content"
+                                android:text="(0)"
+                                android:textColor="@color/secondary_cadet_blue_color" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgCarImage"
+                        style="@style/RoundedImageStyle"
+                        android:layout_width="@dimen/_55sdp"
+                        android:layout_height="@dimen/_55sdp"
+                        app:srcCompat="@drawable/place_holder" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCarModel"
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:text="@string/not_provided" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:text=" - "
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCarRegistrationNumber"
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/primary_color"
+                        android:text="@string/not_provided" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

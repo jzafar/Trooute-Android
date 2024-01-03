@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "78129548686",
+    "project_id": "trooute-b5e1d",
+    "storage_bucket": "trooute-b5e1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78129548686:android:4ad4ac418ffca2c3a128df",
+        "android_client_info": {
+          "package_name": "com.example.trooute"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPKJT0oKiDddcWvYAoL7I8Nhk_ugAm2gA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

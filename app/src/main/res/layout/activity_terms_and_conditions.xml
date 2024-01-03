@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.general.TermsAndConditionsActivity">
+
+        <include
+            android:id="@+id/includeAppBar"
+            layout="@layout/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_default_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_sub_section_space"
+                    app:showDividers="middle">
+
+                    <TextView
+                        style="@style/HeadLine_5"
+                        android:text="@string/acceptance_of_terms_title" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="@string/acceptance_of_terms_desc" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_sub_section_space"
+                    app:showDividers="middle">
+
+                    <TextView
+                        style="@style/HeadLine_5"
+                        android:text="@string/user_responsibilities_title" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="@string/user_responsibilities_desc" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="@string/user_responsibilities_desc_2" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_sub_section_space"
+                    app:showDividers="middle">
+
+                    <TextView
+                        style="@style/HeadLine_5"
+                        android:text="@string/contact_information_title" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="@string/contact_information_desc" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_sub_section_space"
+                    app:showDividers="middle">
+
+                    <TextView
+                        style="@style/HeadLine_5"
+                        android:text="@string/modifications_title" />
+
+                    <TextView
+                        style="@style/Body_7"
+                        android:text="@string/modifications_desc" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

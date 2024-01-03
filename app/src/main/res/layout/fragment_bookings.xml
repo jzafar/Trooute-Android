@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+        android:paddingTop="@dimen/default_screen_vertical_space"
+        tools:context=".presentation.ui.booking.BookingsFragment">
+
+        <include
+            android:id="@+id/includeSearchView"
+            layout="@layout/search_layout" />
+
+        <com.faltenreich.skeletonlayout.SkeletonLayout
+            android:id="@+id/skeletonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/includeSearchView">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBooking"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                android:visibility="visible"
+                tools:listitem="@layout/rv_bookings_item" />
+
+        </com.faltenreich.skeletonlayout.SkeletonLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBookingNotAvailable"
+            style="@style/NoDataMessageStyle"
+            android:layout_centerInParent="true"
+            android:text="@string/booking_not_available" />
+
+    </RelativeLayout>
+
+</layout>

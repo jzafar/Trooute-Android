@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  SSP  -->
+    <dimen name="text_size_40">@dimen/_38ssp</dimen>
+    <dimen name="text_size_28">@dimen/_26ssp</dimen>
+    <dimen name="text_size_20">@dimen/_18ssp</dimen>
+    <dimen name="text_size_18">@dimen/_16ssp</dimen>
+    <dimen name="text_size_16">@dimen/_14ssp</dimen>
+    <dimen name="text_size_14">@dimen/_12ssp</dimen>
+    <dimen name="text_size_12">@dimen/_10ssp</dimen>
+
+    <!--  SDP  -->
+    <dimen name="default_space">@dimen/_15sdp</dimen>
+    <dimen name="section_space">@dimen/_8sdp</dimen>
+    <dimen name="sub_section_space">@dimen/_6sdp</dimen>
+    <dimen name="default_screen_vertical_space">@dimen/_8sdp</dimen>
+    <dimen name="default_screen_horizontal_space">@dimen/_8sdp</dimen>
+    <dimen name="auth_screen_top_space">@dimen/_40sdp</dimen>
+
+    <dimen name="rating_bar_start_space">@dimen/_5sdp</dimen>
+    <dimen name="rating_bar_end_space">@dimen/_15sdp</dimen>
+
+    <dimen name="rv_Vertical_space">@dimen/_8sdp</dimen>
+    <dimen name="rv_horizontal_space">@dimen/_8sdp</dimen>
+    <dimen name="rv_minus_horizontal_space">@dimen/_minus10sdp</dimen>
+    <dimen name="rv_grid_space">@dimen/_8sdp</dimen>
+
+    <dimen name="circle_drawable_size">@dimen/_8sdp</dimen>
+    <dimen name="drawable_padding">@dimen/_9sdp</dimen>
+
+    <dimen name="content_padding">@dimen/_26sdp</dimen>
+
+    <dimen name="stroke_width_size">0.5dp</dimen>
+
+    <dimen name="default_rounded_radius">@dimen/_12sdp</dimen>
+    <dimen name="box_rounded_radius">@dimen/_6sdp</dimen>
+
+    <dimen name="field_height">@dimen/_50sdp</dimen>
+    <dimen name="multiline_field_height">@dimen/_120sdp</dimen>
+    <dimen name="field_start_margin">@dimen/_5sdp</dimen>
+
+    <dimen name="toast_msg_line_width">@dimen/_5sdp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

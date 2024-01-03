@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ltReviewsItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ltWriteReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            android:visibility="gone"
+            app:divider="@drawable/divider_default_space"
+            app:showDividers="middle">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvExperienceWithDriverTitle"
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:text="@string/experience_with_driver" />
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:id="@+id/rbSubmitExperienceWithDriver"
+                    style="@style/RatingBarTheme"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/rating_bar_end_space" />
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:text="@string/share_your_thoughts" />
+
+                <com.google.android.material.textfield.TextInputLayout style="@style/MultilineTextInputLayoutStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/shareYourThoughts"
+                        style="@style/MultilineTextInputEditTextStyle"
+                        android:hint="@string/share_your_thoughts_desc" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmitReview"
+                style="@style/PrimaryRoundedButton"
+                android:text="@string/submit" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ltUserReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            android:visibility="gone"
+            app:divider="@drawable/divider_default_space"
+            app:showDividers="middle">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUserName"
+                style="@style/HeadLine_6"
+                tools:text="John Smith Review" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvComment"
+                style="@style/Body_6"
+                tools:text="Hold your driver’s license in hand and flash your best smile for the camera. Your journey towards becoming a driver starts with this snapshot." />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:text="@string/experience_with_driver" />
+
+                <RatingBar
+                    android:id="@+id/rbExperienceWithDriver"
+                    style="@style/RatingBarTheme"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/rating_bar_end_space"
+                    android:isIndicator="true" />
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:layout_weight="1"
+                    android:text="@string/rate_the_vehicle" />
+
+                <RatingBar
+                    android:id="@+id/rbRateTheVehicle"
+                    style="@style/RatingBarTheme"
+                    android:layout_marginEnd="@dimen/rating_bar_end_space"
+                    android:isIndicator="true" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <include
+            android:id="@+id/includeDivider"
+            layout="@layout/divider_item"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ltDriverReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            android:visibility="gone"
+            app:divider="@drawable/divider_default_space"
+            app:showDividers="middle">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/HeadLine_6"
+                android:text="@string/my_review" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDriverComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Hold your driver’s license in hand and flash your best smile for the camera. Your journey towards becoming a driver starts with this snapshot." />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/experience" />
+
+                <RatingBar
+                    android:id="@+id/rbExperience"
+                    style="@style/RatingBarTheme"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/rating_bar_end_space"
+                    android:isIndicator="true" />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

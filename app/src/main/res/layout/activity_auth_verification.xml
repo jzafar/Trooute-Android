@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:id="@+id/ltRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/default_space"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            app:divider="@drawable/divider_default_space"
+            app:showDividers="middle"
+            tools:context=".presentation.ui.auth.AuthVerificationActivity"
+            tools:ignore="ScrollViewSize">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_screen_top_space"
+                android:src="@drawable/ic_shield_done" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/HeadLine_4"
+                android:text="@string/verify"
+                android:textAlignment="center" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvVerificationDesc"
+                style="@style/Body_6"
+                android:text="@string/please_enter_the_verification_code_sent_to_your_email_address"
+                android:textAlignment="center" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/HeadLine_7"
+                    android:text="@string/your_code_here" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_60sdp"
+                    android:orientation="horizontal"
+                    android:weightSum="4"
+                    app:divider="@drawable/divider_default_space"
+                    app:showDividers="middle">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/teCode_1"
+                            style="@style/TextInputEditTextStyle"
+                            android:gravity="center"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/teCode_2"
+                            style="@style/TextInputEditTextStyle"
+                            android:gravity="center"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/teCode_3"
+                            style="@style/TextInputEditTextStyle"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:textSize="@dimen/text_size_16" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/teCode_4"
+                            style="@style/TextInputEditTextStyle"
+                            android:gravity="center"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvExpiredAfter"
+                        style="@style/Body_7"
+                        android:layout_width="wrap_content"
+                        android:text="Expired after 12s" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvResend"
+                        style="@style/HeadLine_7"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/resend"
+                        android:textColor="@color/primary_color" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnConfirm"
+                style="@style/PrimaryRoundedButton"
+                android:text="@string/confirm" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+</layout>

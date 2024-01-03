@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/on_primary_tree_poppy_color" />
+    <size
+        android:width="@dimen/circle_drawable_size"
+        android:height="@dimen/circle_drawable_size" />
+    <corners android:radius="@dimen/default_rounded_radius" />
+</shape>

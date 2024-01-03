@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/default_screen_vertical_space">
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/feedback" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divider_default_space"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <TextView
+                style="@style/HeadLine_4"
+                android:layout_width="wrap_content"
+                android:text="Enjoying the App?"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Body_5"
+                android:layout_width="wrap_content"
+                android:text="Rate your experience using Trooute so far."
+                android:textColor="@color/black" />
+
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/rbSubmitExperience"
+                style="@style/RatingBarTheme"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:stepSize="1" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+
+            <TextView
+                android:id="@+id/dialogSubmit_button"
+                style="@style/HeadLine_5"
+                android:text="Submit"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/primary_color"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dialogDismiss_button"
+                style="@style/HeadLine_5"
+                android:text="Not Now"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

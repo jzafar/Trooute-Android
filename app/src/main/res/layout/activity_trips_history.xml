@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.trip.TripsHistoryActivity">
+
+        <include
+            android:id="@+id/includeAppBar"
+            layout="@layout/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTripHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/includeAppBar"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            android:visibility="visible"
+            tools:listitem="@layout/rv_trip_history_item" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNoTripsHistoryAvailable"
+            style="@style/Body_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_trips_history_available"
+            android:textColor="@color/secondary_cadet_blue_color"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</layout>

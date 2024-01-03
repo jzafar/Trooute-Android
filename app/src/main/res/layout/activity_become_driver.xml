@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ltRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.main.BecomeDriverActivity">
+
+        <include
+            android:id="@+id/includeAppBar"
+            layout="@layout/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/default_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_default_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_7"
+                        android:text="@string/upload_vehicle_photo" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/ElevatedCardViewStyle"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_150sdp"
+                            android:background="@color/secondary_athens_gray_color"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/ltClickToUploadPhoto"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:divider="@drawable/divider_sub_section_space"
+                                app:showDividers="middle">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@drawable/ic_upload" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Body_6"
+                                    android:layout_width="wrap_content"
+                                    android:text="@string/click_to_upload_photo"
+                                    android:textColor="@color/secondary_cadet_blue_color" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/imgVehicle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:visibility="gone"
+                                app:srcCompat="@drawable/passenger_1" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/HeadLine_7"
+                            android:text="@string/make" />
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/TextInputLayoutStyle">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etMake"
+                                style="@style/TextInputEditTextStyle"
+                                android:hint="@string/honda"
+                                android:inputType="textCapWords" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/HeadLine_7"
+                            android:text="@string/model" />
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/TextInputLayoutStyle">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etModel"
+                                style="@style/TextInputEditTextStyle"
+                                android:hint="@string/civic_1_8"
+                                android:inputType="textCapWords" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_7"
+                        android:text="@string/year" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/DropDownStyle">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actYear"
+                            style="@style/CustomAutoCompleteTextView"
+                            android:hint="@string/select" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_7"
+                        android:text="@string/color" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/DropDownStyle">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actColor"
+                            style="@style/CustomAutoCompleteTextView"
+                            android:hint="@string/select" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_7"
+                        android:text="@string/vehicle_license_plate" />
+
+                    <com.google.android.material.textfield.TextInputLayout style="@style/TextInputLayoutStyle">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etVehicleLicensePlate"
+                            style="@style/TextInputEditTextStyle"
+                            android:hint="@string/afk_235"
+                            android:inputType="textCapWords" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_7"
+                        android:text="@string/upload_driving_license" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:text="@string/driving_licience_desc"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/ElevatedCardViewStyle"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_150sdp"
+                            android:background="@color/secondary_athens_gray_color"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/ltClickToUploadDrivingLicense"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:divider="@drawable/divider_sub_section_space"
+                                app:showDividers="middle">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@drawable/ic_upload" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/Body_6"
+                                    android:layout_width="wrap_content"
+                                    android:text="@string/click_to_upload_photo"
+                                    android:textColor="@color/secondary_cadet_blue_color" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/imgDrivingLicense"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:visibility="gone"
+                                app:srcCompat="@drawable/passenger_1" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSubmitRequest"
+                    style="@style/PrimaryRoundedButton"
+                    android:text="@string/submit_request" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </ScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.faltenreich.skeletonlayout.SkeletonLayout
+        android:id="@+id/skeletonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.notification.NotificationsFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvNotification"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:visibility="gone"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                android:paddingHorizontal="@dimen/default_space"
+                tools:listitem="@layout/rv_notification_item" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNoNotificationAvailable"
+                style="@style/NoDataMessageStyle"
+                android:layout_centerInParent="true"
+                android:visibility="visible"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                android:text="@string/notifications_are_not_available" />
+
+        </RelativeLayout>
+
+    </com.faltenreich.skeletonlayout.SkeletonLayout>
+</layout>

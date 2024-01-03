@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.onboarding.OnBoardingScreenActivity">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/secondary_athens_gray_color">
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:divider="@drawable/divider_default_space"
+            app:showDividers="middle">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/onBoardingViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/onBoardingDotIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:dotsColor="@color/secondary_polo_blue_color"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="16dp"
+                app:dotsSpacing="4dp"
+                app:dotsStrokeColor="@color/secondary_polo_blue_color"
+                app:dotsStrokeWidth="0.5dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnNext_1"
+                    style="@style/PrimaryRoundedButton"
+                    android:layout_width="wrap_content"
+                    android:text="Next" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ltPrevNextButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:divider="@drawable/divider_default_space"
+                    app:showDividers="middle"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnPrevious"
+                        style="@style/SecondaryRoundedButton"
+                        android:layout_width="wrap_content"
+                        android:text="Previous" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnNext_2"
+                        style="@style/PrimaryRoundedButton"
+                        android:layout_width="wrap_content"
+                        android:text="Next" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ltSignUpSingInButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:divider="@drawable/divider_default_space"
+                    app:showDividers="middle"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnSignUp"
+                        style="@style/PrimaryRoundedButton"
+                        android:layout_width="wrap_content"
+                        android:text="Sign up" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnSignIn"
+                        style="@style/SecondaryRoundedButton"
+                        android:layout_width="wrap_content"
+                        android:text="Sign in" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

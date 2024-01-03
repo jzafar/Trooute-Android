@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.trip.TripDetailCompletedActivity">
+
+        <include
+            android:id="@+id/includeAppBar"
+            layout="@layout/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/ltMainContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ltButtonSection"
+            android:layout_below="@+id/includeAppBar"
+            android:fillViewport="true">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_default_space"
+                app:showDividers="middle">
+
+                <include
+                    android:id="@+id/includeCompletedBookingDetailItemLayout"
+                    layout="@layout/completed_booking_detail_item" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ltPassengersUserSide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_4"
+                        android:layout_width="match_parent"
+                        android:paddingHorizontal="@dimen/section_space"
+                        android:text="@string/passengers" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvDriverSidePassengers"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/rv_trip_detail_completed_item" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvNoComTripsPassengersAvailable"
+                        style="@style/Body_6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_centerInParent="true"
+                        android:text="@string/passengers_not_available"
+                        android:textColor="@color/secondary_cadet_blue_color"
+                        android:visibility="gone" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_4"
+                        android:layout_width="match_parent"
+                        android:paddingHorizontal="@dimen/section_space"
+                        android:text="@string/driver_details" />
+
+                    <include
+                        android:id="@+id/includeDriverDetails"
+                        layout="@layout/user_detail_item"/>
+
+                    <include
+                        android:id="@+id/includeCarDetails"
+                        layout="@layout/vehicle_info_item"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_4"
+                        android:paddingHorizontal="@dimen/section_space"
+                        android:text="@string/destination_and_schedule" />
+
+                    <include
+                        android:id="@+id/includeDestinationAndScheduleLayout"
+                        layout="@layout/destination_and_schedule_item" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_4"
+                        android:paddingHorizontal="@dimen/section_space"
+                        android:text="@string/trip_details" />
+
+                    <include
+                        android:id="@+id/includeTripDetailLayout"
+                        layout="@layout/trip_detail_item" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

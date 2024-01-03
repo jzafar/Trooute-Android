@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView style="@style/ElevatedCardViewStyle">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            app:divider="@drawable/divider_section_space"
+            app:showDividers="middle">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPassengersNotAvailable"
+                style="@style/Body_6"
+                android:visibility="gone"
+                android:text="@string/passengers_not_available"
+                android:textColor="@color/secondary_cadet_blue_color" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPassengers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                tools:itemCount="1"
+                tools:listitem="@layout/rv_passengers_primary_item" />
+
+            <include layout="@layout/divider_item" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Body_6"
+                android:text="You might share the ride with fellow passengers heading the same way."
+                android:textColor="@color/secondary_cadet_blue_color" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

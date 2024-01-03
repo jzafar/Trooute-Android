@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView style="@style/ElevatedCardViewStyle">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            app:divider="@drawable/divider_default_space"
+            app:showDividers="middle">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/HeadLine_6"
+                    android:text="@string/seats_available_for_passengers" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_secondary_athens_gray_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/sub_section_space">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/decrementSeats"
+                        style="@style/ElevatedCardViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        app:cardBackgroundColor="@color/secondary_zumthor_color"
+                        app:cardElevation="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/_9sdp"
+                            android:paddingVertical="@dimen/_12sdp"
+                            app:srcCompat="@drawable/ic_remove" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTotalSeats"
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="1"
+                        android:textColor="@color/primary_color" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/incrementSeats"
+                        style="@style/ElevatedCardViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:cardBackgroundColor="@color/secondary_zumthor_color"
+                        app:cardElevation="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/_9sdp"
+                            android:paddingVertical="@dimen/_12sdp"
+                            app:srcCompat="@drawable/ic_add" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:text="@string/set_a_price_for_the_trip" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:text="@string/per_person"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ltPrice"
+                    style="@style/TextInputLayoutStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPrice"
+                        style="@style/TextInputEditTextStyle"
+                        android:hint="Price"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/HeadLine_6"
+                    android:layout_width="wrap_content"
+                    android:text="Restrictions on luggage type and weight" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:text="Please provide any luggage size or weight restrictions for each passenger."
+                    android:textColor="@color/secondary_cadet_blue_color" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tvLanguageRestrictionType"
+                            style="@style/TextInputEditTextStyle"
+                            android:hint="Type"
+                            android:inputType="text|textCapWords" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tvLanguageRestrictionWeight"
+                            style="@style/TextInputEditTextStyle"
+                            android:hint="weight (kg)"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_secondary_athens_gray_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/sub_section_space">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Round Trip" />
+
+                    <Switch
+                        android:id="@+id/switchRoundTrip"
+                        style="@style/SwitchTheme"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:text="whether the ride is a round-trip or not"
+                    android:textColor="@color/secondary_cadet_blue_color" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_secondary_athens_gray_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/sub_section_space">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Smoking Preference" />
+
+                    <Switch
+                        android:id="@+id/switchSmokingPreference"
+                        style="@style/SwitchTheme"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:text="whether smoking is allowed or not during the trip"
+                    android:textColor="@color/secondary_cadet_blue_color" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_secondary_athens_gray_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/sub_section_space">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvLanguagePreference"
+                            style="@style/HeadLine_6"
+                            android:layout_width="wrap_content"
+                            android:text="Language Preference" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Body_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:autoSizeTextType="uniform"
+                            android:maxLines="1"
+                            android:text="@string/per_person"
+                            android:textColor="@color/secondary_cadet_blue_color" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <Switch
+                        android:id="@+id/switchLanguagePreference"
+                        style="@style/SwitchTheme"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.textfield.TextInputLayout style="@style/DropDownStyle">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actLanguage"
+                        style="@style/CustomAutoCompleteTextView"
+                        android:hint="Language" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/sub_section_space">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:text="Other relevant details" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:text=" (Optional)"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/MultilineTextInputLayoutStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNote"
+                        style="@style/MultilineTextInputEditTextStyle"
+                        android:hint="Please be on time as we have a tight schedule." />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

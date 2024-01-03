@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardTripRoute"
+        style="@style/ElevatedCardViewStyle">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/default_space">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/HeadLine_6"
+                android:layout_width="0dp"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:text="@string/persons" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.6"
+                android:background="@drawable/rounded_secondary_athens_gray_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/sub_section_space">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/decrementPerson"
+                    style="@style/ElevatedCardViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    app:cardBackgroundColor="@color/secondary_zumthor_color"
+                    app:cardElevation="0dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/_9sdp"
+                        android:paddingVertical="@dimen/_12sdp"
+                        app:srcCompat="@drawable/ic_remove" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPersonCount"
+                    style="@style/HeadLine_6"
+                    android:layout_width="wrap_content"
+                    android:layout_centerInParent="true"
+                    tools:text="1"
+                    android:textColor="@color/primary_color" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/incrementPerson"
+                    style="@style/ElevatedCardViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:cardBackgroundColor="@color/secondary_zumthor_color"
+                    app:cardElevation="0dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/_9sdp"
+                        android:paddingVertical="@dimen/_12sdp"
+                        app:srcCompat="@drawable/ic_add" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

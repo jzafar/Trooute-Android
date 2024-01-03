@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.chat.MessageActivity">
+
+        <include
+            android:id="@+id/includeAppBar"
+            layout="@layout/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.faltenreich.skeletonlayout.SkeletonLayout
+            android:id="@+id/skeletonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ltBottomSection"
+            android:layout_below="@id/includeAppBar">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMessage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                tools:listitem="@layout/rv_send_message_item" />
+
+        </com.faltenreich.skeletonlayout.SkeletonLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ltBottomSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/default_screen_horizontal_space">
+
+            <include layout="@layout/divider_item" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/default_screen_vertical_space">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlMessage"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/imgSendMessage"
+                    android:background="@color/transparent_color">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMessage"
+                        style="@style/TextInputEditTextStyle"
+                        android:hint="@string/message"
+                        android:inputType="textMultiLine|textCapSentences" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgSendMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/ic_send_message" />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </RelativeLayout>
+
+</layout>

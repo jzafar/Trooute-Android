@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgLocationFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_27sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_location_from" />
+
+        <ImageView
+            android:id="@+id/imgLocationWhereTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_27sdp"
+            app:layout_constraintEnd_toEndOf="@+id/imgLocationFrom"
+            app:layout_constraintStart_toStartOf="@+id/imgLocationFrom"
+            app:layout_constraintTop_toTopOf="@+id/ltLocationWhereTo"
+            app:srcCompat="@drawable/ic_location_where_to" />
+
+        <View
+            android:id="@+id/imageView7"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_dotted_line_vertical"
+            android:layerType="none"
+            app:layout_constraintBottom_toTopOf="@+id/imgLocationWhereTo"
+            app:layout_constraintEnd_toEndOf="@+id/imgLocationFrom"
+            app:layout_constraintStart_toStartOf="@+id/imgLocationFrom"
+            app:layout_constraintTop_toBottomOf="@+id/imgLocationFrom" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ltLocationFrom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_5sdp"
+            app:divider="@drawable/divider_section_space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgLocationFrom"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showDividers="middle"
+            tools:ignore="RtlSymmetry">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Body_6"
+                android:text="@string/from"
+                android:textColor="@color/secondary_cadet_blue_color" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAddressFrom"
+                style="@style/HeadLine_6"
+                tools:text="Kings Cross Under Statiotion" />
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                style="@style/Body_6"-->
+<!--                android:text="New York"-->
+<!--                android:textColor="@color/on_primary_mirage_color" />-->
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDepartureDate"
+                style="@style/Body_6"
+                android:textColor="@color/primary_color"
+                tools:text="21 August 2023 - 10: 30 AM" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ltLocationWhereTo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_space"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_5sdp"
+            app:divider="@drawable/divider_section_space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgLocationWhereTo"
+            app:layout_constraintTop_toBottomOf="@+id/ltLocationFrom"
+            app:showDividers="middle"
+            tools:ignore="RtlSymmetry">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Body_6"
+                android:text="@string/where_to"
+                android:textColor="@color/secondary_cadet_blue_color" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAddressWhereto"
+                style="@style/HeadLine_6"
+                tools:text="Kings Cross Under Statiotion" />
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                style="@style/Body_6"-->
+<!--                android:text="New York"-->
+<!--                android:textColor="@color/on_primary_mirage_color" />-->
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

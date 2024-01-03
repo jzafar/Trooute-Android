@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView style="@style/ElevatedCardViewStyle">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            app:divider="@drawable/divider_default_space"
+            app:showDividers="middle">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:text="@string/restrictions_on_luggage_type_and_weight"
+                    android:textColor="@color/secondary_cadet_blue_color" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/type"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTypeValue"
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:text="@string/not_provided"
+                        android:textAlignment="textEnd" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/weight"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWeightValue"
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:text="@string/not_provided"
+                        android:textAlignment="textEnd" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <include layout="@layout/divider_item" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/round_trip"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRoundTripValue"
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:text="@string/not_provided"
+                        android:textAlignment="textEnd" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:text="@string/smoking_allowed"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSmokingAllowedValue"
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:text="@string/not_provided"
+                        android:textAlignment="textEnd" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:text="@string/language_preference"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLanguagePreferenceValue"
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:text="@string/not_provided"
+                        android:textAlignment="textEnd" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <include layout="@layout/divider_item" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:text="@string/other_relevant_details"
+                    android:textColor="@color/secondary_cadet_blue_color" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvOtherRelevantDetailsValue"
+                    style="@style/Body_6"
+                    android:text="@string/not_provided" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

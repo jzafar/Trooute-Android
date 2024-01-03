@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:enabled="true"
+        android:icon="@drawable/bnv_home_icon"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/inboxFragment"
+        android:enabled="true"
+        android:icon="@drawable/bnv_inbox_icon"
+        android:title="@string/inbox" />
+    <item
+        android:id="@+id/bookingsFragment"
+        android:enabled="true"
+        android:icon="@drawable/bnv_bookings_icon"
+        android:title="@string/bookings" />
+<!--    <item-->
+<!--        android:id="@+id/notificationsFragment"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/bnv_notifications_icon"-->
+<!--        android:title="@string/notifications" />-->
+    <item
+        android:id="@+id/settingsFragment"
+        android:enabled="true"
+        android:icon="@drawable/bnv_settings_icon"
+        android:title="@string/settings" />
+</menu>
