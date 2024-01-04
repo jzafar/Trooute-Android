@@ -8,7 +8,7 @@ object Constants {
     const val BOOKING_ID = "Booking Id"
     const val CREATE_BOOKING_REQUEST = "Create Booking Request"
     const val TOTAL_AMOUNT = "Total Amount"
-    const val PLATFORM_FEE_PRICE: Double = 0.99
+    const val PLATFORM_FEE_PRICE: Double = 1.0
     const val WEIGHT_SIGN = "kg"
     const val PLACES_START_LAT_LNG = "Google places start lat long"
     const val PLACES_DESTINATION_LAT_LNG = "Google places destination lat long"

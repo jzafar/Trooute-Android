@@ -16,6 +16,7 @@
 
         <include
             android:id="@+id/includeSearchView"
+            android:visibility="gone"
             layout="@layout/search_layout" />
 
         <com.faltenreich.skeletonlayout.SkeletonLayout

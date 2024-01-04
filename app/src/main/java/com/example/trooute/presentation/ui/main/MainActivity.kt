@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             this.appBarLayout.isVisible = isAppBarVisible
             this.toolbarTitle.text = title
             this.arrowBackPress.isVisible = false
-            this.filter.isVisible = isActionIconVisible
+            this.filter.isVisible = false //isActionIconVisible
         }
     }
 

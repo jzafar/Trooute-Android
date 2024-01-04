@@ -220,7 +220,8 @@ class BookNowActivity : AppCompatActivity() {
                                             placesPickUpLocationLatLng?.longitude
                                         )
                                     ),
-                                    trip = tripID
+                                    trip = tripID,
+                                    plateFormFee = personCount.toDouble()
                                 )
                                 putExtra(CREATE_BOOKING_REQUEST, createBookingRequest)
                             }

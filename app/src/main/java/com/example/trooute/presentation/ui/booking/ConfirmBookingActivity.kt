@@ -60,7 +60,7 @@ class ConfirmBookingActivity : AppCompatActivity() {
 
     private var authModelInfo: User? = null
 
-    private var platFormFee:Double = 0.0
+    private var platFormFee:Double = 1.0
 
     private val tripsData: TripsData? by lazy {
         IntentCompat.getParcelableExtra(intent, GET_TRIP_DETAIL, TripsData::class.java)

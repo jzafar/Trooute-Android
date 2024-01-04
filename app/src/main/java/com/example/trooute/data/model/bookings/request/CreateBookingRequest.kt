@@ -10,7 +10,7 @@ data class CreateBookingRequest(
     val numberOfSeats: Long?,
     val pickupLocation: PickupLocation?,
     val trip: String?,
-    val plateFormFee: Double = 0.0
+    val plateFormFee: Double = 1.0
 ) : Parcelable {
     @Parcelize
     data class PickupLocation(
