@@ -18,6 +18,7 @@ import com.nguyenhoanglam.imagepicker.model.RootDirectory
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePickerLauncher
 import com.permissionx.guolindev.PermissionX
 
+
 class ImagePicker(
     private val activityContext: FragmentActivity,
     private val launcher: ImagePickerLauncher
@@ -42,14 +43,14 @@ class ImagePicker(
 
         binding.apply {
             openCamera.setOnClickListener {
-                if (cameraGalleryPermission()) {
+                if (cameraPermission()) {
                     openCamera()
                     bottomSheetDialog.dismiss()
                 }
             }
 
             openGallery.setOnClickListener {
-                if (cameraGalleryPermission()) {
+                if (galleryPermission()) {
                     openGallery()
                     bottomSheetDialog.dismiss()
                 }
@@ -101,12 +102,42 @@ class ImagePicker(
         launcher.launch(config)
     }
 
+
     @RequiresApi(Build.VERSION_CODES.R)
-    fun cameraGalleryPermission(): Boolean {
+    fun galleryPermission(): Boolean {
         var isGranted = false
         PermissionX.init(activityContext)
             .permissions(
                 Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            .onExplainRequestReason { scope, deniedList ->
+                scope.showRequestReasonDialog(
+                    deniedList,
+                    "Core fundamental are based on these permissions",
+                    "OK",
+                    "Cancel"
+                )
+            }
+            .onForwardToSettings { scope, deniedList ->
+                scope.showForwardToSettingsDialog(
+                    deniedList,
+                    "You need to allow necessary permissions in Settings manually",
+                    "OK",
+                    "Cancel"
+                )
+            }
+            .request { allGranted, grantedList, deniedList ->
+                isGranted = allGranted
+            }
+
+        return isGranted
+    }
+
+    private fun cameraPermission(): Boolean {
+        var isGranted = false
+        PermissionX.init(activityContext)
+            .permissions(
+                Manifest.permission.CAMERA
             )
             .onExplainRequestReason { scope, deniedList ->
                 scope.showRequestReasonDialog(
