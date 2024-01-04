@@ -212,7 +212,7 @@ class LocationAndRequestManager constructor(
                 requestLocationPermission()
             }
         } else {
-            checkBackgroundLocation()
+//            checkBackgroundLocation()
         }
     }
 
