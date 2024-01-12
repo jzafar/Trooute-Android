@@ -196,7 +196,7 @@
                         android:id="@+id/tvFrequentlyAskedQuestions"
                         style="@style/Body_6"
                         android:autoSizeTextType="uniform"
-                        android:drawableStart="@drawable/ic_doc"
+                        android:drawableStart="@drawable/ic_faq"
                         android:drawableEnd="@drawable/ic_arrow_forward"
                         android:maxLines="1"
                         android:text="@string/frequently_asked_questions" />
@@ -205,7 +205,7 @@
                         android:id="@+id/giveUsFeedBack"
                         style="@style/Body_6"
                         android:autoSizeTextType="uniform"
-                        android:drawableStart="@drawable/ic_doc"
+                        android:drawableStart="@drawable/ic_feedback"
                         android:drawableEnd="@drawable/ic_arrow_forward"
                         android:maxLines="1"
                         android:text="@string/give_us_feedback" />
@@ -245,7 +245,7 @@
                         android:id="@+id/termsAndConditions"
                         style="@style/Body_6"
                         android:autoSizeTextType="uniform"
-                        android:drawableStart="@drawable/ic_doc"
+                        android:drawableStart="@drawable/ic_terms_conditions"
                         android:drawableEnd="@drawable/ic_arrow_forward"
                         android:maxLines="1"
                         android:text="@string/terms_of_services" />
@@ -254,7 +254,7 @@
                         android:id="@+id/privacyPolicy"
                         style="@style/Body_6"
                         android:autoSizeTextType="uniform"
-                        android:drawableStart="@drawable/ic_doc"
+                        android:drawableStart="@drawable/ic_privacy_policy"
                         android:drawableEnd="@drawable/ic_arrow_forward"
                         android:maxLines="1"
                         android:text="@string/privacy_policy" />
