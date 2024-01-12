@@ -40,14 +40,15 @@ class UpdatePasswordActivity : AppCompatActivity() {
         binding.apply {
             btnUpdate.setOnClickListener {
                 if (
-                    isPasswordValid(false, tePassword)
-                    && isConfirmPasswordValid(tePassword, teRetypePassword)
+                    isPasswordValid(false, teNewPassword) &&
+                    isPasswordValid(false, teCurrentPassword) &&
+                    isConfirmPasswordValid(teNewPassword, teRetypePassword)
                 ) {
                     viewModel.updateMyPassword(
                         UpdateMyPasswordRequest(
-                            password = tePassword.text.toString(),
+                            password = teNewPassword.text.toString(),
                             passwordConfirm = teRetypePassword.text.toString(),
-                            passwordCurrent = tePassword.text.toString(),
+                            passwordCurrent = teCurrentPassword.text.toString(),
                         )
                     )
 
@@ -76,7 +77,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
                     is Resource.SUCCESS -> {
                         Toast(this@UpdatePasswordActivity).showSuccessMessage(
                             this@UpdatePasswordActivity,
-                            it.data.message.toString()
+                            "Password Updated successfully"
                         )
 
                         finish()

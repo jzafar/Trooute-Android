@@ -229,4 +229,6 @@
     <string name="modifications_title">4. Modifications</string>
     <string name="modifications_desc">Trooute reserves the right to modify these terms at any time without prior notice. By continuing to use the App after modifications, users accept the updated terms.</string>
     <string name="update_password">Update Password</string>
+    <string name="current_password_here">Type your current password here</string>
+    <string name="current_password">Current Password</string>
 </resources>
