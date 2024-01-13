@@ -42,8 +42,9 @@
                 style="@style/RatingBarTheme"
                 android:scaleX="2"
                 android:scaleY="2"
-                android:rating="5"
-                android:stepSize="1" />
+                android:stepSize="1"
+                android:numStars="5"
+                android:rating="5"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"

@@ -17,7 +17,7 @@
             android:id="@+id/customToastParent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_20sdp"
+            android:layout_margin="@dimen/_15sdp"
             app:cardCornerRadius="@dimen/_5sdp"
             app:cardElevation="@dimen/_20sdp">
 
@@ -41,12 +41,14 @@
 
                     <TextView
                         style="@style/HeadLine_6"
-                        android:text="@string/error" />
+                        android:text="@string/error"
+                        android:layout_marginTop="@dimen/_5sdp" />
 
                     <TextView
                         android:id="@+id/toastMessage"
                         style="@style/Body_7"
-                        android:text="Error! has been occur" />
+                        android:text="Error! has been occur"
+                        android:layout_marginBottom="@dimen/_5sdp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

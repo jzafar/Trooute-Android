@@ -39,6 +39,7 @@ import okhttp3.MultipartBody
 import java.io.File
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
 
@@ -160,6 +161,7 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
                                 AuthVerificationActivity::class.java
                             ).putExtra(EMAIL, binding.teEmailAddress.text.toString())
                         )
+                        clearAllForm()
                         Log.e(TAG, "bindAuthObserver: success : " + it.data)
                     }
                 }
@@ -204,5 +206,19 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         ViewUtils.hideKeyboard(binding.ltRoot)
         return super.dispatchTouchEvent(ev)
+    }
+
+    fun clearAllForm() {
+        binding.teFullName.getEditableText().clear()
+        binding.teEmailAddress.getEditableText().clear()
+        binding.tePhoneNumber.getEditableText().clear()
+        binding.tePassword.getEditableText().clear()
+        binding.teRetypePassword.getEditableText().clear()
+        binding.imgUserProfile.setImageURI(null)
+        binding.imgUserProfile.setImageResource(R.drawable.ic_camera)
+        val contentPadding = (resources.getDimension(R.dimen.content_padding)).toInt()
+        binding.imgUserProfile.setContentPadding(contentPadding, contentPadding, contentPadding, contentPadding)
+        isImageAdded = false
+        profileImageFile = null
     }
 }
