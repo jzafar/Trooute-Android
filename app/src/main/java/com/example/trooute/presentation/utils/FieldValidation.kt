@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Patterns
 import android.widget.AutoCompleteTextView
+import android.widget.CheckBox
 import android.widget.Toast
 import com.google.android.material.internal.ViewUtils.showKeyboard
 import com.google.android.material.textfield.TextInputEditText
@@ -27,6 +28,15 @@ fun Context.isFieldValid(field: TextInputEditText, message: String): Boolean {
         false
     } else {
         true
+    }
+}
+
+fun Context.isTermsCheckBoxClicked(field: CheckBox): Boolean {
+    if (field.isChecked) {
+        return true
+    } else {
+        Toast(this).showWarningMessage(this, "Please accept terms and conditions")
+        return false
     }
 }
 
