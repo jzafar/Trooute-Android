@@ -161,9 +161,33 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
     }
 
     private fun setUpYearDropDown(actYear: AutoCompleteTextView) {
-        yearArrayList.add("2021")
-        yearArrayList.add("2022")
+        yearArrayList.add("2024")
         yearArrayList.add("2023")
+        yearArrayList.add("2022")
+        yearArrayList.add("2021")
+        yearArrayList.add("2020")
+        yearArrayList.add("2019")
+        yearArrayList.add("2018")
+        yearArrayList.add("2017")
+        yearArrayList.add("2016")
+        yearArrayList.add("2015")
+        yearArrayList.add("2014")
+        yearArrayList.add("2013")
+        yearArrayList.add("2012")
+        yearArrayList.add("2011")
+        yearArrayList.add("2010")
+        yearArrayList.add("2009")
+        yearArrayList.add("2008")
+        yearArrayList.add("2007")
+        yearArrayList.add("2006")
+        yearArrayList.add("2005")
+        yearArrayList.add("2004")
+        yearArrayList.add("2003")
+        yearArrayList.add("2002")
+        yearArrayList.add("2001")
+        yearArrayList.add("2000")
+
+
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, yearArrayList)
 
         actYear.apply {
@@ -175,9 +199,19 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
     }
 
     private fun setUpColorDropDown(actYear: AutoCompleteTextView) {
-        colorArrayList.add("Black")
         colorArrayList.add("White")
+        colorArrayList.add("Black")
+        colorArrayList.add("Gray")
+        colorArrayList.add("Silver")
         colorArrayList.add("Blue")
+        colorArrayList.add("Red")
+        colorArrayList.add("Brown")
+        colorArrayList.add("Green")
+        colorArrayList.add("Orange")
+        colorArrayList.add("Beige")
+        colorArrayList.add("Purple")
+        colorArrayList.add("Gold")
+        colorArrayList.add("Yellow")
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, colorArrayList)
 
         actYear.apply {
