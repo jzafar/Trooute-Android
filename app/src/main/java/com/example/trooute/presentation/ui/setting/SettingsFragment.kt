@@ -44,6 +44,10 @@ import com.example.trooute.presentation.utils.showErrorMessage
 import com.example.trooute.presentation.utils.showSuccessMessage
 import com.example.trooute.presentation.viewmodel.driverviewmodel.SwitchDriverModeViewModel
 import com.example.trooute.presentation.viewmodel.notification.PushNotificationViewModel
+import com.google.android.play.core.review.ReviewException
+import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.review.model.ReviewErrorCode
+import com.google.android.play.core.review.testing.FakeReviewManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -155,7 +159,26 @@ class SettingsFragment : Fragment() {
             }
 
             giveUsFeedBack.setOnClickListener {
-                showRatingDialog()
+                val manager = ReviewManagerFactory.create(requireContext())
+                val request = manager.requestReviewFlow()
+                request.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // We got the ReviewInfo object
+                        val reviewInfo = task.result
+                        val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
+                        flow.addOnCompleteListener { _ ->
+                            Log.i("GoogleReview", "" + flow.isSuccessful)
+                            // The flow has finished. The API does not indicate whether the user
+                            // reviewed or not, or even whether the review dialog was shown. Thus, no
+                            // matter the result, we continue our app flow.
+                        }
+                    } else {
+                        // There was some problem, log or handle the error code.
+                        @ReviewErrorCode val reviewErrorCode = (task.getException() as ReviewException).errorCode
+                        Log.i("GoogleReview", "" + reviewErrorCode)
+                    }
+                }
+//                showRatingDialog()
             }
 
             termsAndConditions.setOnClickListener {
