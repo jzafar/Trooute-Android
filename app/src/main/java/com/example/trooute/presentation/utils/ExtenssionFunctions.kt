@@ -12,12 +12,12 @@ fun Context.inviteFriend() {
         .setType("text/plain")
         .setChooserTitle("Invite a friend")
 //        .setChooserTitle("Share text with: ")
-        .setText("Desired text to share")
+        .setText("Hey! I want to invite you to try Trooute App. Get where you’re going with affordable, convenient rides. You can download App from this link: https://google.com")
         .startChooser()
 }
 
 fun Context.composeEmail() {
-    val recipientEmail = "clientemail@example.com" // Replace with the email address provided by your client
+    val recipientEmail = "support@trooute.com"
     val subject = "Subject of the email"
     val message = "Desired text to share"
 
