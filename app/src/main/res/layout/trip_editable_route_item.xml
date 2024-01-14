@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -112,6 +113,90 @@
                             android:inputType="textPostalAddress" />
 
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/HeadLine_6"
+                            android:text="@string/choose_the_date_of_the_trip" />
+
+                        <EditText android:id="@+id/chooseDate"
+                            style="@style/TextInputEditTextStyle"
+                            android:focusable="false"
+                            android:inputType="none"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            android:background="@null"
+                            android:hint="@string/choose_date"
+
+                            />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
+                        <CheckBox
+                            android:id="@+id/checkBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/flexible"
+                            android:buttonTint="@color/on_primary_green_color"
+                            />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="-5dp"
+                            >
+                            <Button
+                                android:id="@+id/removeBtn"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/custom_btn_remove"
+                                android:backgroundTint="@color/on_primary_green_color"/>
+                            <EditText
+                                android:id="@+id/itemQuanEt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:minEms="1"
+                                android:text="1"
+                                android:textAllCaps="false"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/black"
+                                android:textSize="20sp"
+                                android:background="@null"
+                                android:focusable="false"
+                                android:inputType="none"
+                                />
+                            <Button
+                                android:id="@+id/addBtn"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/custom_btn_add"
+                                android:backgroundTint="@color/on_primary_green_color"/>
+                        </RelativeLayout>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
