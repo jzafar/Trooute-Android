@@ -8,6 +8,7 @@ data class Driver(
     val _id: String? = null ?: "0",
     val carDetails: CarDetails? = null,
     val name: String? = null ?: "No name",
+    val phoneNumber: String? = null ?: "No phone number",
     val photo: String? = null ?: "",
     val isApprovedDriver: Boolean,
     val reviewsStats: ReviewsStats? = null

@@ -2,6 +2,7 @@ package com.example.trooute.presentation.ui.trip
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -107,7 +108,7 @@ class TripDetailActivity : AppCompatActivity() {
         tripID = intent.getStringExtra(TRIP_ID).toString()
         passengersAdapter = PassengersPrimaryAdapter()
         driverSidePassengersAdapter =
-            DriverSidePassengersAdapter(sharedPreferenceManager, ::startMessaging)
+            DriverSidePassengersAdapter(sharedPreferenceManager, ::startMessaging, ::startCall)
 
         authModelInfo = sharedPreferenceManager.getAuthModelFromPref()
 
@@ -162,6 +163,13 @@ class TripDetailActivity : AppCompatActivity() {
                 }
             )
         }
+    }
+
+    private fun startCall(user: User?) {
+        val uri = "tel:" + user?.phoneNumber
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.setData(Uri.parse(uri))
+        startActivity(intent)
     }
 
     override fun onResume() {

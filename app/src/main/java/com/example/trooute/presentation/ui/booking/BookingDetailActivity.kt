@@ -2,6 +2,7 @@ package com.example.trooute.presentation.ui.booking
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -20,27 +21,25 @@ import com.example.trooute.core.util.Constants.ACCEPT_BOOKING_TITLE
 import com.example.trooute.core.util.Constants.BOOKED_CANCELLED_BODY
 import com.example.trooute.core.util.Constants.BOOKED_CANCELLED_TITLE
 import com.example.trooute.core.util.Constants.BOOKING_ID
-import com.example.trooute.core.util.Constants.MAKE_PAYMENT_BODY
-import com.example.trooute.core.util.Constants.MAKE_PAYMENT_TITLE
 import com.example.trooute.core.util.Constants.MESSAGE_USER_INFO
 import com.example.trooute.core.util.Constants.MUTABLE_CONTENT
-import com.example.trooute.core.util.Constants.WEIGHT_SIGN
-import com.example.trooute.core.util.Resource
-import com.example.trooute.core.util.SharedPreferenceManager
-import com.example.trooute.data.model.bookings.response.BookingDetailsData
-import com.example.trooute.data.model.review.request.CreateReviewRequest
-import com.example.trooute.databinding.ActivityBookingDetailBinding
-import com.example.trooute.presentation.adapters.PassengersPrimaryAdapter
-import com.example.trooute.presentation.ui.main.MakePaymentActivity
 import com.example.trooute.core.util.Constants.PLATFORM_FEE_PRICE
 import com.example.trooute.core.util.Constants.PRICE_SIGN
 import com.example.trooute.core.util.Constants.TONE
 import com.example.trooute.core.util.Constants.TOPIC
 import com.example.trooute.core.util.Constants.TROOUTE_TOPIC
+import com.example.trooute.core.util.Constants.WEIGHT_SIGN
+import com.example.trooute.core.util.Resource
+import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.auth.response.User
+import com.example.trooute.data.model.bookings.response.BookingDetailsData
 import com.example.trooute.data.model.chat.Users
 import com.example.trooute.data.model.notification.NotificationRequest
+import com.example.trooute.data.model.review.request.CreateReviewRequest
+import com.example.trooute.databinding.ActivityBookingDetailBinding
+import com.example.trooute.presentation.adapters.PassengersPrimaryAdapter
 import com.example.trooute.presentation.ui.chat.MessageActivity
+import com.example.trooute.presentation.ui.main.MakePaymentActivity
 import com.example.trooute.presentation.utils.Loader
 import com.example.trooute.presentation.utils.Utils.formatDateTime
 import com.example.trooute.presentation.utils.Utils.getSubString
@@ -69,6 +68,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class BookingDetailActivity : AppCompatActivity() {
@@ -388,6 +388,9 @@ class BookingDetailActivity : AppCompatActivity() {
                     includeApprovedLayout.mcApprovedBooking.isVisible = false
                     includeConfirmedLayout.mcConfirmedBooking.isVisible = true
                     includeCompletedLayout.mcCompletedBooking.isVisible = false
+                    includeUserDetailLayout.apply {
+                        ltCallInboxSection.isVisible = true
+                    }
 
                     includeConfirmedLayout.apply {
                         tvStatus.text = checkStringValue(
@@ -591,6 +594,16 @@ class BookingDetailActivity : AppCompatActivity() {
                         )
                     }
                 }
+
+                callIcon.setOnClickListener {
+                    bookingData.user?.let {
+
+                        val uri = "tel:" + it.phoneNumber
+                        val intent = Intent(Intent.ACTION_DIAL)
+                        intent.setData(Uri.parse(uri))
+                        startActivity(intent)
+                    }
+                }
             }
         }
     }
@@ -708,7 +721,8 @@ class BookingDetailActivity : AppCompatActivity() {
                 tvTotalReviews.text = "(${
                     checkLongValue(bookingData.trip?.driver?.reviewsStats?.totalReviews)
                 })"
-                ltCallInboxSection.isVisible = true
+//                ltCallInboxSection.isVisible = true
+
 
                 messageIcon.setOnClickListener {
                     bookingData.trip?.driver?.let {
@@ -726,6 +740,15 @@ class BookingDetailActivity : AppCompatActivity() {
                                 )
                             }
                         )
+                    }
+                }
+
+                callIcon.setOnClickListener {
+                    bookingData.trip?.driver?.let {
+                        val uri = "tel:" + it.phoneNumber
+                        val intent = Intent(Intent.ACTION_DIAL)
+                        intent.setData(Uri.parse(uri))
+                        startActivity(intent)
                     }
                 }
             }
