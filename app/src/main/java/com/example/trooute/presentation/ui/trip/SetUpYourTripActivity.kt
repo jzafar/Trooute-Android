@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.GooglePlacesManager
 import com.example.trooute.core.util.Resource
 import com.example.trooute.data.model.trip.request.CreateTripRequest
@@ -118,14 +119,31 @@ class SetUpYourTripActivity : AppCompatActivity() {
             includeTripDetailsDriverItemLayout.apply {
                 decrementSeats.setOnClickListener {
                     if (totalSeats > 1) {
+                        incrementSeats.setEnabled(true);
                         totalSeats--
                         tvTotalSeats.text = "$totalSeats"
+                    }
+                    if (totalSeats.toInt() == 1) {
+                        decrementSeats.setEnabled(false);
                     }
                 }
 
                 incrementSeats.setOnClickListener {
-                    totalSeats++
-                    tvTotalSeats.text = "$totalSeats"
+                    if (totalSeats < Constants.MAX_PASSENGERS){
+                        decrementSeats.setEnabled(true);
+                        totalSeats++
+                        tvTotalSeats.text = "$totalSeats"
+                    }else {
+                        Toast(this@SetUpYourTripActivity).showErrorMessage(
+                            this@SetUpYourTripActivity,
+                            resources.getString(R.string.max_passengers_allowed, Constants.MAX_PASSENGERS)
+
+                        )
+                    }
+                    if(totalSeats.toInt() == Constants.MAX_PASSENGERS) {
+                        incrementSeats.setEnabled(false);
+                    }
+
                 }
 
                 switchRoundTrip.setOnCheckedChangeListener { buttonView, isChecked ->

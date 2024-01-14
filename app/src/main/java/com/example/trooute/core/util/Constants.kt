@@ -12,6 +12,7 @@ object Constants {
     const val WEIGHT_SIGN = "kg"
     const val PLACES_START_LAT_LNG = "Google places start lat long"
     const val PLACES_DESTINATION_LAT_LNG = "Google places destination lat long"
+    const val MAX_PASSENGERS = 4
 
     // Trip Status
     const val SCHEDULED = "Scheduled"
