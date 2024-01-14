@@ -25,6 +25,7 @@ import com.example.trooute.presentation.utils.isEmailValid
 import com.example.trooute.presentation.utils.isFieldValid
 import com.example.trooute.presentation.utils.isPasswordValid
 import com.example.trooute.presentation.utils.isPhoneNumberValid
+import com.example.trooute.presentation.utils.isTermsCheckBoxClicked
 import com.example.trooute.presentation.utils.showErrorMessage
 import com.example.trooute.presentation.utils.showSuccessMessage
 import com.example.trooute.presentation.viewmodel.authviewmodel.SignUpViewModel
@@ -82,13 +83,19 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
                 imagePicker.openDialog()
             }
 
+            termsAndCondition.setOnClickListener {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
+                startActivity(browserIntent)
+            }
             btnSignup.setOnClickListener {
+
                 if (
                     isFieldValid(teFullName, "Full name")
                     && isEmailValid(teEmailAddress)
                     && isPhoneNumberValid(tePhoneNumber)
                     && isPasswordValid(true, tePassword)
                     && isConfirmPasswordValid(tePassword, teRetypePassword)
+                    && isTermsCheckBoxClicked(checkBox)
                 ) {
                     if (isImageAdded) {
                         signUpViewModel.signUp(

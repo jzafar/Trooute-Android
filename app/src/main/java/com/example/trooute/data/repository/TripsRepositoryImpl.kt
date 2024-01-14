@@ -25,7 +25,7 @@ class TripsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTrips(
-        fromLatitude: Double, fromLongitude: Double
+        fromLatitude: Double?, fromLongitude: Double?
     ): Resource<GetTripsResponse> {
         return withContext(ioDispatcher) {
             safeApiCall {

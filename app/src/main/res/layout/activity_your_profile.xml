@@ -85,11 +85,30 @@
                         android:id="@+id/tlPhoneNumber"
                         style="@style/TextInputLayoutStyle">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tePhoneNumber"
-                            style="@style/TextInputEditTextStyle"
-                            android:hint="@string/your_phone_number_here"
-                            android:inputType="phone" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+
+                            <com.fredporciuncula.phonemoji.PhonemojiFlagTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="16sp"
+                                app:phonemoji_flagFor="@id/tePhoneNumber"
+                                />
+
+                            <com.fredporciuncula.phonemoji.PhonemojiTextInputEditText
+                                android:id="@+id/tePhoneNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/your_phone_number_here"
+                                android:inputType="phone"
+                                />
+
+                        </LinearLayout>
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

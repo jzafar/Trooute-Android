@@ -164,9 +164,11 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
             if (sharedPreferenceManager.driverMode()) {
                 includeTripDestinationLayout.cardTripRoute.isVisible = false
                 tvTripsTitle.text = getString(R.string.ongoing_trips)
+                tvNoTripsAvailable.text = "You do not have any ongoing trip"
             } else {
                 includeTripDestinationLayout.cardTripRoute.isVisible = true
                 tvTripsTitle.text = getString(R.string.trips_around_you)
+                tvNoTripsAvailable.text = getString(R.string.no_trips_around_you)
             }
 
             sharedPreferenceManager.getAuthModelFromPref().let { user ->
@@ -183,11 +185,11 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
         }
     }
 
-    private fun callGetTripsApi(location: Location) {
+    private fun callGetTripsApi(location: Location?) {
         location.let {
-            Log.e(TAG, "callGetTripsApi: lat -> ${it.latitude}, lng -> ${it.longitude}")
+            Log.e(TAG, "callGetTripsApi: lat -> ${it?.latitude}, lng -> ${it?.longitude}")
             getTripsViewModel.getTrips(
-                fromLatitude = it.latitude, fromLongitude = it.longitude
+                fromLatitude = it?.latitude, fromLongitude = it?.longitude
             )
             bindGetTripsObserver()
         }

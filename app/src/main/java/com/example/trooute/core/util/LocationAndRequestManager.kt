@@ -62,7 +62,11 @@ class LocationAndRequestManager constructor(
         private const val GPS_PERMISSION_KEY = "RequestGPSPermission"
     }
 
-    fun getLocation(callBack: ((Location) -> Unit)? = null) {
+    fun getLocation(callBack: ((Location?) -> Unit)? = null) {
+        Log.e(
+            TAG,
+            "getLocation called"
+        )
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         ) {
@@ -83,6 +87,7 @@ class LocationAndRequestManager constructor(
                                 "Last known location not available",
                                 Toast.LENGTH_LONG
                             ).show()
+                            callBack?.invoke(null)
                         }
                     }
                     .addOnFailureListener { e ->
@@ -92,10 +97,13 @@ class LocationAndRequestManager constructor(
                             "Error getting last known location: ${e.message}",
                             Toast.LENGTH_LONG
                         ).show()
+                        callBack?.invoke(null)
                     }
             } else {
                 fusedLocationProvider = LocationServices.getFusedLocationProviderClient(context)
             }
+        } else {
+            callBack?.invoke(null)
         }
     }
 
@@ -124,18 +132,19 @@ class LocationAndRequestManager constructor(
                     }
                 }
             } else {
+                checkLocationPermission()
                 // Location permission denied
-                Toast.makeText(context, "Location permission denied", Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, "Location permission denied", Toast.LENGTH_LONG).show()
 
                 // Check if we are in a state where the user has denied the permission and
                 // selected Don't ask again
-                if (!shouldShowRequestPermissionRationale(
-                        context,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    )
-                ) {
-                    openLocationSetting()
-                }
+//                if (!shouldShowRequestPermissionRationale(
+//                        context,
+//                        Manifest.permission.ACCESS_FINE_LOCATION
+//                    )
+//                ) {
+//                    openLocationSetting()
+//                }
             }
         }
 
@@ -186,7 +195,6 @@ class LocationAndRequestManager constructor(
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
-        getLocation()
     }
 
     private fun checkLocationPermission() {

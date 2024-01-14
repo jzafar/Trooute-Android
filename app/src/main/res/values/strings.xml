@@ -231,4 +231,6 @@
     <string name="update_password">Update Password</string>
     <string name="current_password_here">Type your current password here</string>
     <string name="current_password">Current Password</string>
+    <string name="tc_link"> <a href="">Terms &amp; Conditions</a></string>
+
 </resources>
