@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Patterns
 import android.widget.AutoCompleteTextView
 import android.widget.CheckBox
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.internal.ViewUtils.showKeyboard
 import com.google.android.material.textfield.TextInputEditText
@@ -38,6 +39,11 @@ fun Context.isTermsCheckBoxClicked(field: CheckBox): Boolean {
         Toast(this).showWarningMessage(this, "Please accept terms and conditions")
         return false
     }
+}
+
+fun Context.messageBoxIsEmpty(field: TextView): Boolean {
+    var value = field.text.trim()
+    return value.isEmpty()
 }
 
 fun Context.isDropdownValid(

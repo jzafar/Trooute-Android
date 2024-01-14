@@ -16,6 +16,7 @@ import com.example.trooute.databinding.RvInboxItemBinding
 import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.utils.Utils.convertTimeStampToDate
 import com.example.trooute.presentation.utils.ValueChecker.checkStringValue
+import com.example.trooute.presentation.utils.loadProfileImage
 
 class InboxAdapter(
     private val adapterItemClickListener: AdapterItemClickListener
@@ -54,6 +55,7 @@ class InboxAdapter(
                         tvLastMessage.context,
                         item.lastMessage.toString()
                     )
+                    loadProfileImage(userImage, item.user?.photo.toString())
                 }
             }
         }

@@ -31,6 +31,7 @@ import com.example.trooute.presentation.adapters.ChatAdapter
 import com.example.trooute.presentation.utils.Utils.getCurrentTimestamp
 import com.example.trooute.presentation.utils.ValueChecker.checkStringValue
 import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
+import com.example.trooute.presentation.utils.messageBoxIsEmpty
 import com.example.trooute.presentation.utils.setRVVertical
 import com.example.trooute.presentation.viewmodel.chatviewmodel.MessageViewModel
 import com.example.trooute.presentation.viewmodel.notification.PushNotificationViewModel
@@ -117,31 +118,32 @@ class MessageActivity : AppCompatActivity() {
             bindGetAllMessageObserver()
 
             imgSendMessage.setOnClickListener {
-                messageViewModel.sendMessage(
-                    currentUser = Users(
-                        _id = authModelInfo?._id.toString(),
-                        name = authModelInfo?.name.toString(),
-                        photo = authModelInfo?.photo.toString(),
-                        seen = true
-                    ),
-                    inbox = Inbox(
-                        user = Users(
-                            _id = messageReceiverInfo?._id.toString(),
-                            name = messageReceiverInfo?.name.toString(),
-                            photo = messageReceiverInfo?.photo.toString(),
-                            seen = false
+                if (!messageBoxIsEmpty(etMessage)) {
+                    messageViewModel.sendMessage(
+                        currentUser = Users(
+                            _id = authModelInfo?._id.toString(),
+                            name = authModelInfo?.name.toString(),
+                            photo = authModelInfo?.photo.toString(),
+                            seen = true
                         ),
-                        lastMessage = etMessage.text.toString(),
-                        timestamp = getCurrentTimestamp()
-                    ),
-                    message = Message(
-                        senderId = authModelInfo?._id.toString(),
-                        message = etMessage.text.toString(),
-                        timestamp = getCurrentTimestamp()
+                        inbox = Inbox(
+                            user = Users(
+                                _id = messageReceiverInfo?._id.toString(),
+                                name = messageReceiverInfo?.name.toString(),
+                                photo = messageReceiverInfo?.photo.toString(),
+                                seen = false
+                            ),
+                            lastMessage = etMessage.text.toString(),
+                            timestamp = getCurrentTimestamp()
+                        ),
+                        message = Message(
+                            senderId = authModelInfo?._id.toString(),
+                            message = etMessage.text.toString(),
+                            timestamp = getCurrentTimestamp()
+                        )
                     )
-                )
-
-                isMessageSend = true
+                    isMessageSend = true
+                }
             }
 
             bindMessageObserver()
