@@ -388,6 +388,9 @@ class BookingDetailActivity : AppCompatActivity() {
                     includeApprovedLayout.mcApprovedBooking.isVisible = false
                     includeConfirmedLayout.mcConfirmedBooking.isVisible = true
                     includeCompletedLayout.mcCompletedBooking.isVisible = false
+                    includeUserDetailLayout.apply {
+                        ltCallInboxSection.isVisible = true
+                    }
 
                     includeConfirmedLayout.apply {
                         tvStatus.text = checkStringValue(
@@ -708,7 +711,8 @@ class BookingDetailActivity : AppCompatActivity() {
                 tvTotalReviews.text = "(${
                     checkLongValue(bookingData.trip?.driver?.reviewsStats?.totalReviews)
                 })"
-                ltCallInboxSection.isVisible = true
+//                ltCallInboxSection.isVisible = true
+
 
                 messageIcon.setOnClickListener {
                     bookingData.trip?.driver?.let {

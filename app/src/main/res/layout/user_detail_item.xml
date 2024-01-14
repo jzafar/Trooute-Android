@@ -95,7 +95,7 @@
                     android:layout_height="match_parent"
                     android:gravity="end|bottom"
                     android:orientation="horizontal"
-                    android:visibility="visible"
+                    android:visibility="invisible"
                     app:divider="@drawable/divider_sub_section_space"
                     app:showDividers="middle">
 

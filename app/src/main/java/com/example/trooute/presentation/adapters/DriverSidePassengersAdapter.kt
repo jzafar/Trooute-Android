@@ -50,7 +50,13 @@ class DriverSidePassengersAdapter(
                             checkLongValue(item.user?.reviewsStats?.totalReviews)
                         })"
 
-                        ltCallInboxSection.isVisible = true
+                        if(currentItem.status.equals(ltCallInboxSection.context.getString(R.string.confirmed))) {
+                            ltCallInboxSection.isVisible = true
+                        } else {
+                            ltCallInboxSection.isVisible = false
+                        }
+
+
 
                         messageIcon.setOnClickListener {
                             startMessaging.invoke(item.user)
