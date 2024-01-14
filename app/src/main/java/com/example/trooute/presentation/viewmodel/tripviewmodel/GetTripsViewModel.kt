@@ -19,7 +19,7 @@ class GetTripsViewModel @Inject constructor(
     val getTripsState: StateFlow<Resource<GetTripsResponse>> get() = _getTripsState
 
     fun getTrips(
-        fromLatitude: Double, fromLongitude: Double
+        fromLatitude: Double?, fromLongitude: Double?
     ) {
         viewModelScope.launch {
             _getTripsState.emit(Resource.LOADING)
