@@ -134,6 +134,10 @@ dependencies {
     // For Kotlin users also import the Kotlin extensions library for Play In-App Review:
     implementation("com.google.android.play:review-ktx:2.0.1")
 
+    // Phone number validation
+    //https://github.com/ibrahimsn98/PhoneNumberKit
+    implementation ("com.github.ibrahimsn98:PhoneNumberKit:2.0.6")
+
 }
 
 // Allow references to generated code
