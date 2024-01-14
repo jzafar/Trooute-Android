@@ -80,7 +80,7 @@ class YourProfileActivity : AppCompatActivity(), PickiTCallbacks {
             sharedPreferenceManager.getAuthModelFromPref()?.let {user ->
                 loadProfileImage(imgUserProfile, user.photo.toString())
                 teFullName.setText(user.name.toString())
-                tePhoneNumber.setText(user.phoneNumber.toString())
+                tePhoneNumber.setInternationalPhoneNumber(user.phoneNumber.toString())
             }
 
             btnUpdate.setOnClickListener {

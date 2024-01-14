@@ -135,8 +135,9 @@ dependencies {
     implementation("com.google.android.play:review-ktx:2.0.1")
 
     // Phone number validation
-    //https://github.com/ibrahimsn98/PhoneNumberKit
-    implementation ("com.github.ibrahimsn98:PhoneNumberKit:2.0.6")
+    //https://github.com/tfcporciuncula/phonemoji
+    implementation ("com.fredporciuncula:phonemoji:1.5.2")
+    implementation ("com.googlecode.libphonenumber:libphonenumber:8.13.5")
 
 }
 

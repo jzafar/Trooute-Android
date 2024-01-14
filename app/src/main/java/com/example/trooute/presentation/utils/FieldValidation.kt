@@ -7,8 +7,10 @@ import android.widget.AutoCompleteTextView
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
+import com.fredporciuncula.phonemoji.PhonemojiTextInputEditText
 import com.google.android.material.internal.ViewUtils.showKeyboard
 import com.google.android.material.textfield.TextInputEditText
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 
 fun Context.isImageAdded(image: Boolean, message: String): Boolean {
     return if (!image) {
@@ -90,21 +92,36 @@ fun Context.isEmailValid(email: TextInputEditText): Boolean {
 }
 
 @SuppressLint("RestrictedApi")
-fun Context.isPhoneNumberValid(phone: TextInputEditText): Boolean {
+fun Context.isPhoneNumberValid(phone: PhonemojiTextInputEditText): Boolean {
     val phoneNumber = phone.text.toString()
-    return if (phoneNumber.isBlank() || phoneNumber.isEmpty() || phoneNumber.trim() == "") {
+    val phoneUtil = PhoneNumberUtil.getInstance()
+    val country = PhoneNumberUtil.getCountryMobileToken(phone.initialCountryCode)
+    val swissNumberPrototype = phoneUtil.parse(phoneNumber, country)
+    val isValid = phoneUtil.isValidNumber(swissNumberPrototype)
+    if (!isValid) {
         phone.requestFocus()
         showKeyboard(phone)
-        Toast(this).showWarningMessage(this, "Phone number can't be blank")
-        false
-    } else if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
-        phone.requestFocus()
-        showKeyboard(phone)
-        Toast(this).showErrorMessage(this, "Phone number is not valid")
-        false
+        Toast(this).showWarningMessage(this, "Phone number is not correct")
+        return false
     } else {
-        true
+        return true
     }
+
+//    return if (phoneNumber.isBlank() || phoneNumber.isEmpty() || phoneNumber.trim() == "") {
+//        phone.requestFocus()
+//        showKeyboard(phone)
+//        Toast(this).showWarningMessage(this, "Phone number can't be blank")
+//        false
+//    } else {
+//
+//        val country = PhoneNumberUtil.getCountryMobileToken(phone.initialCountryCode)
+//        phone.requestFocus()
+//        showKeyboard(phone)
+//        Toast(this).showErrorMessage(this, "Phone number is not valid")
+//        false
+//    } else {
+//        true
+//    }
 }
 
 @SuppressLint("RestrictedApi")
