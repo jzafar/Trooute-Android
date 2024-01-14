@@ -2,6 +2,7 @@ package com.example.trooute.presentation.ui.booking
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -64,7 +65,8 @@ class BookingsFragment : Fragment(), AdapterItemClickListener {
         bookingsAdapter = BookingsAdapter(
             this@BookingsFragment,
             sharedPreferenceManager,
-            ::startMessaging
+            ::startMessaging,
+            ::startCall
         )
 
         binding.apply {
@@ -158,6 +160,13 @@ class BookingsFragment : Fragment(), AdapterItemClickListener {
                 }
             )
         }
+    }
+
+    private fun startCall(user: User?) {
+        val uri = "tel:" + user?.phoneNumber
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.setData(Uri.parse(uri))
+        startActivity(intent)
     }
 
     private fun startMessaging(user: User?) {

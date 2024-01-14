@@ -25,7 +25,8 @@ import com.example.trooute.presentation.utils.loadProfileImage
 
 class DriverSidePassengersAdapter(
     private val sharedPreferenceManager: SharedPreferenceManager,
-    private val startMessaging: (User?) -> Unit
+    private val startMessaging: (User?) -> Unit,
+    private val startCall: (User?) -> Unit
 ) : ListAdapter<Booking, DriverSidePassengersAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: RvDriverSidePassengersItemBinding) :
@@ -56,10 +57,12 @@ class DriverSidePassengersAdapter(
                             ltCallInboxSection.isVisible = false
                         }
 
-
-
                         messageIcon.setOnClickListener {
                             startMessaging.invoke(item.user)
+                        }
+
+                        callIcon.setOnClickListener {
+                            startCall.invoke(item.user)
                         }
                     }
 
