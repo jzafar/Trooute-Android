@@ -266,10 +266,10 @@ class SettingsFragment : Fragment() {
                     Log.e(TAG, "bindTopicObserver: isLogout -> $isLogout")
 
                     if (isLogout) {
-                        Toast(requireContext()).showSuccessMessage(
-                            requireContext(),
-                            "Logout successfully!"
-                        )
+//                        Toast(requireContext()).showSuccessMessage(
+//                            requireContext(),
+//                            "Logout successfully!"
+//                        )
 
                         sharedPreferenceManager.saveAuthIdInPref(null)
                         sharedPreferenceManager.saveAuthTokenInPref(null)

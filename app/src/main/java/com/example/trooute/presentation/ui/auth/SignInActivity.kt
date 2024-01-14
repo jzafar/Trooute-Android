@@ -114,10 +114,10 @@ class SignInActivity : AppCompatActivity() {
                     }
 
                     is Resource.SUCCESS -> {
-                        Toast(this@SignInActivity).showSuccessMessage(
-                            this@SignInActivity,
-                            it.data.message.toString()
-                        )
+//                        Toast(this@SignInActivity).showSuccessMessage(
+//                            this@SignInActivity,
+//                            it.data.message.toString()
+//                        )
 
                         sharedPreferenceManager.saveAuthTokenInPref(it.data.token.toString())
 
@@ -150,9 +150,11 @@ class SignInActivity : AppCompatActivity() {
             when (it) {
                 is Resource.ERROR -> {
                     Log.e(TAG, "bindSubscribeTopicObserver: Error -> ${it.message}")
+                    loader.cancel()
                 }
 
                 Resource.LOADING -> {
+                    loader.show()
                     Log.e(TAG, "bindSubscribeTopicObserver: Loading...")
                 }
 
@@ -165,9 +167,11 @@ class SignInActivity : AppCompatActivity() {
                             MainActivity::class.java
                         )
                     )
+                    loader.cancel()
                 }
             }
         }.launchIn(lifecycleScope)
+
     }
 
     @SuppressLint("RestrictedApi")
