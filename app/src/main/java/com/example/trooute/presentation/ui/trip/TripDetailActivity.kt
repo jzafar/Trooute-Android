@@ -502,13 +502,20 @@ class TripDetailActivity : AppCompatActivity() {
                 )
 
                 val intent = Intent()
-                if (tripsData.isAddedInWishList) {
-                    imgHeart.isVisible = false
-                    imgRedHeart.isVisible = true
+                if (sharedPreferenceManager.driverMode()) {
+                        imgHeart.isVisible = false
+                        imgRedHeart.isVisible = false
                 } else {
-                    imgHeart.isVisible = true
-                    imgRedHeart.isVisible = false
+                    if (tripsData.isAddedInWishList) {
+                        imgHeart.isVisible = false
+                        imgRedHeart.isVisible = true
+                    } else {
+                        imgHeart.isVisible = true
+                        imgRedHeart.isVisible = false
+                    }
                 }
+
+
 
                 imgHeart.setOnClickListener {
                     imgHeart.isVisible = false
