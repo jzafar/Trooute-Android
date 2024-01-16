@@ -182,4 +182,5 @@
     <string name="modifications_title">4. Modifications</string>
     <string name="modifications_desc">Trooute se réserve le droit de modifier ces conditions à tout moment et sans préavis. En continuant à utiliser l &amp;apos;Application après modifications, les utilisateurs acceptent les conditions mises à jour.</string>
     <string name="update_password">Mettre à jour le mot de passe</string>
+    <string name="distanceRange">"Distance with in "</string>
 </resources>

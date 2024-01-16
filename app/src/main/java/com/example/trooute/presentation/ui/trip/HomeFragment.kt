@@ -54,16 +54,16 @@ import com.example.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishLis
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.slider.RangeSlider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
-import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener, DatePickerDialog.OnDateSetListener {
@@ -143,9 +143,10 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
                     val month = calendar.get(Calendar.MONTH)
                     val year = calendar.get(Calendar.YEAR)
                     val datePickerDialog =
-                        DatePickerDialog(requireActivity(),
+                        DatePickerDialog(requireActivity(), R.style.DatePickerTheme,
                             this@HomeFragment as OnDateSetListener?, year, month,day)
                     datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+                    datePickerDialog.getWindow()?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
                     datePickerDialog.show()
                 }
                 removeBtn.setOnClickListener {
@@ -230,6 +231,18 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
 
             locationManager.getLocation { loc ->
                 callGetTripsApi(loc)
+            }
+
+            this.includeTripDestinationLayout.fromSlider.addOnChangeListener { slider, value, fromUser ->
+                slider.setLabelFormatter { value -> //It is just an example
+                    String.format(Locale.US, "%.0f km", value)
+                }
+            }
+
+            this.includeTripDestinationLayout.whereSlider.addOnChangeListener { slider, value, fromUser ->
+                slider.setLabelFormatter { value -> //It is just an example
+                    String.format(Locale.US, "%.0f km", value)
+                }
             }
         }
     }

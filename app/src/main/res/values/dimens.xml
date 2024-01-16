@@ -35,10 +35,11 @@
     <dimen name="default_rounded_radius">@dimen/_12sdp</dimen>
     <dimen name="box_rounded_radius">@dimen/_6sdp</dimen>
 
-    <dimen name="field_height">@dimen/_50sdp</dimen>
+    <dimen name="field_height">@dimen/_40sdp</dimen>
     <dimen name="multiline_field_height">@dimen/_120sdp</dimen>
     <dimen name="field_start_margin">@dimen/_5sdp</dimen>
 
     <dimen name="toast_msg_line_width">@dimen/_5sdp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="counterBtnRadius">@dimen/_25sdp</dimen>
 </resources>
