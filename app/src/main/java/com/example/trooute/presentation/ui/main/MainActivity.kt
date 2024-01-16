@@ -113,6 +113,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    override fun onBackPressed() {
+        var current = binding.vpMainMenu.currentItem
+        if (current > 0) {
+            current--
+            if (current == 2){
+                val currentItem = binding.bnvMainMenu.menu.findItem(R.id.bookingsFragment)
+                currentItem.isChecked = true
+            } else if (current == 1) {
+                val currentItem = binding.bnvMainMenu.menu.findItem(R.id.inboxFragment)
+                currentItem.isChecked = true
+            } else if (current == 0) {
+                val currentItem = binding.bnvMainMenu.menu.findItem(R.id.homeFragment)
+                currentItem.isChecked = true
+            }
+
+            binding.vpMainMenu.setCurrentItem(current, true)
+
+        }
+    }
 
     private fun setupAppBar(
         isAppBarVisible: Boolean,
