@@ -71,8 +71,9 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnCancelBookingDriverSide"
                         style="@style/SecondaryRoundedButton"
-                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:maxLines="1"
                         android:text="@string/cancel_booking" />
 
@@ -85,12 +86,14 @@
                     android:orientation="horizontal"
                     app:divider="@drawable/divider_section_space"
                     app:showDividers="middle"
+                    android:weightSum="2"
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnCancelBooking"
                         style="@style/SecondaryRoundedButton"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:autoSizeTextType="uniform"
                         android:maxLines="1"
                         android:layout_weight="1"
@@ -99,11 +102,11 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnMakePayment"
                         style="@style/PrimaryRoundedButton"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:autoSizeTextType="uniform"
                         android:maxLines="1"
-                        android:layout_alignParentEnd="true"
                         android:text="@string/make_payment" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
