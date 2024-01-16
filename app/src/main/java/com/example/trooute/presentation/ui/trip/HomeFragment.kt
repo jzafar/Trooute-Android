@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -27,6 +28,7 @@ import com.example.trooute.core.interceptor.SessionUtils
 import com.example.trooute.core.util.Constants.INTENT_IS_TRIP_WISH_LISTED
 import com.example.trooute.core.util.Constants.PLACES_DESTINATION_LAT_LNG
 import com.example.trooute.core.util.Constants.PLACES_START_LAT_LNG
+import com.example.trooute.core.util.Constants.SEARCH_TRIPS_DATA
 import com.example.trooute.core.util.Constants.TRIP_ID
 import com.example.trooute.core.util.Constants.TROOUTE_TOPIC
 import com.example.trooute.core.util.Constants.WISH_LIST_CHECKER_CODE
@@ -46,6 +48,7 @@ import com.example.trooute.presentation.utils.isFieldValid
 import com.example.trooute.presentation.utils.loadProfileImage
 import com.example.trooute.presentation.utils.setRVVertical
 import com.example.trooute.presentation.viewmodel.notification.PushNotificationViewModel
+import com.example.trooute.presentation.viewmodel.tripviewmodel.GetSearchedTripsViewModel
 import com.example.trooute.presentation.viewmodel.tripviewmodel.GetTripsViewModel
 import com.example.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishListViewModel
 import com.faltenreich.skeletonlayout.Skeleton
@@ -83,7 +86,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
     private val getTripsViewModel: GetTripsViewModel by viewModels()
     private val pushNotificationViewModel: PushNotificationViewModel by viewModels()
     private val addToWishListViewModel: AddToWishListViewModel by viewModels()
-
+    private val getSearchedTripsViewModel: GetSearchedTripsViewModel by viewModels()
     @Inject
     lateinit var loader: Loader
 
@@ -177,15 +180,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
                             "Destination location"
                         )
                     ) {
-                        startActivity(
-                            Intent(requireContext(), SearchForTripsActivity::class.java).apply {
-                                putExtra(PLACES_START_LAT_LNG, placesStartLocationLatLng)
-                                putExtra(
-                                    PLACES_DESTINATION_LAT_LNG,
-                                    placesDestinationLocationLatLng
-                                )
-                            }
-                        )
+                        callSearchUserTripApi()
                     }
                 }
             }
@@ -387,4 +382,73 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
         }
     }
 
+    private fun callSearchUserTripApi() {
+        placesStartLocationLatLng?.latitude?.let { startLat ->
+            placesStartLocationLatLng?.longitude?.let { startLong ->
+                placesDestinationLocationLatLng?.latitude?.let { destLat ->
+                    placesDestinationLocationLatLng?.longitude?.let { destLong ->
+                        getSearchedTripsViewModel.getSearchedTrips(
+                            fromLatitude = startLat,
+                            fromLongitude = startLong,
+                            whereToLatitude = destLat,
+                            whereToLongitude = destLong
+                        )
+                    }
+                }
+            }
+        }
+        bindSearchUserTripsObserver()
+    }
+
+    private fun bindSearchUserTripsObserver() {
+        var pushedToNextView = false
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                getSearchedTripsViewModel.getTripsState.collect {
+                    loader.cancel()
+                    when (it) {
+                        is Resource.ERROR -> {
+                            Toast.makeText(
+                                context,
+                                it.message.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            Log.e(TAG, "bindSearchUserTripsObserver: Error -> " + it.message.toString())
+                        }
+
+                        Resource.LOADING -> {
+                            loader.show()
+                        }
+
+                        is Resource.SUCCESS -> {
+                            Log.e(TAG, "bindSearchUserTripsObserver: Success -> " + it.data)
+                            if (it.data.data?.isEmpty() == true) {
+                                Toast.makeText(
+                                    context,
+                                    "No trip found",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
+//                                binding.rvTrips.isVisible = true
+//                                binding.tvNoTripsAvailable.isVisible = false
+//                                tripsAdapter.submitList(it.data.data)
+
+                                if (!pushedToNextView) {
+                                    pushedToNextView = true
+                                    startActivity(
+                                        Intent(requireContext(), SearchForTripsActivity::class.java).apply {
+//                                         val arrayData = it.data.data?.toArr
+//                                        putExtra(SEARCH_TRIPS_DATA, arrayData)
+                                            putParcelableArrayListExtra(SEARCH_TRIPS_DATA, ArrayList(it.data.data))
+                                        }
+                                    )
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
