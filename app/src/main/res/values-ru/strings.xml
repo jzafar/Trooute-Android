@@ -182,4 +182,5 @@
     <string name="modifications_title">4. Модификации</string>
     <string name="modifications_desc">Trooute оставляет за собой право изменять эти условия в любое время без предварительного уведомления. Продолжая использовать Приложение после внесения изменений, пользователи принимают обновленные условия.</string>
     <string name="update_password">Обновить пароль</string>
+    <string name="distanceRange">"Distance with in "</string>
 </resources>
