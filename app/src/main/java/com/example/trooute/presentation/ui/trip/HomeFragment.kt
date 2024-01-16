@@ -1,14 +1,20 @@
 package com.example.trooute.presentation.ui.trip
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -49,10 +55,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener {
+class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener, DatePickerDialog.OnDateSetListener {
 
     private val TAG = "HomeFragment"
     private var placesStartLocationLatLng: LatLng? = null
@@ -123,6 +134,38 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
                     isStartLocationRequired = false
                     googlePlacesManager.launchGooglePlaces()
                 }
+                chooseDate.setOnClickListener {
+                    val calendar: Calendar = Calendar.getInstance()
+                    val day = calendar.get(Calendar.DAY_OF_MONTH)
+                    val month = calendar.get(Calendar.MONTH)
+                    val year = calendar.get(Calendar.YEAR)
+                    val datePickerDialog =
+                        DatePickerDialog(requireActivity(),
+                            this@HomeFragment as OnDateSetListener?, year, month,day)
+                    datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+                    datePickerDialog.show()
+                }
+                removeBtn.setOnClickListener {
+                    var current = itemQuanEt.text.toString().toInt()
+                    if (current > 1) {
+                        current--
+                        itemQuanEt.setText(current.toString())
+                    }
+                }
+                addBtn.setOnClickListener {
+                    var current = itemQuanEt.text.toString().toInt()
+                    if (current < 365) {
+                        current++
+                        itemQuanEt.setText(current.toString())
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Flexible days can't be greater than 365",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                }
                 btnSeekOutTrips.setOnClickListener {
                     if (
                         requireActivity().isFieldValid(
@@ -158,6 +201,17 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month)
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        val simpleDateFormat = SimpleDateFormat("dd MMMM yyyy")
+        val dateTime = simpleDateFormat.format(calendar.time)
+
+        binding.includeTripDestinationLayout.chooseDate.setText(dateTime)
+    }
     override fun onResume() {
         super.onResume()
         binding.apply {
