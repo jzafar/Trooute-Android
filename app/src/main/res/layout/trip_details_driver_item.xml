@@ -154,7 +154,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/tvLanguageRestrictionType"
                             style="@style/TextInputEditTextStyle"
-                            android:hint="Type"
+                            android:hint="E.g Suit case"
                             android:inputType="text|textCapWords" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -259,6 +259,44 @@
                 app:divider="@drawable/divider_section_space"
                 app:showDividers="middle">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_secondary_athens_gray_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/sub_section_space">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Pets Preference" />
+
+                    <Switch
+                        android:id="@+id/switchPetsPreference"
+                        style="@style/SwitchTheme"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:text="whether pets are allowed or not during the trip"
+                    android:textColor="@color/secondary_cadet_blue_color" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -278,7 +316,7 @@
                             android:id="@+id/tvLanguagePreference"
                             style="@style/HeadLine_6"
                             android:layout_width="wrap_content"
-                            android:text="Language Preference" />
+                            android:text="Language Preference " />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/Body_6"
@@ -288,6 +326,7 @@
                             android:autoSizeTextType="uniform"
                             android:maxLines="1"
                             android:text="@string/per_person"
+                            android:visibility="gone"
                             android:textColor="@color/secondary_cadet_blue_color" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -301,14 +340,19 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <com.google.android.material.textfield.TextInputLayout style="@style/DropDownStyle">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_weight="1">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/actLanguage"
-                        style="@style/CustomAutoCompleteTextView"
-                        android:hint="Language" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tlvLanguagePreference"
+                        style="@style/TextInputEditTextStyle"
+                        android:hint="E.g German"
+                        android:enabled="false"
+                        android:inputType="text|textCapWords" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -11,6 +11,7 @@ data class CreateTripRequest(
     val note: String?,
     val pricePerPerson: Double?,
     val smokingPreference: Boolean,
+    val petsPreference: Boolean,
     val roundTrip: Boolean,
     val status: String?,
     val totalSeats: Long?,

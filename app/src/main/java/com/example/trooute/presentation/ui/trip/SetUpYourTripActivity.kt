@@ -2,8 +2,10 @@ package com.example.trooute.presentation.ui.trip
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.MotionEvent
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
@@ -30,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.internal.ViewUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,9 +44,7 @@ class SetUpYourTripActivity : AppCompatActivity() {
     private var departureTime: String = ""
     private var roundTrip = false
     private var smokingPreference: Boolean = false
-    private var languagePreference: String? = null
-    private val languageArrayList = ArrayList<String>()
-
+    private var petsPreference: Boolean = false
     private var placesStartLocationLatLng: LatLng? = null
     private var placesStartLocationAddress: String? = null
     private var placesDestinationLocationLatLng: LatLng? = null
@@ -95,6 +96,8 @@ class SetUpYourTripActivity : AppCompatActivity() {
             }
 
             includeDestinationAndSchedule.apply {
+                calendarView.minDate = Date().time
+//                calendarView.layout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
                 etStartingLocation.setOnClickListener {
                     isStartLocationRequired = true
                     googlePlacesManager.launchGooglePlaces()
@@ -154,7 +157,17 @@ class SetUpYourTripActivity : AppCompatActivity() {
                     smokingPreference = isChecked
                 }
 
-                setUpLanguageLanguage(actLanguage)
+                switchPetsPreference.setOnCheckedChangeListener { buttonView, isChecked ->
+                    petsPreference = isChecked
+                }
+                switchLanguagePreference.setOnCheckedChangeListener{ buttonView, isChecked ->
+                    if (isChecked) {
+                        tlvLanguagePreference.isEnabled = true
+                    } else {
+                        tlvLanguagePreference.isEnabled = false
+                        tlvLanguagePreference.setText("")
+                    }
+                }
 
                 btnPostTrip.setOnClickListener {
                     Log.e(TAG, "onCreate: departureDate -> $departureDate")
@@ -183,6 +196,11 @@ class SetUpYourTripActivity : AppCompatActivity() {
                     ) {
                         Log.e(TAG, "onCreate: departureDate -> $departureDate")
                         Log.e(TAG, "onCreate: departureTime -> $departureTime")
+                        var languagePreference: String? = null
+                        if (binding.includeTripDetailsDriverItemLayout.switchLanguagePreference.isChecked) {
+                            var language = binding.includeTripDetailsDriverItemLayout.tlvLanguagePreference.text
+                            languagePreference = language.toString()
+                        }
                         createTripViewModel.createTrip(
                             CreateTripRequest(
                                 departureDate = "$departureDate, $departureTime",
@@ -191,6 +209,7 @@ class SetUpYourTripActivity : AppCompatActivity() {
                                     placesStartLocationLatLng?.latitude,
                                     placesStartLocationLatLng?.longitude
                                 ),
+
                                 languagePreference = languagePreference,
                                 luggageRestrictions = LanguageRestriction(
                                     text = tvLanguageRestrictionType.text.toString(),
@@ -199,6 +218,7 @@ class SetUpYourTripActivity : AppCompatActivity() {
                                 note = etNote.text.toString(),
                                 pricePerPerson = etPrice.text.toString().toDouble(),
                                 smokingPreference = smokingPreference,
+                                petsPreference = petsPreference,
                                 roundTrip = roundTrip,
                                 status = "",
                                 totalSeats = totalSeats,
@@ -248,33 +268,6 @@ class SetUpYourTripActivity : AppCompatActivity() {
                             "bindCreateTripObserver: Success -> " + it.data.message.toString()
                         )
                     }
-                }
-            }
-        }
-    }
-
-    private fun setUpLanguageLanguage(
-        actLanguagePreference: AutoCompleteTextView
-    ) {
-        languageArrayList.add("Arabic")
-        languageArrayList.add("Urdu")
-        languageArrayList.add("English")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, languageArrayList)
-
-        binding.includeTripDetailsDriverItemLayout.switchLanguagePreference.setOnCheckedChangeListener { buttonView, isChecked ->
-            actLanguagePreference.apply {
-                if (isChecked) {
-                    setAdapter(adapter) // Set the adapter (assuming 'adapter' is your ArrayAdapter)
-                    isFocusable = true // Enable focus
-                    isFocusableInTouchMode = true // Enable touch interaction
-
-                    setOnItemClickListener { parent, view, position, id ->
-                        languagePreference = parent.getItemAtPosition(position).toString()
-                    }
-                } else {
-                    setAdapter(null) // Remove the adapter
-                    isFocusable = false // Disable focus
-                    isFocusableInTouchMode = false // Disable touch interaction
                 }
             }
         }

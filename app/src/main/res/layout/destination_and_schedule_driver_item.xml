@@ -131,6 +131,7 @@
 
                 <CalendarView
                     android:id="@+id/calendarView"
+                    style="@style/DatePickerTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -162,6 +163,7 @@
                             android:enabled="false"
                             android:focusable="false"
                             android:hint="@string/time"
+                            android:visibility="gone"
                             android:inputType="time" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,9 +171,9 @@
                         android:id="@+id/tvTime"
                         style="@style/HeadLine_6"
                         android:layout_width="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentEnd="false"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/section_space"
+                        android:layout_marginStart="@dimen/section_space"
                         android:background="@drawable/secondary_rounded_box"
                         android:paddingHorizontal="@dimen/default_space"
                         android:paddingVertical="@dimen/default_screen_vertical_space"
