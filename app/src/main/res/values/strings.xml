@@ -233,7 +233,7 @@
     <string name="current_password">Current Password</string>
     <string name="flexible">My dates are flexible</string>
     <string name="choose_date">Choose Date</string>
-    <string name="tc_link"> <a href="">Terms &amp; Conditions</a></string>
+    <string name="tc_link"> Agree to <a href="">Terms &amp; Conditions</a></string>
     <string name="max_passengers_allowed">Maximum number of passgeners allowed is %1$s</string>
     <string name="distanceRange">"Distance with in (Kms)"</string>
 
