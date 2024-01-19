@@ -3,6 +3,7 @@ package com.example.trooute.presentation.ui.setting
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.Constants.TROOUTE_TOPIC
 import com.example.trooute.core.util.Resource
 import com.example.trooute.core.util.SharedPreferenceManager
@@ -181,21 +183,25 @@ class SettingsFragment : Fragment() {
             }
 
             termsAndConditions.setOnClickListener {
-                startActivity(
-                    Intent(
-                        requireContext(),
-                        TermsAndConditionsActivity::class.java
-                    ).putExtra("ToolBarTitle", termsAndConditions.text.toString())
-                )
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TERMS_CONDITIONS))
+                startActivity(browserIntent)
+//                startActivity(
+//                    Intent(
+//                        requireContext(),
+//                        TermsAndConditionsActivity::class.java
+//                    ).putExtra("ToolBarTitle", termsAndConditions.text.toString())
+//                )
             }
 
             privacyPolicy.setOnClickListener {
-                startActivity(
-                    Intent(
-                        requireContext(),
-                        PrivacyPolicyActivity::class.java
-                    ).putExtra("ToolBarTitle", privacyPolicy.text.toString())
-                )
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.PRIVACY_POLICY))
+                startActivity(browserIntent)
+//                startActivity(
+//                    Intent(
+//                        requireContext(),
+//                        PrivacyPolicyActivity::class.java
+//                    ).putExtra("ToolBarTitle", privacyPolicy.text.toString())
+//                )
             }
 
             tvReportProblem.setOnClickListener {

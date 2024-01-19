@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.Constants.EMAIL
 import com.example.trooute.core.util.Resource
 import com.example.trooute.core.util.UploadMultipart.imgRequestBody
@@ -88,7 +89,7 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
             }
 
             termsAndCondition.setOnClickListener {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TERMS_CONDITIONS))
                 startActivity(browserIntent)
             }
 

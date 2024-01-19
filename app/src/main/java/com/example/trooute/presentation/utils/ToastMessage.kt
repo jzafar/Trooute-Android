@@ -21,7 +21,7 @@ fun Toast.showSuccessMessage(
     // Use the application extension function
     this.apply {
         // Set the gravity of the toast
-        setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 0)
+        setGravity(Gravity.BOTTOM or Gravity.FILL_HORIZONTAL, 0, 0)
         // Set the duration of the toast
         duration = Toast.LENGTH_SHORT
         // Set the view of the toast to the custom layout
@@ -44,7 +44,7 @@ fun Toast.showWarningMessage(
     // Use the application extension function
     this.apply {
         // Set the gravity of the toast
-        setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 0)
+        setGravity(Gravity.BOTTOM or Gravity.FILL_HORIZONTAL, 0, 0)
         // Set the duration of the toast
         duration = Toast.LENGTH_SHORT
         // Set the view of the toast to the custom layout
@@ -67,9 +67,9 @@ fun Toast.showErrorMessage(
     // Use the application extension function
     this.apply {
         // Set the gravity of the toast
-        setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 0)
+        setGravity(Gravity.BOTTOM or Gravity.FILL_HORIZONTAL, 0, 0)
         // Set the duration of the toast
-        duration = Toast.LENGTH_SHORT
+        duration = Toast.LENGTH_LONG
         // Set the view of the toast to the custom layout
         view = toastBinding.root
         // Show the toast
