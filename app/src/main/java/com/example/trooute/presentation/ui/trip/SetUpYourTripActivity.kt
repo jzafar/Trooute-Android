@@ -3,6 +3,7 @@ package com.example.trooute.presentation.ui.trip
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -148,6 +149,23 @@ class SetUpYourTripActivity : AppCompatActivity() {
                     }
 
                 }
+
+                val currencyTextWatcher = object : TextWatcher {
+                    override fun afterTextChanged(editable: Editable?) {
+                        when {
+                            editable.isNullOrEmpty() -> return
+                            Regex("\\$\\d+").matches(editable.toString()) -> return
+                            editable.toString() == "€ " -> editable.clear()
+                            editable.startsWith("€ ").not() -> editable.insert(0, "€ ")
+                        }
+                    }
+
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+                }
+
+                etPrice.addTextChangedListener(currencyTextWatcher);
 
                 switchRoundTrip.setOnCheckedChangeListener { buttonView, isChecked ->
                     roundTrip = isChecked

@@ -117,7 +117,8 @@
                         android:id="@+id/etPrice"
                         style="@style/TextInputEditTextStyle"
                         android:hint="Price"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:digits="€ 1234567890"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
