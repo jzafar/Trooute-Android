@@ -34,6 +34,15 @@ fun Context.isFieldValid(field: TextInputEditText, message: String): Boolean {
     }
 }
 
+fun Context.isGenderSelected(gender: String, message: String): Boolean {
+    return if (gender.isBlank() || gender.isEmpty() || gender.trim() == "") {
+        Toast(this).showWarningMessage(this, "$message")
+        false
+    } else {
+        true
+    }
+}
+
 fun Context.isTermsCheckBoxClicked(field: CheckBox): Boolean {
     if (field.isChecked) {
         return true

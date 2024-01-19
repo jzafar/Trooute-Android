@@ -154,7 +154,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/tvLanguageRestrictionType"
                             style="@style/TextInputEditTextStyle"
-                            android:hint="E.g Suit case"
+                            android:hint="E.g Suitcase, Hand carry"
                             android:inputType="text|textCapWords" />
 
                     </com.google.android.material.textfield.TextInputLayout>

@@ -10,112 +10,145 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/ltRoot"
         style="@style/ElevatedCardViewStyle">
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingHorizontal="@dimen/default_screen_horizontal_space"
-            android:paddingVertical="@dimen/default_screen_vertical_space"
-            app:divider="@drawable/divider_section_space"
-            app:showDividers="middle">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgUserProfile"
-                style="@style/CircleProfileImageStyle"
-                android:layout_width="@dimen/_75sdp"
-                android:layout_height="@dimen/_75sdp"
-                app:srcCompat="@drawable/profile_place_holder" />
+            android:paddingVertical="@dimen/default_screen_vertical_space">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgUserProfile"
+                    style="@style/CircleProfileImageStyle"
+                    android:layout_width="@dimen/_75sdp"
+                    android:layout_height="@dimen/_75sdp"
+                    app:srcCompat="@drawable/profile_place_holder" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:divider="@drawable/divider_section_space"
-                    app:showDividers="middle">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvUserName"
-                        style="@style/HeadLine_6"
-                        android:layout_width="wrap_content"
-                        android:drawableEnd="@drawable/ic_verified_done"
-                        android:maxLines="1"
-                        tools:text="Sheraz Ahmad" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         app:divider="@drawable/divider_section_space"
                         app:showDividers="middle">
 
-                        <androidx.appcompat.widget.LinearLayoutCompat
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvUserName"
+                            style="@style/HeadLine_6"
                             android:layout_width="wrap_content"
+                            android:drawableEnd="@drawable/ic_verified_done"
+                            android:maxLines="1"
+                            tools:text="Sheraz Ahmad" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            app:divider="@drawable/divider_sub_section_space"
-                            app:showDividers="middle"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            app:divider="@drawable/divider_section_space"
+                            app:showDividers="middle">
 
-                            <androidx.appcompat.widget.AppCompatRatingBar
-                                style="@style/RatingBarTheme"
-                                android:isIndicator="true"
-                                android:layout_marginStart="@dimen/rating_bar_start_space"
-                                android:numStars="1"
-                                android:rating="1" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvAvgRating"
-                                style="@style/HeadLine_6"
+                            <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0" />
+                                android:gravity="center"
+                                app:divider="@drawable/divider_sub_section_space"
+                                app:showDividers="middle"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatRatingBar
+                                    style="@style/RatingBarTheme"
+                                    android:isIndicator="true"
+                                    android:layout_marginStart="@dimen/rating_bar_start_space"
+                                    android:numStars="1"
+                                    android:rating="1" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvAvgRating"
+                                    style="@style/HeadLine_6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTotalReviews"
+                                style="@style/HeadLine_6"
+                                android:layout_width="wrap_content"
+                                android:text="(0)"
+                                android:textColor="@color/secondary_cadet_blue_color" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvTotalReviews"
-                            style="@style/HeadLine_6"
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ltCallInboxSection"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="end|bottom"
+                        android:orientation="horizontal"
+                        android:visibility="invisible"
+                        app:divider="@drawable/divider_sub_section_space"
+                        app:showDividers="middle">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/messageIcon"
                             android:layout_width="wrap_content"
-                            android:text="(0)"
-                            android:textColor="@color/secondary_cadet_blue_color" />
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_open_inbox" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/callIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_call" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/ltCallInboxSection"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="end|bottom"
-                    android:orientation="horizontal"
-                    android:visibility="invisible"
-                    app:divider="@drawable/divider_sub_section_space"
-                    app:showDividers="middle">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/messageIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_open_inbox" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/callIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_call" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <include
+                android:id="@+id/includeUserDetailDivider"
+                layout="@layout/divider_item"
+                android:visibility="gone"
+                />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/driverReviewSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDriverReviewsTitle"
+                    style="@style/HeadLine_6"
+                    android:text="@string/reviews"
+                    android:drawableEnd="@drawable/ic_arrow_down"/>
+
+                <include
+                    android:id="@+id/includeReviewItem"
+                    layout="@layout/reviews_item"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </com.google.android.material.card.MaterialCardView>
 </layout>

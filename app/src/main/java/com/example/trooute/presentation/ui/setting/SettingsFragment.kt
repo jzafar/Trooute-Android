@@ -109,10 +109,6 @@ class SettingsFragment : Fragment() {
                 tvCreateNewTrip.setOnClickListener {
                     startActivity(Intent(requireContext(), SetUpYourTripActivity::class.java))
                 }
-
-                tvTripHistory.setOnClickListener {
-                    startActivity(Intent(requireContext(), TripsHistoryActivity::class.java))
-                }
             } else {
                 ltBecomeADriver.setOnClickListener {
                     startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
@@ -127,6 +123,9 @@ class SettingsFragment : Fragment() {
                 }
             }
 
+            tvTripHistory.setOnClickListener {
+                startActivity(Intent(requireContext(), TripsHistoryActivity::class.java))
+            }
             tvYourProfile.setOnClickListener {
                 startActivity(
                     Intent(
@@ -293,12 +292,12 @@ class SettingsFragment : Fragment() {
                 includeVehicleInfoLayout.vehicleInfoRoot.isVisible = true
                 tvWishlist.isVisible = false
                 tvCreateNewTrip.isVisible = true
-                tvTripHistory.isVisible = true
+//                tvTripHistory.isVisible = true
             } else {
                 includeVehicleInfoLayout.vehicleInfoRoot.isVisible = false
                 tvWishlist.isVisible = true
                 tvCreateNewTrip.isVisible = false
-                tvTripHistory.isVisible = false
+//                tvTripHistory.isVisible = false
             }
         }
     }

@@ -106,6 +106,52 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/HeadLine_7"
+                        android:text="@string/gender" />
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            style="@style/RadioButtonLayoutStyle"
+                            android:weightSum="2"
+                            >
+                            <RadioButton
+                                android:id="@+id/male"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/male"
+                                android:layout_weight="1"
+                                android:onClick="onClickRadioButton"/>
+
+                            <RadioButton
+                                android:id="@+id/female"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/female"
+                                android:layout_weight="1"
+                                android:onClick="onClickRadioButton"/>
+
+                        </RadioGroup>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_7"
                         android:text="@string/phone_number" />
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -204,7 +250,7 @@
 
                     <TextView
                         android:id="@+id/terms_and_condition"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/tc_link"
                         android:textSize="16sp"/>

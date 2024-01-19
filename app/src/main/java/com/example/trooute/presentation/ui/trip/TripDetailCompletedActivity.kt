@@ -84,6 +84,11 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                 adapter = tripDetailCompletedAdapter
             }
 
+            includeDriverDetails.apply {
+                driverReviewSection.isVisible = true
+                includeUserDetailDivider.root.isVisible = true
+            }
+
             getTripDetails()
         }
     }
@@ -174,23 +179,28 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                     this@TripDetailCompletedActivity, R.string.completed
                 )
 
+                var tripId = tripID.uppercase()
+                if (tripsData.trip != null) {
+                        tripId = tripsData.trip?._id?.uppercase() ?: tripID.uppercase()
+                }
+
                 tvBookingId.text = "Trip # ${
                     checkStringValue(
                         this@TripDetailCompletedActivity,
-                        getSubString(tripsData.trip?._id)
+                        tripId
                     )
                 }"
 
                 formatDateTime(
                     this@TripDetailCompletedActivity,
                     tvDepartureDate,
-                    tripsData.trip?.departureDate
+                    tripsData?.departureDate
                 )
 
                 ltNxSeats.isVisible = false
                 ltPlatformFee.isVisible = false
                 includeDivider.divider.isVisible = false
-                tvTotalPrice.text = checkPriceValue(tripsData.trip?.totalAmount)
+                tvTotalPrice.text = checkPriceValue(tripsData.totalAmount)
                 tvTotalPrice.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
             }
 
@@ -207,84 +217,89 @@ class TripDetailCompletedActivity : AppCompatActivity() {
             }
 
             // Driver details
-            includeDriverDetails.apply {
-                tripsData.trip?.driver.let { driver ->
-                    loadProfileImage(imgUserProfile, driver?.photo)
-                    tvUserName.text = checkStringValue(
-                        this@TripDetailCompletedActivity,
-                        driver?.name
-                    )
-                    tvAvgRating.text = checkFloatValue(driver?.reviewsStats?.avgRating)
-                    tvTotalReviews.text = "(${checkLongValue(driver?.reviewsStats?.totalReviews)})"
+            if (sharedPreferenceManager.driverMode()) {
+                driverCarInfoLayout.isVisible = false
+            } else {
+                includeDriverDetails.apply {
+                    tripsData?.driver.let { driver ->
+                        loadProfileImage(imgUserProfile, driver?.photo)
+                        tvUserName.text = checkStringValue(
+                            this@TripDetailCompletedActivity,
+                            driver?.name
+                        )
+                        tvAvgRating.text = checkFloatValue(driver?.reviewsStats?.avgRating)
+                        tvTotalReviews.text = "(${checkLongValue(driver?.reviewsStats?.totalReviews)})"
 
-                    includeCarDetails.apply {
-                        driver?.carDetails.let { carDetails ->
-                            loadImage(imgVehicleProfile, carDetails?.photo)
-                            tvVehicleModel.text = checkStringValue(
-                                this@TripDetailCompletedActivity,
-                                carDetails?.model
-                            )
-                            tvVehicleYear.text = checkLongValue(carDetails?.year)
-                            tvVehicleColor.text = checkStringValue(
-                                this@TripDetailCompletedActivity,
-                                carDetails?.color
-                            )
-                            tvVehicleAvgRating.text = checkFloatValue(
-                                carDetails?.reviewsStats?.avgRating
-                            )
-                            tvVehicleTotalReviews.text = "(${
-                                checkLongValue(carDetails?.reviewsStats?.totalReviews)
-                            })"
-                            tvVehicleRegistrationNumber.text = checkStringValue(
-                                this@TripDetailCompletedActivity,
-                                carDetails?.registrationNumber
-                            )
+                        includeCarDetails.apply {
+                            driver?.carDetails.let { carDetails ->
+                                loadImage(imgVehicleProfile, carDetails?.photo)
+                                tvVehicleModel.text = checkStringValue(
+                                    this@TripDetailCompletedActivity,
+                                    carDetails?.model
+                                )
+                                tvVehicleYear.text = checkLongValue(carDetails?.year)
+                                tvVehicleColor.text = checkStringValue(
+                                    this@TripDetailCompletedActivity,
+                                    carDetails?.color
+                                )
+                                tvVehicleAvgRating.text = checkFloatValue(
+                                    carDetails?.reviewsStats?.avgRating
+                                )
+                                tvVehicleTotalReviews.text = "(${
+                                    checkLongValue(carDetails?.reviewsStats?.totalReviews)
+                                })"
+                                tvVehicleRegistrationNumber.text = checkStringValue(
+                                    this@TripDetailCompletedActivity,
+                                    carDetails?.registrationNumber
+                                )
+                            }
                         }
                     }
-                }
 
-                ltCallInboxSection.isVisible = false
+                    ltCallInboxSection.isVisible = false
+                }
             }
+
 
             // Destination and Schedule Details
             includeDestinationAndScheduleLayout.apply {
                 includeTripRouteLayout.apply {
                     tvAddressFrom.text = checkStringValue(
                         this@TripDetailCompletedActivity,
-                        tripsData.trip?.from_address
+                        tripsData?.from_address
                     )
                     formatDateTime(
                         this@TripDetailCompletedActivity,
                         tvDepartureDate,
-                        tripsData.trip?.departureDate
+                        tripsData?.departureDate
                     )
                     tvAddressWhereto.text = checkStringValue(
                         this@TripDetailCompletedActivity,
-                        tripsData.trip?.whereTo_address
+                        tripsData?.whereTo_address
                     )
                 }
 
-                tvPricePerPerson.text = checkPriceValue(tripsData.trip?.pricePerPerson)
+                tvPricePerPerson.text = checkPriceValue(tripsData?.pricePerPerson)
             }
 
             // Trips details
             includeTripDetailLayout.apply {
                 tvTypeValue.text = checkStringValue(
                     this@TripDetailCompletedActivity,
-                    tripsData.trip?.luggageRestrictions?.text
+                    tripsData?.luggageRestrictions?.text
                 )
 
                 tvWeightValue.text = "${
-                    checkLongValue(tripsData.trip?.luggageRestrictions?.weight)
+                    checkLongValue(tripsData?.luggageRestrictions?.weight)
                 }$WEIGHT_SIGN"
 
-                if (tripsData.trip?.roundTrip == true) {
+                if (tripsData?.roundTrip == true) {
                     tvRoundTripValue.text = "Yes"
                 } else {
                     tvRoundTripValue.text = "No"
                 }
 
-                if (tripsData.trip?.smokingPreference == true) {
+                if (tripsData?.smokingPreference == true) {
                     tvSmokingAllowedValue.text = "Yes"
                 } else {
                     tvSmokingAllowedValue.text = "No"
@@ -292,12 +307,12 @@ class TripDetailCompletedActivity : AppCompatActivity() {
 
                 tvLanguagePreferenceValue.text = checkStringValue(
                     this@TripDetailCompletedActivity,
-                    tripsData.trip?.languagePreference
+                    tripsData?.languagePreference
                 )
 
                 tvOtherRelevantDetailsValue.text = checkStringValue(
                     this@TripDetailCompletedActivity,
-                    tripsData.trip?.note
+                    tripsData?.note
                 )
             }
         }

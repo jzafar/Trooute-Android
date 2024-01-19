@@ -7,6 +7,9 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +26,7 @@ import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
 import com.example.trooute.presentation.utils.isConfirmPasswordValid
 import com.example.trooute.presentation.utils.isEmailValid
 import com.example.trooute.presentation.utils.isFieldValid
+import com.example.trooute.presentation.utils.isGenderSelected
 import com.example.trooute.presentation.utils.isPasswordValid
 import com.example.trooute.presentation.utils.isPhoneNumberValid
 import com.example.trooute.presentation.utils.isTermsCheckBoxClicked
@@ -51,7 +55,7 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
     private var profileImageFile: File? = null
     private var pickiT: PickiT? = null
     private var isImageAdded = false
-
+    private var gender: String = ""
     private val signUpViewModel: SignUpViewModel by viewModels()
 
     @Inject
@@ -87,11 +91,14 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
                 startActivity(browserIntent)
             }
+
+
             btnSignup.setOnClickListener {
 
                 if (
                     isFieldValid(teFullName, "Full name")
                     && isEmailValid(teEmailAddress)
+                    && isGenderSelected(gender, "Please select gender")
                     && isPhoneNumberValid(tePhoneNumber)
                     && isPasswordValid(true, tePassword)
                     && isConfirmPasswordValid(tePassword, teRetypePassword)
@@ -104,6 +111,7 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
                                 .addFormDataPart("email", teEmailAddress.text.toString())
                                 .addFormDataPart("password", tePassword.toString())
                                 .addFormDataPart("phoneNumber", tePhoneNumber.text.toString())
+                                .addFormDataPart("gender", gender)
                                 .addFormDataPart(
                                     "photo",
                                     profileImageFile?.name,
@@ -118,6 +126,7 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
                                 .addFormDataPart("email", teEmailAddress.text.toString())
                                 .addFormDataPart("password", tePassword.toString())
                                 .addFormDataPart("phoneNumber", tePhoneNumber.text.toString())
+                                .addFormDataPart("gender", gender)
                                 .build()
                         )
                     }
@@ -133,6 +142,20 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
         }
     }
 
+    fun onClickRadioButton(view: View){
+        if (view is RadioButton) {
+            when (view.id) {
+                R.id.male ->
+                    if (view.isChecked) {
+                        gender = "male"
+                    }
+                R.id.female ->
+                    if (view.isChecked) {
+                        gender = "female"
+                    }
+            }
+        }
+    }
     private fun bindSignUpObserver() {
         lifecycleScope.launch {
             signUpViewModel.signUpState.collect {

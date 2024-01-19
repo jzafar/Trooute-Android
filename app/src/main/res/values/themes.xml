@@ -251,6 +251,24 @@
         <!--        <item name="android:paddingBottom">@dimen/_3sdp</item>-->
     </style>
 
+    <!--  Radio button Style  -->
+    <style name="RadioButtonLayoutStyle" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/field_height</item>
+        <item name="android:background">@drawable/field_rounded_background</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="colorControlNormal">@color/primary_color</item>
+        <item name="colorControlActivated">@color/primary_color</item>
+        <item name="colorControlHighlight">@color/primary_color</item>
+        <item name="colorAccent">@color/primary_color</item>
+        <item name="android:textColorHint">@color/primary_color</item>
+        <!--        <item name="android:paddingStart">@dimen/_6sdp</item>-->
+        <!--        <item name="android:paddingEnd">@dimen/_6sdp</item>-->
+        <!--        <item name="android:paddingTop">@dimen/_3sdp</item>-->
+        <!--        <item name="android:paddingBottom">@dimen/_3sdp</item>-->
+    </style>
+
     <style name="TextInputEditTextStyle" parent="ThemeOverlay.MaterialComponents.TextInputEditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

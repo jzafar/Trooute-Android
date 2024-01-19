@@ -236,5 +236,8 @@
     <string name="tc_link"> <a href="">Terms &amp; Conditions</a></string>
     <string name="max_passengers_allowed">Maximum number of passgeners allowed is %1$s</string>
     <string name="distanceRange">"Distance with in (Kms)"</string>
+    <string name="gender">"Gender"</string>
+    <string name="male">"Male"</string>
+    <string name="female">"Female"</string>
 
 </resources>
