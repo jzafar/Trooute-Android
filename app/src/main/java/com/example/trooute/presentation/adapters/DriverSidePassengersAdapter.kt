@@ -23,6 +23,7 @@ import com.example.trooute.presentation.utils.ValueChecker.checkPriceValue
 import com.example.trooute.presentation.utils.ValueChecker.checkStringValue
 import com.example.trooute.presentation.utils.loadProfileImage
 
+
 class DriverSidePassengersAdapter(
     private val sharedPreferenceManager: SharedPreferenceManager,
     private val startMessaging: (User?) -> Unit,
@@ -51,11 +52,7 @@ class DriverSidePassengersAdapter(
                             checkLongValue(item.user?.reviewsStats?.totalReviews)
                         })"
 
-                        if(currentItem.status.equals(ltCallInboxSection.context.getString(R.string.confirmed))) {
-                            ltCallInboxSection.isVisible = true
-                        } else {
-                            ltCallInboxSection.isVisible = false
-                        }
+                        ltCallInboxSection.isVisible = currentItem.status.equals(ltCallInboxSection.context.getString(R.string.confirmed))
 
                         messageIcon.setOnClickListener {
                             startMessaging.invoke(item.user)
@@ -67,7 +64,7 @@ class DriverSidePassengersAdapter(
                     }
 
                     tvNxSeats.text = checkNumOfSeatsValue(item.numberOfSeats)
-                    tvNxSeatsPrice.text = checkPriceValue(item.amount)
+                    tvNxSeatsPrice.text = checkPriceValue(item.tripData?.pricePerPerson)
                     tvTotalPrice.text = checkPriceValue(item.amount)
                 }
             }
@@ -81,6 +78,10 @@ class DriverSidePassengersAdapter(
             parent,
             false
         )
+//        val params: ViewGroup.LayoutParams = binding.parentView.layoutParams
+//        params.width = (ViewGroup.LayoutParams.MATCH_PARENT * 0.6).toInt()
+//        params.height = binding.parentView.height
+//        binding.parentView.requestLayout()
         return ViewHolder(binding)
     }
 

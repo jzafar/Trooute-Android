@@ -20,5 +20,6 @@ data class Booking(
     val createdAt:String? = null?: "",
     val updatedAt:String? = null?: "",
     val trip: String? = null ?: "",
+    val tripData: Trip? = null,
     val user: User? = null
 ) : Parcelable

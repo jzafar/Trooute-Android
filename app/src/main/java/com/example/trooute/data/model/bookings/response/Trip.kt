@@ -14,6 +14,7 @@ data class Trip(
     val passengers: List<Passenger>? = null,
     val from_address: String? = null ?: "No address",
     val whereTo_address: String? = null ?: "No address",
+    val pricePerPerson: String? = null ?: "No price",
     val luggageRestrictions: LanguageRestriction? = null,
     val roundTrip: Boolean,
     val smokingPreference: Boolean,

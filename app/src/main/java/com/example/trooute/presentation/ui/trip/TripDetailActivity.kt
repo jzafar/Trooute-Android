@@ -134,6 +134,10 @@ class TripDetailActivity : AppCompatActivity() {
                     this.setRVHorizontal()
                     adapter = driverSidePassengersAdapter
                 }
+                tvMyDetailTitle.isVisible = false
+                includeUserDetailLayout.root.isVisible = false
+                includeVehicleInfoLayout.root.isVisible = false
+
             } else {
                 ltPassengersUserSide.isVisible = true
                 ltDriverSidePassengers.isVisible = false
@@ -228,44 +232,44 @@ class TripDetailActivity : AppCompatActivity() {
                 }
 
                 // My Details
-                tripsData.trip?.driver.let { driver ->
-                    includeUserDetailLayout.apply {
-                        ltCallInboxSection.isVisible = false
-                        loadProfileImage(imgUserProfile, driver?.photo)
-                        tvUserName.text = checkStringValue(this@TripDetailActivity, driver?.name)
-
-                        driver?.reviewsStats.let { review ->
-                            tvAvgRating.text = checkFloatValue(review?.avgRating)
-                            tvTotalReviews.text = "(${
-                                checkLongValue(review?.totalReviews)
-                            })"
-                        }
-
-                        driver?.carDetails.let { car ->
-                            includeVehicleInfoLayout.apply {
-                                loadImage(imgVehicleProfile, car?.photo)
-                                tvVehicleModel.text = checkStringValue(
-                                    this@TripDetailActivity, car?.model
-                                )
-                                tvVehicleYear.text = checkLongValue(car?.year)
-                                tvVehicleColor.text = checkStringValue(
-                                    this@TripDetailActivity, car?.color
-                                )
-
-                                car?.reviewsStats.let { review ->
-                                    tvVehicleAvgRating.text = checkFloatValue(review?.avgRating)
-                                    tvVehicleTotalReviews.text = "(${
-                                        checkLongValue(review?.totalReviews)
-                                    })"
-                                }
-
-                                tvVehicleRegistrationNumber.text = checkStringValue(
-                                    this@TripDetailActivity, car?.registrationNumber
-                                )
-                            }
-                        }
-                    }
-                }
+//                tripsData.trip?.driver.let { driver ->
+//                    includeUserDetailLayout.apply {
+//                        ltCallInboxSection.isVisible = false
+//                        loadProfileImage(imgUserProfile, driver?.photo)
+//                        tvUserName.text = checkStringValue(this@TripDetailActivity, driver?.name)
+//
+//                        driver?.reviewsStats.let { review ->
+//                            tvAvgRating.text = checkFloatValue(review?.avgRating)
+//                            tvTotalReviews.text = "(${
+//                                checkLongValue(review?.totalReviews)
+//                            })"
+//                        }
+//
+//                        driver?.carDetails.let { car ->
+//                            includeVehicleInfoLayout.apply {
+//                                loadImage(imgVehicleProfile, car?.photo)
+//                                tvVehicleModel.text = checkStringValue(
+//                                    this@TripDetailActivity, car?.model
+//                                )
+//                                tvVehicleYear.text = checkLongValue(car?.year)
+//                                tvVehicleColor.text = checkStringValue(
+//                                    this@TripDetailActivity, car?.color
+//                                )
+//
+//                                car?.reviewsStats.let { review ->
+//                                    tvVehicleAvgRating.text = checkFloatValue(review?.avgRating)
+//                                    tvVehicleTotalReviews.text = "(${
+//                                        checkLongValue(review?.totalReviews)
+//                                    })"
+//                                }
+//
+//                                tvVehicleRegistrationNumber.text = checkStringValue(
+//                                    this@TripDetailActivity, car?.registrationNumber
+//                                )
+//                            }
+//                        }
+//                    }
+//                }
 
                 tripsData.trip.let { trip ->
                     Log.e(TAG, "setupViews: trip -> $trip")

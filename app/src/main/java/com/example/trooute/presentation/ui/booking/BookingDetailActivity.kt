@@ -211,8 +211,13 @@ class BookingDetailActivity : AppCompatActivity() {
                             bookingData.trip?.departureDate.toString()
                         )
 
+                        val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
+                        val pricePerSeat = (bookingData.trip?.pricePerPerson?.toDouble() ?: 0.0) * bookingData.numberOfSeats!!
                         tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
-                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
+                        tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+
+//                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
+//                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
 
                         if (sharedPreferenceManager.driverMode()) {
                             ltPlatformFee.isVisible = false
@@ -250,7 +255,7 @@ class BookingDetailActivity : AppCompatActivity() {
                             ltCancelAccept.isVisible = false
 
                             tvTotalPrice.text = checkPriceValue(
-                                bookingData.amount?.plus(platFormFee)
+                                bookingData.amount
                             )
 
                             btnCancelBookingUserSide.setOnClickListener {
@@ -287,6 +292,9 @@ class BookingDetailActivity : AppCompatActivity() {
                         tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
 
                         val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
+                        val pricePerSeat = (bookingData.trip?.pricePerPerson?.toDouble() ?: 0.0) * bookingData.numberOfSeats!!
+                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
+                        tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
 
                         if (sharedPreferenceManager.driverMode()) {
                             ltPlatformFee.isVisible = false
@@ -295,7 +303,7 @@ class BookingDetailActivity : AppCompatActivity() {
                             ltPlatformFee.isVisible = true
                             tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
                             tvTotalPrice.text = checkPriceValue(
-                                bookingData.amount?.plus(platFormFee)
+                                pricePerSeat + platFormFee
                             )
                         }
                     }
@@ -325,10 +333,15 @@ class BookingDetailActivity : AppCompatActivity() {
                             bookingData.trip?.departureDate.toString()
                         )
 
-                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
-                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
-
                         val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
+                        val pricePerSeat = (bookingData.trip?.pricePerPerson?.toDouble() ?: 0.0) * bookingData.numberOfSeats!!
+                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
+                        tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+
+//                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
+//                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
+
+//                        val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
 
                         if (sharedPreferenceManager.driverMode()) {
                             ltDriverSideButton.isVisible = true
@@ -355,11 +368,7 @@ class BookingDetailActivity : AppCompatActivity() {
                             tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
 
                             tvTotalPrice.text = checkPriceValue(
-                                bookingData.amount?.plus(platFormFee)
-                            )
-
-                            tvTotalPrice.text = checkPriceValue(
-                                bookingData.amount?.plus(platFormFee)
+                                pricePerSeat + platFormFee
                             )
 
                             btnCancelBooking.setOnClickListener {
@@ -402,11 +411,12 @@ class BookingDetailActivity : AppCompatActivity() {
                             tvDepartureDate,
                             bookingData.trip?.departureDate.toString()
                         )
-
-                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
-                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
-
                         val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
+                        val pricePerSeat = (bookingData.trip?.pricePerPerson?.toDouble() ?: 0.0) * bookingData.numberOfSeats!!
+                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
+                        tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+
+
 
                         if (sharedPreferenceManager.driverMode()) {
                             ltPlatformFee.isVisible = false
@@ -424,7 +434,7 @@ class BookingDetailActivity : AppCompatActivity() {
                             ltPlatformFee.isVisible = true
                             tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
                             tvTotalPrice.text = checkPriceValue(
-                                bookingData.amount?.plus(platFormFee)
+                                bookingData.amount
                             )
 
                             btnCancelBooking.setOnClickListener {
@@ -457,10 +467,15 @@ class BookingDetailActivity : AppCompatActivity() {
                             bookingData.trip?.departureDate.toString()
                         )
 
-                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
-                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
-
                         val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
+                        val pricePerSeat = (bookingData.trip?.pricePerPerson?.toDouble() ?: 0.0) * bookingData.numberOfSeats!!
+                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
+                        tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+
+//                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
+//                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
+
+//                        val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
 
                         if (sharedPreferenceManager.driverMode()) {
                             ltPlatformFee.isVisible = false
@@ -469,7 +484,7 @@ class BookingDetailActivity : AppCompatActivity() {
                             ltPlatformFee.isVisible = true
                             tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
                             tvTotalPrice.text = checkPriceValue(
-                                bookingData.amount?.plus(platFormFee)
+                                platFormFee + pricePerSeat
                             )
                         }
                     }
