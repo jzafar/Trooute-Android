@@ -88,10 +88,14 @@ class BookingsAdapter(
 
                         ltNxSeats.isVisible = true
                         includeDivider.divider.isVisible = true
-
+                        val price = item.numberOfSeats!! * (item.trip?.pricePerPerson?.toLong() ?: 0)
                         tvNxSeats.text = checkNumOfSeatsValue(item.numberOfSeats)
-                        tvNxSeatsPrice.text = checkPriceValue(item.amount)
-                    } else {
+                        tvNxSeatsPrice.text = checkPriceValue(price.toDouble())
+
+                        tvPricePerPerson.text = checkPriceValue(item.trip?.pricePerPerson?.toDouble())
+                        tvPersonLabel.isVisible = true
+                    }
+                    else {
                         includeDriverSideUserInfoLayout.ltRoot.isVisible = false
                         includeUserInfoLayout.ltRoot.isVisible = true
                         includeUserInfoLayout.apply {
@@ -120,6 +124,9 @@ class BookingsAdapter(
 
                         ltNxSeats.isVisible = false
                         includeDivider.divider.isVisible = false
+
+                        tvPricePerPerson.text = checkPriceValue(item.amount)
+                        tvPersonLabel.isVisible = false
                     }
 
                     includeTripRouteLayout.apply {
@@ -137,9 +144,6 @@ class BookingsAdapter(
                             item.trip?.whereTo_address
                         )
                     }
-
-                    tvPricePerPerson.text = checkPriceValue(item.amount)
-                    tvPersonLabel.isVisible = false
                 }
             }
         }

@@ -161,13 +161,14 @@ class BookingDetailActivity : AppCompatActivity() {
                                         ltUserSidePassengers.isVisible = true
                                         ltUserSideDesignationSchedule.isVisible = true
                                         ltUserSideTripDetails.isVisible = true
-                                        ltDriverSidePickupLocation.isVisible = false
+                                        ltDriverSidePickupLocation.isVisible = true
                                     }
                                     setUpUserSideReviewViews(bookingData)
                                     setUpUserSideDriverDetailsViews(bookingData)
                                     setUpUserSidePassengersViews(bookingData)
                                     setUpUserSideDesignationAndScheduleViews(bookingData)
                                     setUpUserSideTripDetailsViews(bookingData)
+                                    setUpDriverSidePickupLocationViews(bookingData)
                                 }
                             }
 
@@ -216,16 +217,13 @@ class BookingDetailActivity : AppCompatActivity() {
                         tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
                         tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
 
-//                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
-//                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
-
                         if (sharedPreferenceManager.driverMode()) {
-                            ltPlatformFee.isVisible = false
+                            ltPlatformFee.isVisible = true
                             ltCancelUserSide.isVisible = false
                             ltCancelAccept.isVisible = true
-
+                            tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
                             tvTotalPrice.text = checkPriceValue(
-                                bookingData.amount
+                                pricePerSeat - platFormFee
                             )
 
                             btnCancelBooking.setOnClickListener {
@@ -270,6 +268,59 @@ class BookingDetailActivity : AppCompatActivity() {
                     }
                 }
 
+                getString(R.string.confirmed) -> {
+                    includeWaitingLayout.mcWaitingBooking.isVisible = false
+                    includeCancelledLayout.mcCancelledBooking.isVisible = false
+                    includeApprovedLayout.mcApprovedBooking.isVisible = false
+                    includeConfirmedLayout.mcConfirmedBooking.isVisible = true
+                    includeCompletedLayout.mcCompletedBooking.isVisible = false
+                    includeUserDetailLayout.apply {
+                        ltCallInboxSection.isVisible = true
+                    }
+
+                    includeConfirmedLayout.apply {
+                        tvStatus.text = checkStringValue(
+                            this@BookingDetailActivity, bookingData.status
+                        )
+                        tvBookingId.text = "Booking # ${getSubString(bookingData._id)}"
+                        formatDateTime(
+                            this@BookingDetailActivity,
+                            tvDepartureDate,
+                            bookingData.trip?.departureDate.toString()
+                        )
+                        val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
+                        val pricePerSeat = (bookingData.trip?.pricePerPerson?.toDouble() ?: 0.0) * bookingData.numberOfSeats!!
+                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
+                        tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+
+                        ltPlatformFee.isVisible = true
+                        tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
+
+                        if (sharedPreferenceManager.driverMode()) {
+                            tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
+                            btnCancelBooking.setOnClickListener {
+                                processBookingViewModel.cancelBooking(bookingId = bookingData._id.toString())
+                                bindProcessBookingObserver(
+                                    BOOKED_CANCELLED_TITLE,
+                                    BOOKED_CANCELLED_BODY,
+                                    bookingData.user?._id.toString()
+                                )
+                            }
+                        } else {
+                            tvTotalPrice.text = checkPriceValue(bookingData.amount)
+
+                            btnCancelBooking.setOnClickListener {
+                                processBookingViewModel.cancelBooking(bookingId = bookingData._id.toString())
+                                bindProcessBookingObserver(
+                                    BOOKED_CANCELLED_TITLE,
+                                    BOOKED_CANCELLED_BODY,
+                                    bookingData.trip?.driver?._id.toString()
+                                )
+                            }
+                        }
+                    }
+                }
+
                 getString(R.string.canceled) -> {
                     includeWaitingLayout.mcWaitingBooking.isVisible = false
                     includeCancelledLayout.mcCancelledBooking.isVisible = true
@@ -295,13 +346,12 @@ class BookingDetailActivity : AppCompatActivity() {
                         val pricePerSeat = (bookingData.trip?.pricePerPerson?.toDouble() ?: 0.0) * bookingData.numberOfSeats!!
                         tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
                         tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
-
+                        ltPlatformFee.isVisible = true
+                        tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
                         if (sharedPreferenceManager.driverMode()) {
-                            ltPlatformFee.isVisible = false
-                            tvTotalPrice.text = checkPriceValue(bookingData.amount)
+                            tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
                         } else {
-                            ltPlatformFee.isVisible = true
-                            tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
+
                             tvTotalPrice.text = checkPriceValue(
                                 pricePerSeat + platFormFee
                             )
@@ -338,17 +388,13 @@ class BookingDetailActivity : AppCompatActivity() {
                         tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
                         tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
 
-//                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
-//                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
-
-//                        val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
-
+                        ltPlatformFee.isVisible = true
+                        tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
                         if (sharedPreferenceManager.driverMode()) {
                             ltDriverSideButton.isVisible = true
                             ltUserSideButtons.isVisible = false
-                            ltPlatformFee.isVisible = false
 
-                            tvTotalPrice.text = checkPriceValue(bookingData.amount)
+                            tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
 
                             btnCancelBookingDriverSide.setOnClickListener {
                                 processBookingViewModel.cancelBooking(bookingId = bookingData._id.toString())
@@ -361,11 +407,6 @@ class BookingDetailActivity : AppCompatActivity() {
                         } else {
                             ltDriverSideButton.isVisible = false
                             ltUserSideButtons.isVisible = true
-                            ltPlatformFee.isVisible = true
-
-
-
-                            tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
 
                             tvTotalPrice.text = checkPriceValue(
                                 pricePerSeat + platFormFee
@@ -386,64 +427,6 @@ class BookingDetailActivity : AppCompatActivity() {
                                 Log.e(TAG, "setUpBookingDetailViews: driver id 2 -> " + sharedPreferenceManager.getMakePaymentUserIdFromPref())
                                 processBookingViewModel.confirmBooking(bookingId = bookingData._id.toString())
                                 bindProcessBookingObserver()
-                            }
-                        }
-                    }
-                }
-
-                getString(R.string.confirmed) -> {
-                    includeWaitingLayout.mcWaitingBooking.isVisible = false
-                    includeCancelledLayout.mcCancelledBooking.isVisible = false
-                    includeApprovedLayout.mcApprovedBooking.isVisible = false
-                    includeConfirmedLayout.mcConfirmedBooking.isVisible = true
-                    includeCompletedLayout.mcCompletedBooking.isVisible = false
-                    includeUserDetailLayout.apply {
-                        ltCallInboxSection.isVisible = true
-                    }
-
-                    includeConfirmedLayout.apply {
-                        tvStatus.text = checkStringValue(
-                            this@BookingDetailActivity, bookingData.status
-                        )
-                        tvBookingId.text = "Booking # ${getSubString(bookingData._id)}"
-                        formatDateTime(
-                            this@BookingDetailActivity,
-                            tvDepartureDate,
-                            bookingData.trip?.departureDate.toString()
-                        )
-                        val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
-                        val pricePerSeat = (bookingData.trip?.pricePerPerson?.toDouble() ?: 0.0) * bookingData.numberOfSeats!!
-                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
-                        tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
-
-
-
-                        if (sharedPreferenceManager.driverMode()) {
-                            ltPlatformFee.isVisible = false
-                            tvTotalPrice.text = checkPriceValue(bookingData.amount)
-
-                            btnCancelBooking.setOnClickListener {
-                                processBookingViewModel.cancelBooking(bookingId = bookingData._id.toString())
-                                bindProcessBookingObserver(
-                                    BOOKED_CANCELLED_TITLE,
-                                    BOOKED_CANCELLED_BODY,
-                                    bookingData.user?._id.toString()
-                                )
-                            }
-                        } else {
-                            ltPlatformFee.isVisible = true
-                            tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
-                            tvTotalPrice.text = checkPriceValue(
-                                bookingData.amount
-                            )
-
-                            btnCancelBooking.setOnClickListener {
-                                processBookingViewModel.cancelBooking(bookingId = bookingData._id.toString())
-                                bindProcessBookingObserver(
-                                    BOOKED_CANCELLED_TITLE,
-                                    BOOKED_CANCELLED_BODY,
-                                    bookingData.trip?.driver?._id.toString()
-                                )
                             }
                         }
                     }
@@ -472,17 +455,13 @@ class BookingDetailActivity : AppCompatActivity() {
                         tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
                         tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
 
-//                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
-//                        tvNxSeatsPrice.text = checkPriceValue(bookingData.amount)
-
-//                        val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
+                        ltPlatformFee.isVisible = true
+                        tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
 
                         if (sharedPreferenceManager.driverMode()) {
-                            ltPlatformFee.isVisible = false
-                            tvTotalPrice.text = checkPriceValue(bookingData.amount)
+                            tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
                         } else {
-                            ltPlatformFee.isVisible = true
-                            tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
+
                             tvTotalPrice.text = checkPriceValue(
                                 platFormFee + pricePerSeat
                             )
