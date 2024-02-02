@@ -14,6 +14,7 @@ object Constants {
     const val PLACES_DESTINATION_LAT_LNG = "Google places destination lat long"
     const val SEARCH_TRIPS_DATA = "searchTripsData"
     const val MAX_PASSENGERS = 10
+    const val USER_ID = "user_id"
 
     // Trip Status
     const val SCHEDULED = "Scheduled"

@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:id="@+id/userReviews"
                 android:paddingHorizontal="@dimen/default_screen_horizontal_space"
                 android:paddingVertical="@dimen/default_screen_vertical_space"
                 app:divider="@drawable/divider_section_space"

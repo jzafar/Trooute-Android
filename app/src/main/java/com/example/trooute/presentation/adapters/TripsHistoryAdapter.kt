@@ -39,7 +39,7 @@ class TripsHistoryAdapter(
                         } else {
                             tvNoPassengersAvailable.isVisible = false
                             rvPassengers.isVisible = true
-                            val passengersAdapter = PassengersPrimaryAdapter()
+                            val passengersAdapter = PassengersPrimaryAdapter(null)
                             rvPassengers.setRVOverlayHorizontal()
                             rvPassengers.adapter = passengersAdapter
                             passengersAdapter.submitList(item.passengers)

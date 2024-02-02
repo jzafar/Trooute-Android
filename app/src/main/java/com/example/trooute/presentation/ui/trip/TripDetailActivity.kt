@@ -17,6 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.Constants.BOOKED_CANCELLED_BODY
 import com.example.trooute.core.util.Constants.BOOKED_CANCELLED_TITLE
 import com.example.trooute.core.util.Constants.CANCELED
@@ -40,6 +41,7 @@ import com.example.trooute.core.util.Constants.WISH_LIST_CHECKER_CODE
 import com.example.trooute.core.util.Resource
 import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.chat.Users
+import com.example.trooute.data.model.common.Passenger
 import com.example.trooute.data.model.common.User
 import com.example.trooute.data.model.notification.NotificationRequest
 import com.example.trooute.data.model.trip.response.Booking
@@ -47,8 +49,10 @@ import com.example.trooute.data.model.trip.response.TripsData
 import com.example.trooute.databinding.ActivityTripDetailBinding
 import com.example.trooute.presentation.adapters.DriverSidePassengersAdapter
 import com.example.trooute.presentation.adapters.PassengersPrimaryAdapter
+import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.ui.booking.BookNowActivity
 import com.example.trooute.presentation.ui.chat.MessageActivity
+import com.example.trooute.presentation.ui.review.ReviewsActivity
 import com.example.trooute.presentation.utils.Loader
 import com.example.trooute.presentation.utils.Utils.formatDateTime
 import com.example.trooute.presentation.utils.ValueChecker.checkFloatValue
@@ -75,7 +79,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TripDetailActivity : AppCompatActivity() {
+class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
 
     private val TAG = "TripDetailActivity"
 
@@ -106,7 +110,7 @@ class TripDetailActivity : AppCompatActivity() {
         statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_trip_detail)
         tripID = intent.getStringExtra(TRIP_ID).toString()
-        passengersAdapter = PassengersPrimaryAdapter()
+        passengersAdapter = PassengersPrimaryAdapter(this)
         driverSidePassengersAdapter =
             DriverSidePassengersAdapter(sharedPreferenceManager, ::startMessaging, ::startCall)
 
@@ -696,5 +700,16 @@ class TripDetailActivity : AppCompatActivity() {
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         ViewUtils.hideKeyboard(binding.ltRoot)
         return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onAdapterItemClicked(position: Int, data: Any) {
+//        if (data is Passenger) {
+//            startActivity(
+//                Intent(this@BookingDetailActivity,
+//                    ReviewsActivity::class.java).apply {
+//                    putExtra(Constants.USER_ID, data._id)
+//                }
+//            )
+//        }
     }
 }
