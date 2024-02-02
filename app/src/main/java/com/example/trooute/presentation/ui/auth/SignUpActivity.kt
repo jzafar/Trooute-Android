@@ -33,6 +33,7 @@ import com.example.trooute.presentation.utils.isPhoneNumberValid
 import com.example.trooute.presentation.utils.isTermsCheckBoxClicked
 import com.example.trooute.presentation.utils.showErrorMessage
 import com.example.trooute.presentation.utils.showSuccessMessage
+import com.example.trooute.presentation.utils.trimAndRemoveDashes
 import com.example.trooute.presentation.viewmodel.authviewmodel.SignUpViewModel
 import com.google.android.material.internal.ViewUtils
 import com.hbisoft.pickit.PickiT
@@ -111,7 +112,7 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
                                 .addFormDataPart("name", teFullName.text.toString())
                                 .addFormDataPart("email", teEmailAddress.text.toString())
                                 .addFormDataPart("password", tePassword.toString())
-                                .addFormDataPart("phoneNumber", tePhoneNumber.text.toString())
+                                .addFormDataPart("phoneNumber", trimAndRemoveDashes(tePhoneNumber))
                                 .addFormDataPart("gender", gender)
                                 .addFormDataPart(
                                     "photo",
@@ -126,7 +127,7 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
                                 .addFormDataPart("name", teFullName.text.toString())
                                 .addFormDataPart("email", teEmailAddress.text.toString())
                                 .addFormDataPart("password", tePassword.toString())
-                                .addFormDataPart("phoneNumber", tePhoneNumber.text.toString())
+                                .addFormDataPart("phoneNumber", trimAndRemoveDashes(tePhoneNumber))
                                 .addFormDataPart("gender", gender)
                                 .build()
                         )

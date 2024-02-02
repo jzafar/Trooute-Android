@@ -21,5 +21,6 @@ data class User(
     val photo: String? = null,
     val updatedAt: String? = null,
     val reviewsStats: ReviewsStats? = null,
-    val carDetails: CarDetails? = null
+    val carDetails: CarDetails? = null,
+    val gender: String? = null
 ) : Parcelable

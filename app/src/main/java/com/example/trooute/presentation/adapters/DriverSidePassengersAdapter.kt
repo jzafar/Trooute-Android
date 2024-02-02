@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.common.User
 import com.example.trooute.data.model.trip.response.Booking
@@ -63,9 +64,13 @@ class DriverSidePassengersAdapter(
                         }
                     }
 
+                    val platFormFee = Constants.PLATFORM_FEE_PRICE * item.numberOfSeats!!
+                    val pricePerSeat = (item.tripData?.pricePerPerson?.toDouble() ?: 0.0) * item.numberOfSeats!!
+
+
                     tvNxSeats.text = checkNumOfSeatsValue(item.numberOfSeats)
-                    tvNxSeatsPrice.text = checkPriceValue(item.tripData?.pricePerPerson)
-                    tvTotalPrice.text = checkPriceValue(item.amount)
+                    tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+                    tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
                 }
             }
         }

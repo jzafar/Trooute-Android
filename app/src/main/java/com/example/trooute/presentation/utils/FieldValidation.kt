@@ -100,6 +100,12 @@ fun Context.isEmailValid(email: TextInputEditText): Boolean {
     }
 }
 
+fun Context.trimAndRemoveDashes(phoneNumber: PhonemojiTextInputEditText): String {
+    val phoneNumber = phoneNumber.text.toString().trim()
+    val removedWhiteSpaces = phoneNumber.filter { !it.isWhitespace() }
+    return removedWhiteSpaces.replace("-", "")
+}
+
 @SuppressLint("RestrictedApi")
 fun Context.isPhoneNumberValid(phone: PhonemojiTextInputEditText): Boolean {
     val phoneNumber = phone.text.toString()
