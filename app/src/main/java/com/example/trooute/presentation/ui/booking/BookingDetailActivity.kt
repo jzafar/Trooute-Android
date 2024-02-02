@@ -1,6 +1,7 @@
 package com.example.trooute.presentation.ui.booking
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -241,6 +243,15 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                             }
 
                             btnAccept.setOnClickListener {
+                                val numberOfRequestSeats = bookingData.numberOfSeats
+                                val remainingSeats = bookingData.trip?.availableSeats
+                                if (remainingSeats != null){
+                                    if (numberOfRequestSeats > remainingSeats) {
+                                        showNumberOfSeatsAlertDialog()
+                                        return@setOnClickListener
+                                    }
+                                }
+
                                 processBookingViewModel.approveBooking(bookingId = bookingData._id.toString())
                                 bindProcessBookingObserver(
                                     ACCEPT_BOOKING_TITLE,
@@ -477,6 +488,16 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
         }
     }
 
+    private fun showNumberOfSeatsAlertDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage("You can't accept this booking. Remaining available seats are less than from what you are accepting")
+            .setPositiveButton("OK") { _, _ ->
+
+            }
+            .create()
+            .show()
+    }
     private fun bindProcessBookingObserver(
         title: String? = null,
         body: String? = null,
