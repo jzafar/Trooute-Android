@@ -35,6 +35,7 @@ object URL {
 
     // REVIEW END POINT
     const val REVIEW_END_POINT = "/api/v1/review"
+    const val GET_REVIEW_END_POINT = "/api/v1/review"
 
     // DRIVER END POINT
     const val UPLOAD_DRIVER_END_POINT = "/api/v1/users/driver/upload-driver-details"

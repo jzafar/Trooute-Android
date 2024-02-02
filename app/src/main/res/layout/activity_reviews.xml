@@ -18,8 +18,12 @@
             layout="@layout/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/ltRoot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -215,6 +219,7 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+        </androidx.core.widget.NestedScrollView>
         </androidx.core.widget.NestedScrollView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
