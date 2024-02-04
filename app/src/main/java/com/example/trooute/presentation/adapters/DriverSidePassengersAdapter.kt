@@ -14,6 +14,7 @@ import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.common.User
 import com.example.trooute.data.model.trip.response.Booking
 import com.example.trooute.databinding.RvDriverSidePassengersItemBinding
+import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.utils.StatusChecker.checkStatus
 import com.example.trooute.presentation.utils.Utils.formatDateTime
 import com.example.trooute.presentation.utils.Utils.getSubString
@@ -26,6 +27,7 @@ import com.example.trooute.presentation.utils.loadProfileImage
 
 
 class DriverSidePassengersAdapter(
+    private val itemClickListener: AdapterItemClickListener,
     private val sharedPreferenceManager: SharedPreferenceManager,
     private val startMessaging: (User?) -> Unit,
     private val startCall: (User?) -> Unit
@@ -93,6 +95,9 @@ class DriverSidePassengersAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bindViews(currentItem)
+        holder.itemView.setOnClickListener {
+            itemClickListener?.onAdapterItemClicked(position = position, data = currentItem)
+        }
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Booking>() {

@@ -243,6 +243,11 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                             }
 
                             btnAccept.setOnClickListener {
+
+                                if (bookingData.trip?.driver?.stripeConnectedAccountId == null) {
+                                    showConnectStripeAccountAlert()
+                                    return@setOnClickListener
+                                }
                                 val numberOfRequestSeats = bookingData.numberOfSeats
                                 val remainingSeats = bookingData.trip?.availableSeats
                                 if (remainingSeats != null){
@@ -486,6 +491,17 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                 }
             }
         }
+    }
+
+    private fun showConnectStripeAccountAlert() {
+        AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage("You can't accept this booking. You must have to connect your stripe account to accept this booking. When we accepts you as driver, we have send you and email to connect your stripe account.")
+            .setPositiveButton("OK") { _, _ ->
+
+            }
+            .create()
+            .show()
     }
 
     private fun showNumberOfSeatsAlertDialog() {

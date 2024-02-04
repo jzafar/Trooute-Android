@@ -51,7 +51,9 @@ import com.example.trooute.presentation.adapters.DriverSidePassengersAdapter
 import com.example.trooute.presentation.adapters.PassengersPrimaryAdapter
 import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.ui.booking.BookNowActivity
+import com.example.trooute.presentation.ui.booking.BookingDetailActivity
 import com.example.trooute.presentation.ui.chat.MessageActivity
+import com.example.trooute.presentation.ui.main.MakePaymentActivity
 import com.example.trooute.presentation.ui.review.ReviewsActivity
 import com.example.trooute.presentation.utils.Loader
 import com.example.trooute.presentation.utils.Utils.formatDateTime
@@ -112,7 +114,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
         tripID = intent.getStringExtra(TRIP_ID).toString()
         passengersAdapter = PassengersPrimaryAdapter(this)
         driverSidePassengersAdapter =
-            DriverSidePassengersAdapter(sharedPreferenceManager, ::startMessaging, ::startCall)
+            DriverSidePassengersAdapter(this, sharedPreferenceManager, ::startMessaging, ::startCall)
 
         authModelInfo = sharedPreferenceManager.getAuthModelFromPref()
 
@@ -703,13 +705,14 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
     }
 
     override fun onAdapterItemClicked(position: Int, data: Any) {
-//        if (data is Passenger) {
-//            startActivity(
-//                Intent(this@BookingDetailActivity,
-//                    ReviewsActivity::class.java).apply {
-//                    putExtra(Constants.USER_ID, data._id)
-//                }
-//            )
-//        }
+        if (data is Booking) {
+            startActivity(
+                Intent(
+                    this,
+                    BookingDetailActivity::class.java
+                ).apply {
+                    putExtra(Constants.BOOKING_ID, data._id)
+                })
+        }
     }
 }
