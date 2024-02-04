@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
+import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.trip.response.Booking
 import com.example.trooute.databinding.RvTripDetailCompletedItemBinding
 import com.example.trooute.presentation.utils.Utils.formatDateTime
@@ -31,7 +33,8 @@ class TripDetailCompletedAdapter(
         comment: String,
         rating: Float,
         trip: String
-    ) -> Unit
+    ) -> Unit,
+    private val sharedPreferenceManager: SharedPreferenceManager
 ) : ListAdapter<Booking, TripDetailCompletedAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: RvTripDetailCompletedItemBinding) :
@@ -161,9 +164,19 @@ class TripDetailCompletedAdapter(
                         }
                     }
 
+                    val platFormFee = Constants.PLATFORM_FEE_PRICE * booking.numberOfSeats!!
+                    val pricePerSeat = (booking.tripData?.pricePerPerson?.toDouble() ?: 0.0) * booking.numberOfSeats!!
                     tvNxSeats.text = checkNumOfSeatsValue(booking.numberOfSeats)
-                    tvNxSeatsPrice.text = checkPriceValue(booking.amount)
-                    tvTotalPrice.text = checkPriceValue(booking.amount)
+                    tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+                    if (sharedPreferenceManager.driverMode()) {
+                        tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
+                    } else {
+                        tvTotalPrice.text = checkPriceValue(pricePerSeat + platFormFee)
+                    }
+
+//                    tvNxSeats.text = checkNumOfSeatsValue(booking.numberOfSeats)
+//                    tvNxSeatsPrice.text = checkPriceValue(booking.amount)
+
                 }
             }
         }

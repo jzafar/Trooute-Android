@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
+import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.trip.response.TripsData
 import com.example.trooute.databinding.RvTripHistoryItemBinding
 import com.example.trooute.presentation.interfaces.AdapterItemClickListener
@@ -21,7 +23,8 @@ import com.example.trooute.presentation.utils.setRVHorizontal
 import com.example.trooute.presentation.utils.setRVOverlayHorizontal
 
 class TripsHistoryAdapter(
-    private val adapterItemClickListener: AdapterItemClickListener? = null
+    private val adapterItemClickListener: AdapterItemClickListener? = null,
+    private val sharedPreferenceManager: SharedPreferenceManager
 ) : ListAdapter<TripsData, TripsHistoryAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: RvTripHistoryItemBinding) :
@@ -56,7 +59,17 @@ class TripsHistoryAdapter(
                             item.whereTo_address
                         )
                     }
+//                    val platFormFee = Constants.PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
 
+                    if (sharedPreferenceManager.driverMode()) {
+//                        tvTotalPrice.text = checkPriceValue(
+//                            pricePerSeat - platFormFee
+//                        )
+                    } else {
+//                        tvTotalPrice.text = checkPriceValue(
+//                            pricePerSeat - platFormFee
+//                        )
+                    }
                     tvPricePerPerson.text = checkPriceValue(item.pricePerPerson)
                     tvTotalPrice.text = checkPriceValue(item.totalAmount)
                 }

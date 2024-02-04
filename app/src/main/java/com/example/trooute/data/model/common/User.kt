@@ -9,5 +9,6 @@ data class User(
     val name: String? = null ?: "No name",
     val phoneNumber: String? = null ?: "No phone number",
     val photo: String? = null ?: "",
-    val reviewsStats: ReviewsStats? = null
+    val reviewsStats: ReviewsStats? = null,
+    val gender: String? = null
 ) : Parcelable

@@ -11,6 +11,6 @@ data class Reviews (
     val targetType: String? = null,
     val target: User? = null,
     val comment: String? = null,
-    val rating: Long? = null ?: 0
+    val rating: Double? = null
 ) : Parcelable
 

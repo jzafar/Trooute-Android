@@ -6,7 +6,7 @@ import com.example.trooute.domain.repository.TripsRepository
 import javax.inject.Inject
 
 class DriverTripsHistoryUseCase @Inject constructor(private val tripsRepository: TripsRepository) {
-    suspend operator fun invoke(status: String): Resource<GetTripsResponse> {
-        return tripsRepository.driverTripsHistory(status = status)
+    suspend operator fun invoke(): Resource<GetTripsResponse> {
+        return tripsRepository.tripsHistory()
     }
 }

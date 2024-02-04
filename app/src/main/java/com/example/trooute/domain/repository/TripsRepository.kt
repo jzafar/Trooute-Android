@@ -18,6 +18,6 @@ interface TripsRepository {
     ): Resource<GetTripsResponse>
 
     suspend fun getTripsDetails(tripId: String): Resource<GetTripDetailsResponse>
-    suspend fun driverTripsHistory(status: String): Resource<GetTripsResponse>
+    suspend fun tripsHistory(): Resource<GetTripsResponse>
     suspend fun updateTripStatus(tripId: String, status: String): Resource<BaseResponse>
 }

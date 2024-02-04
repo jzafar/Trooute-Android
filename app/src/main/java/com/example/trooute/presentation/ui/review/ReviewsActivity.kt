@@ -13,14 +13,18 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.trooute.R
 import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.Resource
+import com.example.trooute.data.model.review.response.Reviews
 import com.example.trooute.databinding.ActivityReviewsBinding
 import com.example.trooute.presentation.adapters.ReviewsAdapter
 import com.example.trooute.presentation.utils.Loader
+import com.example.trooute.presentation.utils.ValueChecker
 import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
+import com.example.trooute.presentation.utils.loadProfileImage
 import com.example.trooute.presentation.utils.setRVVertical
 import com.example.trooute.presentation.viewmodel.bookingviewmodel.GetBookingDetailsViewModel
 import com.example.trooute.presentation.viewmodel.reviewviewmodel.GetReviewsViewModel
 import com.faltenreich.skeletonlayout.Skeleton
+import com.faltenreich.skeletonlayout.applySkeleton
 import com.faltenreich.skeletonlayout.createSkeleton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,6 +38,7 @@ class ReviewsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReviewsBinding
     private val getReviewsViewModel: GetReviewsViewModel by viewModels()
     private lateinit var skeleton: Skeleton
+    private lateinit var rvSkeleton: Skeleton
     @Inject
     lateinit var loader: Loader
 
@@ -62,6 +67,9 @@ class ReviewsActivity : AppCompatActivity() {
             rvReviews.apply {
                 setRVVertical()
                 adapter = reviewsAdapter
+                rvSkeleton = this.applySkeleton(R.layout.rv_reviews_item)
+                rvSkeleton.showSkeleton()
+
             }
 
             getReviewsViewModel.getReviews(userId)
@@ -88,15 +96,46 @@ class ReviewsActivity : AppCompatActivity() {
                         }
 
                         is Resource.SUCCESS -> {
-                            Log.e(TAG, "bindGetReviewsObserver: Success -> " + it.data)
+                            Log.i(TAG, "bindGetReviewsObserver: Success -> " + it.data)
                             it.data.data?.let { reviewsData ->
+                                populateData(reviewsData)
                             }
-
+                            rvSkeleton.showOriginal()
                             skeleton.showOriginal()
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun populateData(reviewsData: List<Reviews>) {
+        val firstReview = reviewsData.first()
+        binding.includeUserDetail.apply {
+            loadProfileImage(imgUserProfile, firstReview.target?.photo.toString())
+            tvUserName.text = ValueChecker.checkStringValue(
+                this@ReviewsActivity, firstReview.target?.name
+            )
+            gender.text = ValueChecker.checkStringValue(
+                this@ReviewsActivity, firstReview.target?.gender
+            )
+            tvAvgRating.text =
+                ValueChecker.checkFloatValue(firstReview.target?.reviewsStats?.avgRating)
+            tvTotalReviews.text = "(${
+                ValueChecker.checkLongValue(
+                    firstReview.target?.reviewsStats?.totalReviews
+                )
+            })"
+
+            binding.tvMainAvgRating.text = ValueChecker.checkFloatValue(firstReview.target?.reviewsStats?.avgRating)
+            binding.totalNumberOfRating.text = "(${
+                ValueChecker.checkLongValue(
+                    firstReview.target?.reviewsStats?.totalReviews
+                )
+            })"
+
+
+            reviewsAdapter.submitList(reviewsData)
         }
     }
 }

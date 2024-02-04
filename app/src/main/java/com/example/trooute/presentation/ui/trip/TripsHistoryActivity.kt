@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.trooute.R
 import com.example.trooute.core.util.Constants.TRIP_ID
 import com.example.trooute.core.util.Resource
+import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.trip.response.TripsData
 import com.example.trooute.databinding.ActivityTripsHistoryBinding
 import com.example.trooute.presentation.adapters.TripsHistoryAdapter
@@ -26,6 +27,7 @@ import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TripsHistoryActivity : AppCompatActivity(), AdapterItemClickListener {
@@ -35,7 +37,9 @@ class TripsHistoryActivity : AppCompatActivity(), AdapterItemClickListener {
     private lateinit var binding: ActivityTripsHistoryBinding
     private lateinit var skeleton: Skeleton
     private lateinit var tripsHistoryAdapter: TripsHistoryAdapter
-
+    private var authModelInfo: com.example.trooute.data.model.auth.response.User? = null
+    @Inject
+    lateinit var sharedPreferenceManager: SharedPreferenceManager
     private val driverTripsHistoryViewModel: DriverTripsHistoryViewModel by viewModels()
 
     @SuppressLint("SetTextI18n")
@@ -43,7 +47,7 @@ class TripsHistoryActivity : AppCompatActivity(), AdapterItemClickListener {
         super.onCreate(savedInstanceState)
         statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_trips_history)
-
+        authModelInfo = sharedPreferenceManager.getAuthModelFromPref()
         binding.apply {
             includeAppBar.apply {
                 this.toolbarTitle.text = "Trips History"
@@ -56,13 +60,13 @@ class TripsHistoryActivity : AppCompatActivity(), AdapterItemClickListener {
 
             rvTripHistory.apply {
                 setRVVertical()
-                tripsHistoryAdapter = TripsHistoryAdapter(this@TripsHistoryActivity)
+                tripsHistoryAdapter = TripsHistoryAdapter(this@TripsHistoryActivity, sharedPreferenceManager)
                 adapter = tripsHistoryAdapter
                 skeleton = this.applySkeleton(R.layout.rv_trip_detail_completed_item)
                 skeleton.showSkeleton()
             }
 
-            driverTripsHistoryViewModel.driverTripsHistory("Completed")
+            driverTripsHistoryViewModel.tripsHistory()
             bindDriverTripsHistoryObserver()
         }
     }

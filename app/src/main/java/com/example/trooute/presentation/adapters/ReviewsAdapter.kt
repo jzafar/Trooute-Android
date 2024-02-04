@@ -1,5 +1,6 @@
 package com.example.trooute.presentation.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -7,15 +8,30 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trooute.R
-import com.example.trooute.data.model.auth.response.User
+import com.example.trooute.data.model.review.response.Reviews
 import com.example.trooute.databinding.RvReviewsItemBinding
+import com.example.trooute.presentation.utils.ValueChecker
+import com.example.trooute.presentation.utils.loadProfileImage
 
-class ReviewsAdapter : ListAdapter<User, ReviewsAdapter.ViewHolder>(DiffCallback()) {
+
+class ReviewsAdapter : ListAdapter<Reviews, ReviewsAdapter.ViewHolder>(DiffCallback()) {
     inner class ViewHolder(private val binding: RvReviewsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindViews(currentItem: User?) {
+        @SuppressLint("SetTextI18n", "RestrictedApi", "ResourceAsColor")
+        fun bindViews(currentItem: Reviews?) {
             currentItem?.let { item ->
-
+                binding.apply {
+                    loadProfileImage(userImage, item.target?.photo.toString())
+                    tvUserName.text = ValueChecker.checkStringValue(
+                        tvUserName.context, item.target?.name
+                    )
+                    tvAvgRating.text =
+                        ValueChecker.checkFloatValue(item.target?.reviewsStats?.avgRating)
+                    tvComment.text =
+                        ValueChecker.checkStringValue(
+                            tvComment.context, item.comment
+                        )
+                }
             }
         }
     }
@@ -33,15 +49,15 @@ class ReviewsAdapter : ListAdapter<User, ReviewsAdapter.ViewHolder>(DiffCallback
     }
 
     class DiffCallback :
-        DiffUtil.ItemCallback<User>() {
+        DiffUtil.ItemCallback<Reviews>() {
         override fun areItemsTheSame(
-            oldItem: User,
-            newItem: User
-        ) = oldItem.name == newItem.name
+            oldItem: Reviews,
+            newItem: Reviews
+        ) = oldItem._id == newItem._id
 
         override fun areContentsTheSame(
-            oldItem: User,
-            newItem: User
+            oldItem: Reviews,
+            newItem: Reviews
         ) = oldItem == newItem
     }
 }

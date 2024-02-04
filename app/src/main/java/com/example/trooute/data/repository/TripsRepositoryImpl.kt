@@ -61,10 +61,10 @@ class TripsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun driverTripsHistory(status: String): Resource<GetTripsResponse> {
+    override suspend fun tripsHistory(): Resource<GetTripsResponse> {
         return withContext(ioDispatcher) {
             safeApiCall {
-                tripsAPI.driverTripsHistory(status = status)
+                tripsAPI.tripsHistory()
             }
         }
     }
