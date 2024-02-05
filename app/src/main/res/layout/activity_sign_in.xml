@@ -23,7 +23,7 @@
             app:divider="@drawable/divider_default_space"
             app:showDividers="middle"
             tools:context=".presentation.ui.auth.SignInActivity"
-            tools:ignore="ScrollViewSize">
+            tools:ignore="ScrollViewSize"  >
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/HeadLine_1"
@@ -85,7 +85,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/enable_biometric_login"
-                app:buttonTint="@color/on_primary_green_color" />
+                app:buttonTint="@color/on_primary_green_color"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvForgotPassword"
@@ -115,7 +116,8 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/fingerprint"
                 android:id="@+id/biometricLoginButton"
-                android:tint="@color/on_primary_green_color" />
+                android:tint="@color/on_primary_green_color"
+                android:visibility="gone"/>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
