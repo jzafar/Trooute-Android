@@ -183,4 +183,6 @@
     <string name="modifications_desc">Trooute se réserve le droit de modifier ces conditions à tout moment et sans préavis. En continuant à utiliser l &amp;apos;Application après modifications, les utilisateurs acceptent les conditions mises à jour.</string>
     <string name="update_password">Mettre à jour le mot de passe</string>
     <string name="distanceRange">"Distance with in "</string>
+    <string name="authentication_error">Unable to autheticate</string>
+    <string name="enable_biometric_login">Enable Biometric Login</string>
 </resources>

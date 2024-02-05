@@ -5,15 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.trooute.R
-import com.example.trooute.core.util.Constants.TROOUTE_TOPIC
 import com.example.trooute.core.util.Constants.EMAIL
+import com.example.trooute.core.util.Constants.TROOUTE_TOPIC
 import com.example.trooute.core.util.Resource
 import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.auth.request.LoginRequest
@@ -24,7 +29,6 @@ import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
 import com.example.trooute.presentation.utils.isEmailValid
 import com.example.trooute.presentation.utils.isPasswordValid
 import com.example.trooute.presentation.utils.showErrorMessage
-import com.example.trooute.presentation.utils.showSuccessMessage
 import com.example.trooute.presentation.viewmodel.authviewmodel.LoginViewModel
 import com.example.trooute.presentation.viewmodel.notification.PushNotificationViewModel
 import com.google.android.material.internal.ViewUtils
@@ -32,14 +36,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.util.Base64
+import java.util.concurrent.Executor
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInActivity : AppCompatActivity() {
 
     private val TAG = "SignInActivity"
+    private var isBiometricSignIn = false
 
     private lateinit var binding: ActivitySignInBinding
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     private val loginViewModel: LoginViewModel by viewModels()
     private val pushNotificationViewModel: PushNotificationViewModel by viewModels()
@@ -54,6 +64,8 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in)
+        initializeBiometricsFlow()
+
 
         binding.apply {
             tvForgotPassword.setOnClickListener {
@@ -65,6 +77,8 @@ class SignInActivity : AppCompatActivity() {
                     isEmailValid(teEmailAddress)
                     && isPasswordValid(true, tePassword)
                 ) {
+                    isBiometricSignIn = false
+
                     loginViewModel.login(
                         LoginRequest(
                             email = teEmailAddress.text.toString(),
@@ -78,6 +92,11 @@ class SignInActivity : AppCompatActivity() {
 
             tvSingUp.setOnClickListener {
                 startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
+            }
+
+            biometricLoginButton.setOnClickListener {
+                isBiometricSignIn = true
+                biometricPrompt.authenticate(promptInfo)
             }
         }
 
@@ -94,6 +113,9 @@ class SignInActivity : AppCompatActivity() {
             this, // LifecycleOwner
             callback
         )
+
+
+
     }
 
     private fun bindSignInObserver() {
@@ -179,4 +201,53 @@ class SignInActivity : AppCompatActivity() {
         ViewUtils.hideKeyboard(binding.ltRoot)
         return super.dispatchTouchEvent(ev)
     }
+
+    private fun initializeBiometricsFlow() {
+        if (BiometricManager.from(this)
+                .canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE) {
+            binding.biometricLoginButton.setVisibility(View.GONE)
+        } else {
+            executor = ContextCompat.getMainExecutor(this)
+            biometricPrompt = BiometricPrompt(this, executor,
+                object : BiometricPrompt.AuthenticationCallback() {
+                    override fun onAuthenticationError(errorCode: Int,
+                                                       errString: CharSequence) {
+                        super.onAuthenticationError(errorCode, errString)
+                        Toast(this@SignInActivity).showErrorMessage(
+                            this@SignInActivity,
+                            getString(R.string.authentication_error)
+                        )
+                    }
+
+                    override fun onAuthenticationSucceeded(
+                        result: BiometricPrompt.AuthenticationResult) {
+                        super.onAuthenticationSucceeded(result)
+                        val prefBioInfo = sharedPreferenceManager.getBiometricInfo()
+                        val decodedInfo = String(Base64.getDecoder().decode(prefBioInfo))
+                        val biometricInfo = decodedInfo.split(":")
+                        loginViewModel.login(
+                            LoginRequest(
+                                email = biometricInfo[0].toString(),
+                                password = biometricInfo[1].toString(),
+                            )
+                        )
+                    }
+
+                    override fun onAuthenticationFailed() {
+                        super.onAuthenticationFailed()
+                        Toast(this@SignInActivity).showErrorMessage(
+                            this@SignInActivity,
+                            getString(R.string.authentication_error)
+                        )
+                    }
+                })
+
+            promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric login for my app")
+                .setSubtitle("Log in using your biometric credential")
+                .setNegativeButtonText("Use account password")
+                .build()
+        }
+    }
+
 }

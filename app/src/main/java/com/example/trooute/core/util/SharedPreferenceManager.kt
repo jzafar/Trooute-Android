@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.example.trooute.data.model.auth.response.User
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.util.Base64
 import javax.inject.Inject
 
 class SharedPreferenceManager @Inject constructor(@ApplicationContext context: Context) {
@@ -19,6 +20,8 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
         const val PREF_DRIVER_MODE = "DriverMode"
         const val PREF_NOTIFICATION_MODE = "NotificationMode"
         const val PREF_AUTH_DATA = "AuthData"
+        const val BIOMETRIC_INFO = "biometricInfo"
+        const val BIOMETRIC_ENABLED = "biometricEnabled"
     }
 
     private val sharedPreferences = context.getSharedPreferences(
@@ -97,5 +100,30 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
     fun getAuthModelFromPref(): User? {
         val json = sharedPreferences.getString(PREF_AUTH_DATA, null) ?: return null
         return gson.fromJson(json, User::class.java)
+    }
+
+    fun getBiometricUserName(): String? {
+        val prefBioInfo = sharedPreferences.getString(BIOMETRIC_INFO, null)
+        val decodedInfo = String(Base64.getDecoder().decode(prefBioInfo))
+        val biometricInfo = decodedInfo.split(":")
+        return biometricInfo[0]
+    }
+
+    fun getBiometricInfo(): String? {
+        return sharedPreferences.getString(BIOMETRIC_INFO, null)
+    }
+
+    fun setBiometricInfo(username: String?) {
+        editor.putString(BIOMETRIC_INFO, username)
+            .commit()
+    }
+
+    fun isBiometricEnabled(): Boolean {
+        return sharedPreferences.getBoolean(BIOMETRIC_ENABLED, false)
+    }
+
+    fun setBiometricEnabled(enabled: Boolean) {
+        editor.putBoolean(BIOMETRIC_ENABLED, enabled)
+            .commit()
     }
 }

@@ -211,6 +211,10 @@ class SettingsFragment : Fragment() {
             ltLogout.setOnClickListener {
                 notificationTopic(false, true)
             }
+
+            includeVehicleInfoLayout.editCarInfo.setOnClickListener {
+                startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
+            }
         }
 
         return binding.root
@@ -296,10 +300,12 @@ class SettingsFragment : Fragment() {
         binding.apply {
             if (isInDriverMode) {
                 includeVehicleInfoLayout.vehicleInfoRoot.isVisible = true
+                includeVehicleInfoLayout.editCarInfo.isVisible = true
                 tvWishlist.isVisible = false
                 tvCreateNewTrip.isVisible = true
             } else {
                 includeVehicleInfoLayout.vehicleInfoRoot.isVisible = false
+                includeVehicleInfoLayout.editCarInfo.isVisible = false
                 tvWishlist.isVisible = true
                 tvCreateNewTrip.isVisible = false
             }

@@ -65,7 +65,20 @@
                         android:paddingHorizontal="@dimen/_12sdp"
                         android:paddingVertical="@dimen/_3sdp"
                         tools:text="AZY-238"
-                        android:textColor="@color/primary_color" />
+                        android:textColor="@color/primary_color"
+                        android:ellipsize="end"/>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/editCarInfo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/_2sdp"
+                        android:background="@android:color/transparent"
+                        android:layout_weight=".25"
+                        android:src="@drawable/edit_info"
+                        app:tint="@color/primary_color"
+                        android:visibility="visible">
+
+                    </androidx.appcompat.widget.AppCompatImageButton>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
