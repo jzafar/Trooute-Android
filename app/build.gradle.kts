@@ -139,6 +139,9 @@ dependencies {
     implementation ("com.fredporciuncula:phonemoji:1.5.2")
     implementation ("com.googlecode.libphonenumber:libphonenumber:8.13.5")
 
+    // Kotlin
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
+
 }
 
 // Allow references to generated code

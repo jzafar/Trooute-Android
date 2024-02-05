@@ -80,6 +80,13 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <CheckBox
+                android:id="@+id/biometricCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enable_biometric_login"
+                app:buttonTint="@color/on_primary_green_color" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvForgotPassword"
                 style="@style/HeadLine_7"
@@ -88,10 +95,30 @@
                 android:textAlignment="textEnd"
                 android:text="@string/forgot_password" />
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:divider="@drawable/divider_sub_section_space"
+            app:showDividers="middle">
+
             <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:id="@+id/btnSignIn"
                 style="@style/PrimaryRoundedButton"
                 android:text="@string/sign_in" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/fingerprint"
+                android:id="@+id/biometricLoginButton"
+                android:tint="@color/on_primary_green_color" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

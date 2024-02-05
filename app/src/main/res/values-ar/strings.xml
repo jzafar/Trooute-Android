@@ -183,4 +183,6 @@
     <string name="modifications_desc">تحتفظ Trooute بالحق في تعديل هذه الشروط في أي وقت دون إشعار مسبق. من خلال الاستمرار في استخدام التطبيق بعد التعديلات، يقبل المستخدمون الشروط المحدثة.</string>
     <string name="update_password">تطوير كلمة السر</string>
     <string name="distanceRange">"Distance with in "</string>
+    <string name="authentication_error">Unable to autheticate</string>
+    <string name="enable_biometric_login">Enable Biometric Login</string>
 </resources>

@@ -239,5 +239,7 @@
     <string name="gender">"Gender"</string>
     <string name="male">"Male"</string>
     <string name="female">"Female"</string>
+    <string name="authentication_error">Unable to autheticate</string>
+    <string name="enable_biometric_login">Enable Biometric Login</string>
 
 </resources>
