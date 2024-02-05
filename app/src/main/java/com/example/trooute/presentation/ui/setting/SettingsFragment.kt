@@ -18,12 +18,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.adapters.TextViewBindingAdapter.setDrawableEnd
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.trooute.R
 import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.Constants.TROOUTE_TOPIC
 import com.example.trooute.core.util.Resource
 import com.example.trooute.core.util.SharedPreferenceManager
+import com.example.trooute.data.model.bookings.response.BookingData
 import com.example.trooute.databinding.FragmentSettingsBinding
 import com.example.trooute.presentation.ui.auth.SignInActivity
 import com.example.trooute.presentation.ui.auth.YourProfileActivity
@@ -44,6 +47,8 @@ import com.example.trooute.presentation.utils.loadImage
 import com.example.trooute.presentation.utils.loadProfileImage
 import com.example.trooute.presentation.utils.showErrorMessage
 import com.example.trooute.presentation.utils.showSuccessMessage
+import com.example.trooute.presentation.viewmodel.authviewmodel.GetMeVM
+import com.example.trooute.presentation.viewmodel.bookingviewmodel.GetBookingViewModel
 import com.example.trooute.presentation.viewmodel.driverviewmodel.SwitchDriverModeViewModel
 import com.example.trooute.presentation.viewmodel.notification.PushNotificationViewModel
 import com.google.android.play.core.review.ReviewException
@@ -62,11 +67,11 @@ class SettingsFragment : Fragment() {
     private val TAG = "SettingsFragment"
 
     private lateinit var binding: FragmentSettingsBinding
-    private lateinit var approved: String
+//    private lateinit var approved: String
 
     private val switchDriverModeViewModel: SwitchDriverModeViewModel by viewModels()
     private val pushNotificationViewModel: PushNotificationViewModel by viewModels()
-
+    private val getMeViewModel: GetMeVM by viewModels()
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
 
@@ -78,9 +83,6 @@ class SettingsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
-        if (!::approved.isInitialized) {
-            approved = ContextCompat.getString(requireContext(), R.string.approved).lowercase()
-        }
 
         binding.apply {
             includeUserDetailLayout.apply {
@@ -89,19 +91,12 @@ class SettingsFragment : Fragment() {
 
             // Show switch button if driver is approved otherwise hide
             switchDriverMode.isVisible =
-                sharedPreferenceManager.getDriverStatus()?.lowercase() == approved
+                sharedPreferenceManager.getDriverStatus()?.lowercase() == "approved"
 
             setUpViews(sharedPreferenceManager.driverMode())
 
-            if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {
+            if (sharedPreferenceManager.getDriverStatus()?.lowercase() == "approved") {
                 switchDriverMode.isChecked = sharedPreferenceManager.driverMode()
-//                switchDriverMode.setOnCheckedChangeListener { buttonView, isChecked ->
-////                    setUpViews(isChecked)
-////                    sharedPreferenceManager.saveDriverMode(isChecked)
-//                    switchDriverModeViewModel.switchDriver()
-//                    bindSwitchDriverModeObserver(isChecked)
-//                }
-
                 ltBecomeADriver.setOnClickListener {
                     switchDriverModeViewModel.switchDriver()
                     if (switchDriverMode.isChecked) bindSwitchDriverModeObserver(false)
@@ -111,18 +106,23 @@ class SettingsFragment : Fragment() {
                 tvCreateNewTrip.setOnClickListener {
                     startActivity(Intent(requireContext(), SetUpYourTripActivity::class.java))
                 }
+            } else if (sharedPreferenceManager.getDriverStatus()?.lowercase() == "pending") {
+                tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " (Request pending)"
+                ltBecomeADriver.setOnClickListener {
+                    startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
+                }
             } else {
                 ltBecomeADriver.setOnClickListener {
                     startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
                 }
+            }
 
-                switchNotification.isChecked = sharedPreferenceManager.getNotificationMode()
-                ltNotification.setOnClickListener {
-                    if (switchNotification.isChecked)
-                        notificationTopic(false, false)
-                    else
-                        notificationTopic(true, false)
-                }
+            switchNotification.isChecked = sharedPreferenceManager.getNotificationMode()
+            ltNotification.setOnClickListener {
+                if (switchNotification.isChecked)
+                    notificationTopic(false, false)
+                else
+                    notificationTopic(true, false)
             }
 
             tvTripHistory.setOnClickListener {
@@ -315,6 +315,12 @@ class SettingsFragment : Fragment() {
     @SuppressLint("SetTextI18n", "RestrictedApi")
     override fun onResume() {
         super.onResume()
+        refreshData()
+        getMeViewModel.getMe()
+        bindGetMeApi()
+    }
+
+    private fun refreshData(){
         sharedPreferenceManager.getAuthModelFromPref().let { user ->
             binding.apply {
                 includeUserDetailLayout.apply {
@@ -323,7 +329,7 @@ class SettingsFragment : Fragment() {
                         requireContext(), user?.name
                     )
 
-                    if (sharedPreferenceManager.getDriverStatus() == approved) {
+                    if (sharedPreferenceManager.getDriverStatus() == "approved") {
                         setDrawableEnd(
                             tvUserName,
                             ContextCompat.getDrawable(requireContext(), R.drawable.ic_verified_done)
@@ -332,7 +338,10 @@ class SettingsFragment : Fragment() {
                         tvBecomeADriver.text = ContextCompat.getString(
                             requireContext(), R.string.driver_mode
                         )
-                    } else {
+                    } else if(sharedPreferenceManager.getDriverStatus() == "pending") {
+                        tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " (Request pending)"
+                    }
+                    else {
                         setDrawableEnd(tvUserName, null)
 
                         tvBecomeADriver.text = ContextCompat.getString(
@@ -370,6 +379,36 @@ class SettingsFragment : Fragment() {
             }
         }
     }
+    @SuppressLint("RepeatOnLifecycleWrongUsage")
+    private fun bindGetMeApi() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                getMeViewModel.getMeState.collect {
+                    when (it) {
+                        is Resource.ERROR -> {
+
+                            Log.e(TAG, "getMe: Error -> " + it.message.toString())
+                        }
+
+                        Resource.LOADING -> {
+
+                        }
+
+                        is Resource.SUCCESS -> {
+                            it.data.data?.let { user ->
+                                sharedPreferenceManager.saveIsDriverStatus(user.isApprovedDriver)
+                                sharedPreferenceManager.saveDriverMode(user.driverMode)
+                                sharedPreferenceManager.updateUserInPref(user)
+                                refreshData()
+                            }
+                            Log.i(TAG, "getMe: success -> " + it.data)
+
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     private fun bindSwitchDriverModeObserver(isChecked: Boolean) {
         lifecycleScope.launch {
@@ -394,6 +433,7 @@ class SettingsFragment : Fragment() {
                         binding.switchDriverMode.isChecked = isChecked
                         setUpViews(isChecked)
                         sharedPreferenceManager.saveDriverMode(isChecked)
+
                     }
                 }
             }

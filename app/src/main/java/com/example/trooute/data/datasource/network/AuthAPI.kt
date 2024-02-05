@@ -2,6 +2,7 @@ package com.example.trooute.data.datasource.network
 
 import com.example.trooute.core.util.URL.EMAIL_VERIFICATION_END_POINT
 import com.example.trooute.core.util.URL.FORGOT_PASSWORD_END_POINT
+import com.example.trooute.core.util.URL.GET_ME_END_POINT
 import com.example.trooute.core.util.URL.LOGIN_END_POINT
 import com.example.trooute.core.util.URL.RESEND_EMAIL_VERIFICATION_END_POINT
 import com.example.trooute.core.util.URL.SIGNUP_END_POINT
@@ -17,6 +18,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -43,4 +45,6 @@ interface AuthAPI {
 
     @PATCH(UPDATE_MY_PASSWORD_END_POINT)
     suspend fun updateMyPassword(@Body body: UpdateMyPasswordRequest): Response<AuthResponse>
+    @GET(GET_ME_END_POINT)
+    suspend fun getMe(): Response<AuthResponse>
 }

@@ -16,6 +16,7 @@ object URL {
     const val RESEND_EMAIL_VERIFICATION_END_POINT = "/api/v1/users/resend-token"
     const val UPDATE_PROFILE_END_POINT = "api/v1/users/updateMe"
     const val UPDATE_MY_PASSWORD_END_POINT = "api/v1/users/updateMyPassword"
+    const val GET_ME_END_POINT = "api/v1/users/me"
 
     // TRIPS END POINT
     const val CREATE_TRIPS_END_POINT = "/api/v1/trips"
