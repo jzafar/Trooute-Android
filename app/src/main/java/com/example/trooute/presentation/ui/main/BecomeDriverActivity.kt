@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -24,10 +25,12 @@ import com.example.trooute.data.model.driver.request.UploadDriverDetailsRequest
 import com.example.trooute.databinding.ActivityBecomeDriverBinding
 import com.example.trooute.presentation.utils.ImagePicker
 import com.example.trooute.presentation.utils.Loader
+import com.example.trooute.presentation.utils.ValueChecker
 import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
 import com.example.trooute.presentation.utils.isDropdownValid
 import com.example.trooute.presentation.utils.isFieldValid
 import com.example.trooute.presentation.utils.isImageAdded
+import com.example.trooute.presentation.utils.loadImage
 import com.example.trooute.presentation.utils.showErrorMessage
 import com.example.trooute.presentation.utils.showSuccessMessage
 import com.example.trooute.presentation.viewmodel.driverviewmodel.UploadDriverDetailsViewModel
@@ -49,6 +52,7 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
     private lateinit var binding: ActivityBecomeDriverBinding
     private lateinit var vehicleImagePicker: ImagePicker
     private lateinit var licenseImagePicker: ImagePicker
+    private lateinit var approved: String
 
     private var yearArrayList = ArrayList<String>()
     private var colorArrayList = ArrayList<String>()
@@ -112,6 +116,10 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
         licenseImagePicker = ImagePicker(this, licenseImagePickerLauncher)
         pickiT = PickiT(this, this, this)
 
+        if (!::approved.isInitialized) {
+            approved = ContextCompat.getString(this, R.string.approved).lowercase()
+        }
+
         binding.apply {
             includeAppBar.apply {
                 this.toolbarTitle.text = "Become a Driver"
@@ -157,6 +165,10 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
                     bindUploadDriverDetailsObserver()
                 }
             }
+        }
+
+        if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {
+            addVehicleData()
         }
     }
 
@@ -298,4 +310,31 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
         ViewUtils.hideKeyboard(binding.ltRoot)
         return super.dispatchTouchEvent(ev)
     }
+
+    private fun addVehicleData() {
+//        uploadDriverDetailsViewModel.uploadDriverDetails(
+//            UploadDriverDetailsRequest(
+//                make = etMake.text.toString(),
+//                model = etModel.text.toString(),
+//                registrationNumber = etVehicleLicensePlate.text.toString(),
+//                year = actYear.text.toString(),
+//                color = actColor.text.toString(),
+//                carPhoto = vehicleImgFile,
+//                driverLicense = licenseImgFile,
+//            )
+//        )
+        sharedPreferenceManager.getAuthModelFromPref().let { user ->
+            var carDetails = user?.carDetails
+            binding.etMake.setText(carDetails?.make)
+            binding.etModel.setText(carDetails?.model)
+            binding.etVehicleLicensePlate.setText(carDetails?.registrationNumber)
+            binding.actYear.setText(carDetails?.year.toString())
+            binding.actColor.setText(carDetails?.color)
+            loadImage(binding.imgVehicle, carDetails?.photo.toString())
+            loadImage(binding.imgDrivingLicense, carDetails?.driverLicense.toString())
+
+        }
+
+    }
+
 }

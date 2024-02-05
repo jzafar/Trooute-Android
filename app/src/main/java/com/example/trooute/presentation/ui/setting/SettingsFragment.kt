@@ -211,6 +211,10 @@ class SettingsFragment : Fragment() {
             ltLogout.setOnClickListener {
                 notificationTopic(false, true)
             }
+
+            includeVehicleInfoLayout.editCarInfo.setOnClickListener {
+                startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
+            }
         }
 
         return binding.root
