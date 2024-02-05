@@ -331,7 +331,11 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
             binding.actYear.setText(carDetails?.year.toString())
             binding.actColor.setText(carDetails?.color)
             loadImage(binding.imgVehicle, carDetails?.photo.toString())
+            binding.imgVehicle.isVisible = true
+            binding.ltClickToUploadPhoto.isVisible  = false
             loadImage(binding.imgDrivingLicense, carDetails?.driverLicense.toString())
+            binding.imgDrivingLicense.isVisible = true
+            binding.ltClickToUploadDrivingLicense.isVisible  = false
 
         }
 

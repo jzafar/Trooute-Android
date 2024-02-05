@@ -67,11 +67,12 @@
                         android:id="@+id/editCarInfo"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:padding="@dimen/_2sdp"
                         android:background="@android:color/transparent"
                         android:layout_weight=".25"
                         android:src="@drawable/edit_info"
-                        app:tint="@color/on_primary_green_color"
-                        android:visibility="gone">
+                        app:tint="@color/primary_color"
+                        android:visibility="visible">
 
                     </androidx.appcompat.widget.AppCompatImageButton>
 
