@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.trooute.R
 import com.example.trooute.data.model.common.Passenger
 import com.example.trooute.databinding.RvPassengersPrimaryItemBinding
+import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.utils.loadProfileImage
 
-class PassengersPrimaryAdapter : ListAdapter<Passenger, PassengersPrimaryAdapter.ViewHolder>(DiffCallback()) {
+class PassengersPrimaryAdapter(private val adapterItemClickListener: AdapterItemClickListener?) : ListAdapter<Passenger, PassengersPrimaryAdapter.ViewHolder>(DiffCallback()) {
     inner class ViewHolder(private val binding: RvPassengersPrimaryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindViews(currentItem: Passenger?) {
@@ -33,6 +34,9 @@ class PassengersPrimaryAdapter : ListAdapter<Passenger, PassengersPrimaryAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bindViews(currentItem)
+        holder.itemView.setOnClickListener {
+            adapterItemClickListener?.onAdapterItemClicked(position = position, data = currentItem)
+        }
     }
 
     class DiffCallback :

@@ -44,7 +44,7 @@ object StatusChecker {
                 )
 
                 if (isDriverApproved) {
-                    tvStatus.text = ContextCompat.getString(context, R.string.waiting_for_approval)
+                    tvStatus.text = ContextCompat.getString(context, R.string.waiting_for_payment)
                 } else {
                     tvStatus.text = ContextCompat.getString(context, R.string.approved)
                 }

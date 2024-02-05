@@ -17,6 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.Constants.BOOKED_CANCELLED_BODY
 import com.example.trooute.core.util.Constants.BOOKED_CANCELLED_TITLE
 import com.example.trooute.core.util.Constants.CANCELED
@@ -40,6 +41,7 @@ import com.example.trooute.core.util.Constants.WISH_LIST_CHECKER_CODE
 import com.example.trooute.core.util.Resource
 import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.chat.Users
+import com.example.trooute.data.model.common.Passenger
 import com.example.trooute.data.model.common.User
 import com.example.trooute.data.model.notification.NotificationRequest
 import com.example.trooute.data.model.trip.response.Booking
@@ -47,8 +49,12 @@ import com.example.trooute.data.model.trip.response.TripsData
 import com.example.trooute.databinding.ActivityTripDetailBinding
 import com.example.trooute.presentation.adapters.DriverSidePassengersAdapter
 import com.example.trooute.presentation.adapters.PassengersPrimaryAdapter
+import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.ui.booking.BookNowActivity
+import com.example.trooute.presentation.ui.booking.BookingDetailActivity
 import com.example.trooute.presentation.ui.chat.MessageActivity
+import com.example.trooute.presentation.ui.main.MakePaymentActivity
+import com.example.trooute.presentation.ui.review.ReviewsActivity
 import com.example.trooute.presentation.utils.Loader
 import com.example.trooute.presentation.utils.Utils.formatDateTime
 import com.example.trooute.presentation.utils.ValueChecker.checkFloatValue
@@ -75,7 +81,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TripDetailActivity : AppCompatActivity() {
+class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
 
     private val TAG = "TripDetailActivity"
 
@@ -106,9 +112,9 @@ class TripDetailActivity : AppCompatActivity() {
         statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_trip_detail)
         tripID = intent.getStringExtra(TRIP_ID).toString()
-        passengersAdapter = PassengersPrimaryAdapter()
+        passengersAdapter = PassengersPrimaryAdapter(this)
         driverSidePassengersAdapter =
-            DriverSidePassengersAdapter(sharedPreferenceManager, ::startMessaging, ::startCall)
+            DriverSidePassengersAdapter(this, sharedPreferenceManager, ::startMessaging, ::startCall)
 
         authModelInfo = sharedPreferenceManager.getAuthModelFromPref()
 
@@ -134,6 +140,10 @@ class TripDetailActivity : AppCompatActivity() {
                     this.setRVHorizontal()
                     adapter = driverSidePassengersAdapter
                 }
+                tvMyDetailTitle.isVisible = false
+                includeUserDetailLayout.root.isVisible = false
+                includeVehicleInfoLayout.root.isVisible = false
+
             } else {
                 ltPassengersUserSide.isVisible = true
                 ltDriverSidePassengers.isVisible = false
@@ -228,44 +238,44 @@ class TripDetailActivity : AppCompatActivity() {
                 }
 
                 // My Details
-                tripsData.trip?.driver.let { driver ->
-                    includeUserDetailLayout.apply {
-                        ltCallInboxSection.isVisible = false
-                        loadProfileImage(imgUserProfile, driver?.photo)
-                        tvUserName.text = checkStringValue(this@TripDetailActivity, driver?.name)
-
-                        driver?.reviewsStats.let { review ->
-                            tvAvgRating.text = checkFloatValue(review?.avgRating)
-                            tvTotalReviews.text = "(${
-                                checkLongValue(review?.totalReviews)
-                            })"
-                        }
-
-                        driver?.carDetails.let { car ->
-                            includeVehicleInfoLayout.apply {
-                                loadImage(imgVehicleProfile, car?.photo)
-                                tvVehicleModel.text = checkStringValue(
-                                    this@TripDetailActivity, car?.model
-                                )
-                                tvVehicleYear.text = checkLongValue(car?.year)
-                                tvVehicleColor.text = checkStringValue(
-                                    this@TripDetailActivity, car?.color
-                                )
-
-                                car?.reviewsStats.let { review ->
-                                    tvVehicleAvgRating.text = checkFloatValue(review?.avgRating)
-                                    tvVehicleTotalReviews.text = "(${
-                                        checkLongValue(review?.totalReviews)
-                                    })"
-                                }
-
-                                tvVehicleRegistrationNumber.text = checkStringValue(
-                                    this@TripDetailActivity, car?.registrationNumber
-                                )
-                            }
-                        }
-                    }
-                }
+//                tripsData.trip?.driver.let { driver ->
+//                    includeUserDetailLayout.apply {
+//                        ltCallInboxSection.isVisible = false
+//                        loadProfileImage(imgUserProfile, driver?.photo)
+//                        tvUserName.text = checkStringValue(this@TripDetailActivity, driver?.name)
+//
+//                        driver?.reviewsStats.let { review ->
+//                            tvAvgRating.text = checkFloatValue(review?.avgRating)
+//                            tvTotalReviews.text = "(${
+//                                checkLongValue(review?.totalReviews)
+//                            })"
+//                        }
+//
+//                        driver?.carDetails.let { car ->
+//                            includeVehicleInfoLayout.apply {
+//                                loadImage(imgVehicleProfile, car?.photo)
+//                                tvVehicleModel.text = checkStringValue(
+//                                    this@TripDetailActivity, car?.model
+//                                )
+//                                tvVehicleYear.text = checkLongValue(car?.year)
+//                                tvVehicleColor.text = checkStringValue(
+//                                    this@TripDetailActivity, car?.color
+//                                )
+//
+//                                car?.reviewsStats.let { review ->
+//                                    tvVehicleAvgRating.text = checkFloatValue(review?.avgRating)
+//                                    tvVehicleTotalReviews.text = "(${
+//                                        checkLongValue(review?.totalReviews)
+//                                    })"
+//                                }
+//
+//                                tvVehicleRegistrationNumber.text = checkStringValue(
+//                                    this@TripDetailActivity, car?.registrationNumber
+//                                )
+//                            }
+//                        }
+//                    }
+//                }
 
                 tripsData.trip.let { trip ->
                     Log.e(TAG, "setupViews: trip -> $trip")
@@ -692,5 +702,17 @@ class TripDetailActivity : AppCompatActivity() {
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         ViewUtils.hideKeyboard(binding.ltRoot)
         return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onAdapterItemClicked(position: Int, data: Any) {
+        if (data is Booking) {
+            startActivity(
+                Intent(
+                    this,
+                    BookingDetailActivity::class.java
+                ).apply {
+                    putExtra(Constants.BOOKING_ID, data._id)
+                })
+        }
     }
 }

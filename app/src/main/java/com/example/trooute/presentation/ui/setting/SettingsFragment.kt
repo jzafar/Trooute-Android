@@ -299,13 +299,11 @@ class SettingsFragment : Fragment() {
                 includeVehicleInfoLayout.editCarInfo.isVisible = true
                 tvWishlist.isVisible = false
                 tvCreateNewTrip.isVisible = true
-//                tvTripHistory.isVisible = true
             } else {
                 includeVehicleInfoLayout.vehicleInfoRoot.isVisible = false
                 includeVehicleInfoLayout.editCarInfo.isVisible = false
                 tvWishlist.isVisible = true
                 tvCreateNewTrip.isVisible = false
-//                tvTripHistory.isVisible = false
             }
         }
     }

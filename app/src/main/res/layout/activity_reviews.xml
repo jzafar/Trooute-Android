@@ -18,8 +18,12 @@
             layout="@layout/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/ltRoot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -60,6 +64,7 @@
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/ratingDropDown"
                             style="@style/DropDownStyle"
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true">
@@ -75,6 +80,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:visibility="gone"
                         app:divider="@drawable/divider_default_space"
                         app:showDividers="middle">
 
@@ -82,17 +88,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
+                            android:gravity="center"
                             app:divider="@drawable/divider_sub_section_space"
                             app:showDividers="middle">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/HeadLine_1"
+                                android:id="@+id/tvMainAvgRating"
                                 tools:text="4.7" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/Body_6"
                                 android:drawableStart="@drawable/ic_star"
-                                tools:text="(256)"
+                                tools:text=""
+                                android:gravity="center"
+                                android:id="@+id/totalNumberOfRating"
                                 android:textColor="@color/secondary_cadet_blue_color" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -119,6 +129,7 @@
 
                                 <com.google.android.material.progressindicator.LinearProgressIndicator
                                     style="@style/LinearProgressIndicator"
+                                    android:id="@+id/tvProgress5"
                                     android:progress="80" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -138,6 +149,7 @@
 
                                 <com.google.android.material.progressindicator.LinearProgressIndicator
                                     style="@style/LinearProgressIndicator"
+                                    android:id="@+id/tvProgress4"
                                     android:progress="70" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -157,6 +169,7 @@
 
                                 <com.google.android.material.progressindicator.LinearProgressIndicator
                                     style="@style/LinearProgressIndicator"
+                                    android:id="@+id/tvProgress3"
                                     android:progress="30" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -176,6 +189,7 @@
 
                                 <com.google.android.material.progressindicator.LinearProgressIndicator
                                     style="@style/LinearProgressIndicator"
+                                    android:id="@+id/tvProgress2"
                                     android:progress="40" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -195,6 +209,7 @@
 
                                 <com.google.android.material.progressindicator.LinearProgressIndicator
                                     style="@style/LinearProgressIndicator"
+                                    android:id="@+id/tvProgress1"
                                     android:progress="20" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -215,6 +230,7 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+        </androidx.core.widget.NestedScrollView>
         </androidx.core.widget.NestedScrollView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

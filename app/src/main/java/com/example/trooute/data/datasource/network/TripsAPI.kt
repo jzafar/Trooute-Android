@@ -1,7 +1,7 @@
 package com.example.trooute.data.datasource.network
 
 import com.example.trooute.core.util.URL.CREATE_TRIPS_END_POINT
-import com.example.trooute.core.util.URL.DRIVER_TRIPS_HISTORY_END_POINT
+import com.example.trooute.core.util.URL.TRIPS_HISTORY_END_POINT
 import com.example.trooute.core.util.URL.GET_TRIPS_DETAILS_END_POINT
 import com.example.trooute.core.util.URL.GET_TRIPS_END_POINT
 import com.example.trooute.core.util.URL.UPDATE_TRIP_STATUS
@@ -38,8 +38,8 @@ interface TripsAPI {
     @GET("$GET_TRIPS_DETAILS_END_POINT/{id}")
     suspend fun getTripsDetails(@Path("id") tripId: String?): Response<GetTripDetailsResponse>
 
-    @GET(DRIVER_TRIPS_HISTORY_END_POINT)
-    suspend fun driverTripsHistory(@Query("status") status: String?): Response<GetTripsResponse>
+    @GET(TRIPS_HISTORY_END_POINT)
+    suspend fun tripsHistory(): Response<GetTripsResponse>
 
     @PATCH("$UPDATE_TRIP_STATUS/{id}")
     suspend fun updateTripStatus(

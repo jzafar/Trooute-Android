@@ -4,7 +4,7 @@ object URL {
     // BASE URL
 //    const val BASE_URL = "http://192.168.18.85:4000"
 
-//    const val BASE_URL = "http://192.168.100.36:4000"
+//    const val BASE_URL = "http://localhost:4000"
 
     const val BASE_URL = "https://backened.trooute.com"
 
@@ -21,7 +21,7 @@ object URL {
     const val CREATE_TRIPS_END_POINT = "/api/v1/trips"
     const val GET_TRIPS_END_POINT = "/api/v1/trips"
     const val GET_TRIPS_DETAILS_END_POINT = "/api/v1/trips"
-    const val DRIVER_TRIPS_HISTORY_END_POINT = "/api/v1/trips"
+    const val TRIPS_HISTORY_END_POINT = "/api/v1/trips/trips-history"
     const val UPDATE_TRIP_STATUS = "api/v1/trips/update-trip-status"
 
     // BOOKINGS END POINT
@@ -35,6 +35,7 @@ object URL {
 
     // REVIEW END POINT
     const val REVIEW_END_POINT = "/api/v1/review"
+    const val GET_REVIEW_END_POINT = "/api/v1/review/"
 
     // DRIVER END POINT
     const val UPLOAD_DRIVER_END_POINT = "/api/v1/users/driver/upload-driver-details"

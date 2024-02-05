@@ -5,6 +5,7 @@ import com.example.trooute.core.util.safeApiCall
 import com.example.trooute.data.model.common.BaseResponse
 import com.example.trooute.data.model.review.request.CreateReviewRequest
 import com.example.trooute.data.datasource.network.ReviewAPI
+import com.example.trooute.data.model.review.response.GetReviewsResponse
 import com.example.trooute.domain.repository.ReviewRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -18,6 +19,14 @@ class ReviewRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             safeApiCall {
                 reviewAPI.createReview(request)
+            }
+        }
+    }
+
+    override suspend fun getReviews(userId: String): Resource<GetReviewsResponse> {
+        return withContext(ioDispatcher) {
+            safeApiCall {
+                reviewAPI.getReviews(userId)
             }
         }
     }

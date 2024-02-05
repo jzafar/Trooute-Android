@@ -25,7 +25,9 @@ import com.example.trooute.databinding.ActivitySetUpYourTripBinding
 import com.example.trooute.presentation.utils.DateAndTimeManager
 import com.example.trooute.presentation.utils.Loader
 import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
+import com.example.trooute.presentation.utils.isFieldPriceValid
 import com.example.trooute.presentation.utils.isFieldValid
+import com.example.trooute.presentation.utils.priceToDouble
 import com.example.trooute.presentation.utils.showErrorMessage
 import com.example.trooute.presentation.utils.showSuccessMessage
 import com.example.trooute.presentation.viewmodel.tripviewmodel.CreateTripViewModel
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.internal.ViewUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
 import java.util.Date
 import javax.inject.Inject
 
@@ -199,7 +202,7 @@ class SetUpYourTripActivity : AppCompatActivity() {
                             includeDestinationAndSchedule.etDestinationLocation,
                             "Destination location"
                         )
-                        && isFieldValid(
+                        && isFieldPriceValid(
                             includeTripDetailsDriverItemLayout.etPrice,
                             "Price"
                         )
@@ -219,6 +222,8 @@ class SetUpYourTripActivity : AppCompatActivity() {
                             var language = binding.includeTripDetailsDriverItemLayout.tlvLanguagePreference.text
                             languagePreference = language.toString()
                         }
+                        val price =  etPrice.text.toString()
+                        val number: Double = priceToDouble(price)
                         createTripViewModel.createTrip(
                             CreateTripRequest(
                                 departureDate = "$departureDate, $departureTime",
@@ -234,7 +239,7 @@ class SetUpYourTripActivity : AppCompatActivity() {
                                     weight = tvLanguageRestrictionWeight.text.toString().toLong()
                                 ),
                                 note = etNote.text.toString(),
-                                pricePerPerson = etPrice.text.toString().toDouble(),
+                                pricePerPerson = number,
                                 smokingPreference = smokingPreference,
                                 petsPreference = petsPreference,
                                 roundTrip = roundTrip,

@@ -19,10 +19,10 @@ class DriverTripsHistoryViewModel @Inject constructor(
         MutableStateFlow<Resource<GetTripsResponse>>(Resource.LOADING)
     val driverTripsHistoryState: StateFlow<Resource<GetTripsResponse>> get() = _driverTripsHistoryState
 
-    fun driverTripsHistory(status: String) {
+    fun tripsHistory() {
         viewModelScope.launch {
             _driverTripsHistoryState.emit(Resource.LOADING)
-            _driverTripsHistoryState.emit(useCase.invoke(status = status))
+            _driverTripsHistoryState.emit(useCase.invoke())
         }
     }
 }

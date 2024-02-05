@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.common.User
 import com.example.trooute.data.model.trip.response.Booking
 import com.example.trooute.databinding.RvDriverSidePassengersItemBinding
+import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.utils.StatusChecker.checkStatus
 import com.example.trooute.presentation.utils.Utils.formatDateTime
 import com.example.trooute.presentation.utils.Utils.getSubString
@@ -23,7 +25,9 @@ import com.example.trooute.presentation.utils.ValueChecker.checkPriceValue
 import com.example.trooute.presentation.utils.ValueChecker.checkStringValue
 import com.example.trooute.presentation.utils.loadProfileImage
 
+
 class DriverSidePassengersAdapter(
+    private val itemClickListener: AdapterItemClickListener,
     private val sharedPreferenceManager: SharedPreferenceManager,
     private val startMessaging: (User?) -> Unit,
     private val startCall: (User?) -> Unit
@@ -51,11 +55,7 @@ class DriverSidePassengersAdapter(
                             checkLongValue(item.user?.reviewsStats?.totalReviews)
                         })"
 
-                        if(currentItem.status.equals(ltCallInboxSection.context.getString(R.string.confirmed))) {
-                            ltCallInboxSection.isVisible = true
-                        } else {
-                            ltCallInboxSection.isVisible = false
-                        }
+                        ltCallInboxSection.isVisible = currentItem.status.equals(ltCallInboxSection.context.getString(R.string.confirmed))
 
                         messageIcon.setOnClickListener {
                             startMessaging.invoke(item.user)
@@ -66,9 +66,13 @@ class DriverSidePassengersAdapter(
                         }
                     }
 
+                    val platFormFee = Constants.PLATFORM_FEE_PRICE * item.numberOfSeats!!
+                    val pricePerSeat = (item.tripData?.pricePerPerson?.toDouble() ?: 0.0) * item.numberOfSeats!!
+
+
                     tvNxSeats.text = checkNumOfSeatsValue(item.numberOfSeats)
-                    tvNxSeatsPrice.text = checkPriceValue(item.amount)
-                    tvTotalPrice.text = checkPriceValue(item.amount)
+                    tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+                    tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
                 }
             }
         }
@@ -81,12 +85,19 @@ class DriverSidePassengersAdapter(
             parent,
             false
         )
+//        val params: ViewGroup.LayoutParams = binding.parentView.layoutParams
+//        params.width = (ViewGroup.LayoutParams.MATCH_PARENT * 0.6).toInt()
+//        params.height = binding.parentView.height
+//        binding.parentView.requestLayout()
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bindViews(currentItem)
+        holder.itemView.setOnClickListener {
+            itemClickListener?.onAdapterItemClicked(position = position, data = currentItem)
+        }
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Booking>() {

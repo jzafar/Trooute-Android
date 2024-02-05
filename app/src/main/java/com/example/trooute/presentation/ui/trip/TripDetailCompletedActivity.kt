@@ -64,7 +64,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
         statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_trip_detail_completed)
         tripID = intent.getStringExtra(TRIP_ID).toString()
-        tripDetailCompletedAdapter = TripDetailCompletedAdapter(::submitReviewClicked)
+        tripDetailCompletedAdapter = TripDetailCompletedAdapter(::submitReviewClicked,sharedPreferenceManager)
 
         binding.apply {
             includeAppBar.apply {
@@ -194,13 +194,13 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                 formatDateTime(
                     this@TripDetailCompletedActivity,
                     tvDepartureDate,
-                    tripsData?.departureDate
+                    tripsData?.trip?.departureDate
                 )
 
                 ltNxSeats.isVisible = false
                 ltPlatformFee.isVisible = false
                 includeDivider.divider.isVisible = false
-                tvTotalPrice.text = checkPriceValue(tripsData.totalAmount)
+                tvTotalPrice.text = checkPriceValue(tripsData?.trip?.totalAmount)
                 tvTotalPrice.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
             }
 
@@ -266,20 +266,20 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                 includeTripRouteLayout.apply {
                     tvAddressFrom.text = checkStringValue(
                         this@TripDetailCompletedActivity,
-                        tripsData?.from_address
+                        tripsData?.trip?.from_address
                     )
                     formatDateTime(
                         this@TripDetailCompletedActivity,
                         tvDepartureDate,
-                        tripsData?.departureDate
+                        tripsData?.trip?.departureDate
                     )
                     tvAddressWhereto.text = checkStringValue(
                         this@TripDetailCompletedActivity,
-                        tripsData?.whereTo_address
+                        tripsData?.trip?.whereTo_address
                     )
                 }
 
-                tvPricePerPerson.text = checkPriceValue(tripsData?.pricePerPerson)
+                tvPricePerPerson.text = checkPriceValue(tripsData?.trip?.pricePerPerson)
             }
 
             // Trips details

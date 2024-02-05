@@ -11,5 +11,6 @@ data class Driver(
     val phoneNumber: String? = null ?: "No phone number",
     val photo: String? = null ?: "",
     val isApprovedDriver: Boolean,
-    val reviewsStats: ReviewsStats? = null
+    val reviewsStats: ReviewsStats? = null,
+    val stripeConnectedAccountId: String? = null
 ) : Parcelable

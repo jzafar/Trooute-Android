@@ -11,6 +11,8 @@ import com.fredporciuncula.phonemoji.PhonemojiTextInputEditText
 import com.google.android.material.internal.ViewUtils.showKeyboard
 import com.google.android.material.textfield.TextInputEditText
 import com.google.i18n.phonenumbers.PhoneNumberUtil
+import java.lang.Double.parseDouble
+import java.text.NumberFormat
 
 fun Context.isImageAdded(image: Boolean, message: String): Boolean {
     return if (!image) {
@@ -34,6 +36,23 @@ fun Context.isFieldValid(field: TextInputEditText, message: String): Boolean {
     }
 }
 
+@SuppressLint("RestrictedApi")
+fun Context.isFieldPriceValid(field: TextInputEditText, message: String): Boolean {
+    val mField = field.text.toString()
+    val number: String = priceToDouble(mField).toString()
+    return if (number.isBlank() || number.isEmpty() || number.trim() == "") {
+        field.requestFocus()
+        showKeyboard(field)
+        Toast(this).showWarningMessage(this, "$message field can't be blank")
+        false
+    } else {
+        true
+    }
+}
+fun Context.priceToDouble(price: String): Double {
+    val newStr: String = price.replace("€ ", "")
+    return newStr.toDouble()
+}
 fun Context.isGenderSelected(gender: String, message: String): Boolean {
     return if (gender.isBlank() || gender.isEmpty() || gender.trim() == "") {
         Toast(this).showWarningMessage(this, "$message")
@@ -98,6 +117,12 @@ fun Context.isEmailValid(email: TextInputEditText): Boolean {
     } else {
         true
     }
+}
+
+fun Context.trimAndRemoveDashes(phoneNumber: PhonemojiTextInputEditText): String {
+    val phoneNumber = phoneNumber.text.toString().trim()
+    val removedWhiteSpaces = phoneNumber.filter { !it.isWhitespace() }
+    return removedWhiteSpaces.replace("-", "")
 }
 
 @SuppressLint("RestrictedApi")

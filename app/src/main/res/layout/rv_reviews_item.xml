@@ -23,6 +23,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 style="@style/CircleProfileImageStyle"
+                android:id="@+id/userImage"
                 android:layout_width="@dimen/_65sdp"
                 android:layout_height="@dimen/_65sdp"
                 app:srcCompat="@drawable/passenger_1" />
@@ -46,19 +47,21 @@
                         style="@style/HeadLine_6"
                         android:layout_width="wrap_content"
                         android:maxLines="2"
-                        tools:text="Lisa Monica" />
+                        tools:text="" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Body_6"
                         android:layout_width="wrap_content"
+                        android:id="@+id/tvAvgRating"
                         android:drawableStart="@drawable/ic_star"
-                        tools:text="5.0" />
+                        tools:text="Not Provided" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/Body_6"
-                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+                    tools:text=""
+                    android:id="@+id/tvComment"
                     android:textColor="@color/on_primary_mirage_color" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
