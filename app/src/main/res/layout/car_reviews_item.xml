@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ltCarReviewsItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ltWriteReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/default_screen_vertical_space"
+            app:divider="@drawable/divider_default_space"
+            app:showDividers="middle">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvExperienceWithDriverTitle"
+                    style="@style/Body_6"
+                    android:layout_width="wrap_content"
+                    android:text="@string/rate_the_vehicle" />
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:id="@+id/rbSubmitExperienceWithDriver"
+                    style="@style/RatingBarTheme"
+                    android:layout_alignParentEnd="true"
+                    android:numStars="5"
+                    android:stepSize="0.1"
+                    android:layout_marginEnd="@dimen/rating_bar_end_space" />
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmitCarReview"
+                style="@style/PrimaryRoundedButton"
+                android:text="@string/submit" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

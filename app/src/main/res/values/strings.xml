@@ -239,5 +239,6 @@
     <string name="gender">"Gender"</string>
     <string name="male">"Male"</string>
     <string name="female">"Female"</string>
-
+    <string name="rating">"Rating"</string>
+    <string name="experience_passenger">Experience with passenger</string>
 </resources>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getString
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.adapters.TextViewBindingAdapter.setDrawableEnd
@@ -34,7 +35,8 @@ class TripDetailCompletedAdapter(
         rating: Float,
         trip: String
     ) -> Unit,
-    private val sharedPreferenceManager: SharedPreferenceManager
+    private val sharedPreferenceManager: SharedPreferenceManager,
+    private val seeReviews:(targetId: String) -> Unit
 ) : ListAdapter<Booking, TripDetailCompletedAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: RvTripDetailCompletedItemBinding) :
@@ -55,8 +57,10 @@ class TripDetailCompletedAdapter(
                         booking.createdAt
                     )
 
+
                     // Passenger detail
                     includeUserDetail.apply {
+
                         loadProfileImage(imgUserProfile, booking.user?.photo)
                         tvUserName.text = checkStringValue(
                             tvUserName.context,
@@ -67,115 +71,134 @@ class TripDetailCompletedAdapter(
                             checkLongValue(booking.user?.reviewsStats?.totalReviews)
                         })"
                         ltCallInboxSection.isVisible = false
+                        includeUserDetail.root.setOnClickListener{
+
+                            booking.user?._id?.let { it1 -> seeReviews(it1) }
+                        }
                     }
 
-                    // Expending review portion
-                    includeReviewItem.apply {
-                        tvReviewsTitle.setOnClickListener {
-                            ltReviewsItem.apply {
-                                if (isVisible) {
-                                    isVisible = false
-                                    setDrawableEnd(
-                                        tvReviewsTitle,
-                                        ContextCompat.getDrawable(
-                                            tvReviewsTitle.context,
-                                            R.drawable.ic_arrow_down
+                    // hide give review section for himself
+                    val currentUser = sharedPreferenceManager.getAuthIdFromPref()
+                    if (booking.user?._id == currentUser){
+                        includeUserDetailDevider.root.isVisible = false
+                        includeUserDetailReviewSection.isVisible = false
+                    } else {
+                        // Expending review portion
+
+                        includeReviewItem.apply {
+                            if(sharedPreferenceManager.driverMode()) {
+                                tvExperienceWithDriverTitle.text =  "Experience with passenger"
+                            } else {
+                                tvExperienceWithDriverTitle.text =  tvExperienceWithDriverTitle.context.getString(R.string.experience_with_driver)
+                            }
+                            tvReviewsTitle.setOnClickListener {
+                                ltReviewsItem.apply {
+                                    if (isVisible) {
+                                        isVisible = false
+                                        setDrawableEnd(
+                                            tvReviewsTitle,
+                                            ContextCompat.getDrawable(
+                                                tvReviewsTitle.context,
+                                                R.drawable.ic_arrow_down
+                                            )
                                         )
-                                    )
-                                } else {
-                                    isVisible = true
-                                    setDrawableEnd(
-                                        tvReviewsTitle,
-                                        ContextCompat.getDrawable(
-                                            tvReviewsTitle.context,
-                                            R.drawable.ic_arrow_up
+                                    } else {
+                                        isVisible = true
+                                        setDrawableEnd(
+                                            tvReviewsTitle,
+                                            ContextCompat.getDrawable(
+                                                tvReviewsTitle.context,
+                                                R.drawable.ic_arrow_up
+                                            )
                                         )
-                                    )
+                                    }
+                                }
+                            }
+
+                            // Review given to driver from user
+                            booking.reviewsGivenToDriver?.let {
+                                ltUserReviews.isVisible = true
+                                includeDivider.divider.isVisible = true
+
+                                tvUserName.text = checkStringValue(
+                                    tvUserName.context,
+                                    booking.user?.name
+                                )
+                                tvComment.text = checkStringValue(
+                                    tvComment.context,
+                                    booking.reviewsGivenToDriver?.comment
+                                )
+                                rbExperienceWithDriver.rating = checkFloatValue(
+                                    booking.reviewsGivenToDriver?.rating
+                                ).toFloat()
+                            }
+
+                            // Review given to user from driver
+                            booking.reviewsGivenToUser?.let {
+                                ltWriteReviews.isVisible = false
+                                ltDriverReview.isVisible = true
+
+                                tvDriverComment.text = checkStringValue(
+                                    tvDriverComment.context,
+                                    booking.reviewsGivenToUser?.comment
+                                )
+                                rbExperience.rating = checkFloatValue(
+                                    booking.reviewsGivenToUser?.rating
+                                ).toFloat()
+                            } ?: run {
+                                ltWriteReviews.isVisible = true
+                                ltDriverReview.isVisible = false
+
+                                var submitReviewRatingValue = rbSubmitExperienceWithDriver.rating
+
+                                rbSubmitExperienceWithDriver.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                                    submitReviewRatingValue = rating
+                                }
+
+                                btnSubmitReview.setOnClickListener {
+                                    if (
+                                        shareYourThoughts.context.isFieldValid(
+                                            shareYourThoughts,
+                                            "Required"
+                                        )
+                                    ) {
+                                        // Handling on client side
+                                        val comment = shareYourThoughts.text.toString()
+                                        commentState(binding, comment, submitReviewRatingValue)
+
+                                        var target = "User"
+                                        if (booking.user?._id == booking.driverId){
+                                            target = "Driver"
+                                        }
+                                        // Handling on server side
+                                        submitReviewClicked(
+                                            bindingAdapterPosition,
+                                            booking.user?._id.toString(),
+                                            target,
+                                            shareYourThoughts.text.toString(),
+                                            submitReviewRatingValue,
+                                            booking.trip.toString()
+                                        )
+                                    }
                                 }
                             }
                         }
-
-                        // Review given to driver from user
-                        booking.reviewsGivenToDriver?.let {
-                            ltUserReviews.isVisible = true
-                            includeDivider.divider.isVisible = true
-
-                            tvUserName.text = checkStringValue(
-                                tvUserName.context,
-                                booking.user?.name
-                            )
-                            tvComment.text = checkStringValue(
-                                tvComment.context,
-                                booking.reviewsGivenToCar?.comment
-                            )
-
-                            rbExperienceWithDriver.rating = checkFloatValue(
-                                booking.reviewsGivenToCar?.rating
-                            ).toFloat()
-                            rbRateTheVehicle.rating = checkFloatValue(
-                                booking.reviewsGivenToCar?.rating
-                            ).toFloat()
-                        }
-
-                        // Review given to user from driver
-                        booking.reviewsGivenToUser?.let {
-                            ltWriteReviews.isVisible = false
-                            ltDriverReview.isVisible = true
-
-                            tvDriverComment.text = checkStringValue(
-                                tvDriverComment.context,
-                                booking.reviewsGivenToUser?.comment
-                            )
-                            rbExperience.rating = checkFloatValue(
-                                booking.reviewsGivenToUser?.rating
-                            ).toFloat()
-                        } ?: run {
-                            ltWriteReviews.isVisible = true
-                            ltDriverReview.isVisible = false
-
-                            var submitReviewRatingValue = rbSubmitExperienceWithDriver.rating
-
-                            rbSubmitExperienceWithDriver.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-                                submitReviewRatingValue = rating
-                            }
-
-                            btnSubmitReview.setOnClickListener {
-                                if (
-                                    shareYourThoughts.context.isFieldValid(
-                                        shareYourThoughts,
-                                        "Required"
-                                    )
-                                ) {
-                                    // Handling on client side
-                                    val comment = shareYourThoughts.text.toString()
-                                    commentState(binding, comment, submitReviewRatingValue)
-
-                                    // Handling on server side
-                                    submitReviewClicked(
-                                        bindingAdapterPosition,
-                                        booking.user?._id.toString(),
-                                        "User",
-                                        shareYourThoughts.text.toString(),
-                                        submitReviewRatingValue,
-                                        booking.trip.toString()
-                                    )
-                                }
-                            }
-                        }
                     }
+
 
                     val platFormFee = Constants.PLATFORM_FEE_PRICE * booking.numberOfSeats!!
-                    val pricePerSeat = (booking.tripData?.pricePerPerson?.toDouble() ?: 0.0) * booking.numberOfSeats!!
+                    val pricePerSeat = (booking?.pricePerPerson ?: 1.0) * booking.numberOfSeats!!
                     tvNxSeats.text = checkNumOfSeatsValue(booking.numberOfSeats)
                     tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
                     if (sharedPreferenceManager.driverMode()) {
                         tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
                     } else {
+                        // hide price section of other passengers
+//                        if (booking.user?._id != currentUser) {
+//                            ltPriceSection.isVisible = false
+//                        }
                         tvTotalPrice.text = checkPriceValue(pricePerSeat + platFormFee)
                     }
-
-//                    tvNxSeats.text = checkNumOfSeatsValue(booking.numberOfSeats)
-//                    tvNxSeatsPrice.text = checkPriceValue(booking.amount)
 
                 }
             }

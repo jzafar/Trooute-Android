@@ -1,18 +1,23 @@
 package com.example.trooute.presentation.ui.trip
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.TextViewBindingAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.Resource
 import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.review.request.CreateReviewRequest
@@ -21,6 +26,9 @@ import com.example.trooute.databinding.ActivityTripDetailCompletedBinding
 import com.example.trooute.presentation.adapters.TripDetailCompletedAdapter
 import com.example.trooute.core.util.Constants.TRIP_ID
 import com.example.trooute.core.util.Constants.WEIGHT_SIGN
+import com.example.trooute.data.model.common.User
+import com.example.trooute.data.model.trip.response.Booking
+import com.example.trooute.presentation.ui.review.ReviewsActivity
 import com.example.trooute.presentation.utils.Loader
 import com.example.trooute.presentation.utils.Utils.formatDateTime
 import com.example.trooute.presentation.utils.Utils.getSubString
@@ -29,9 +37,12 @@ import com.example.trooute.presentation.utils.ValueChecker.checkLongValue
 import com.example.trooute.presentation.utils.ValueChecker.checkPriceValue
 import com.example.trooute.presentation.utils.ValueChecker.checkStringValue
 import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
+import com.example.trooute.presentation.utils.isFieldValid
 import com.example.trooute.presentation.utils.loadImage
 import com.example.trooute.presentation.utils.loadProfileImage
 import com.example.trooute.presentation.utils.setRVVertical
+import com.example.trooute.presentation.utils.showErrorMessage
+import com.example.trooute.presentation.utils.showSuccessMessage
 import com.example.trooute.presentation.viewmodel.reviewviewmodel.CreateReviewViewModel
 import com.example.trooute.presentation.viewmodel.tripviewmodel.GetTripDetailsViewModel
 import com.faltenreich.skeletonlayout.Skeleton
@@ -53,6 +64,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
     private val getTripDetailsViewModel: GetTripDetailsViewModel by viewModels()
     private val createReviewViewModel: CreateReviewViewModel by viewModels()
 
+    private lateinit var tripDriver: String
     @Inject
     lateinit var loader: Loader
 
@@ -64,7 +76,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
         statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_trip_detail_completed)
         tripID = intent.getStringExtra(TRIP_ID).toString()
-        tripDetailCompletedAdapter = TripDetailCompletedAdapter(::submitReviewClicked,sharedPreferenceManager)
+        tripDetailCompletedAdapter = TripDetailCompletedAdapter(::submitReviewClicked,sharedPreferenceManager,::seeUserReview)
 
         binding.apply {
             includeAppBar.apply {
@@ -120,12 +132,24 @@ class TripDetailCompletedActivity : AppCompatActivity() {
         bindCreateReviewObserver()
     }
 
+    private fun seeUserReview(targetId: String){
+        startActivity(
+            Intent(this@TripDetailCompletedActivity,
+                ReviewsActivity::class.java).apply {
+                putExtra(Constants.USER_ID, targetId)
+            }
+        )
+    }
     private fun bindCreateReviewObserver() {
         lifecycleScope.launch {
             createReviewViewModel.createReviewState.collect {
                 when (it) {
                     is Resource.ERROR -> {
                         Log.e(TAG, "bindCreateReviewObserver: error -> " + it.message.toString())
+                        Toast(this@TripDetailCompletedActivity).showErrorMessage(
+                            this@TripDetailCompletedActivity,
+                            it.message.toString()
+                        )
                     }
 
                     Resource.LOADING -> {
@@ -133,10 +157,15 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                     }
 
                     is Resource.SUCCESS -> {
-                        Log.e(
+                        Log.i(
                             TAG,
                             "bindCreateReviewObserver: success -> " + it.data.message.toString()
                         )
+                        Toast(this@TripDetailCompletedActivity).showSuccessMessage(
+                            this@TripDetailCompletedActivity,
+                            "Review posted successfully"
+                        )
+                        getTripDetails()
                     }
                 }
             }
@@ -159,6 +188,16 @@ class TripDetailCompletedActivity : AppCompatActivity() {
 
                         is Resource.SUCCESS -> {
                             it.data.data?.let { tripsData ->
+                                if (tripsData.driver?._id != null) {
+                                    tripDriver = tripsData.driver._id.toString()
+                                } else {
+                                    if (tripsData.trip?.driver?._id != null) {
+                                        tripDriver = tripsData.trip.driver._id
+                                    } else {
+                                        tripID = sharedPreferenceManager.getAuthIdFromPref().toString()
+                                    }
+
+                                }
                                 setupViews(tripsData)
                                 skeleton.showOriginal()
                             }
@@ -190,30 +229,79 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                         tripId
                     )
                 }"
-
-                formatDateTime(
-                    this@TripDetailCompletedActivity,
-                    tvDepartureDate,
-                    tripsData?.trip?.departureDate
-                )
-
                 ltNxSeats.isVisible = false
                 ltPlatformFee.isVisible = false
-                includeDivider.divider.isVisible = false
-                tvTotalPrice.text = checkPriceValue(tripsData?.trip?.totalAmount)
+                if (sharedPreferenceManager.driverMode()) {
+                    formatDateTime(
+                        this@TripDetailCompletedActivity,
+                        tvDepartureDate,
+                        tripsData?.trip?.departureDate
+                    )
+                    includeDivider.divider.isVisible = false
+                    tvTotalPrice.text = checkPriceValue(tripsData?.trip?.totalAmount)
+                } else {
+                    formatDateTime(
+                        this@TripDetailCompletedActivity,
+                        tvDepartureDate,
+                        tripsData?.departureDate
+                    )
+                    includeDivider.divider.isVisible = true
+                    tvTotalPrice.text = checkPriceValue(tripsData?.totalAmount)
+                }
                 tvTotalPrice.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
             }
 
             // Passengers detail
             if (tripsData.bookings?.isEmpty() == true || tripsData.bookings == null) {
-//                tvNoComTripsPassengersAvailable.isVisible = true
-//                rvDriverSidePassengers.isVisible = false
                 ltPassengersUserSide.isVisible = false
+//                if (tripsData.passengers?.size == 1) { // he was only one passanger
+//                    tvNoComTripsPassengersAvailable.isVisible = false
+//                    rvDriverSidePassengers.isVisible = false
+//                    ltPassengersUserSide.isVisible = false
+//                } else {
+//                    val currentUser = sharedPreferenceManager.getAuthIdFromPref()
+//                    val passengers = tripsData.passengers?.filter { it._id != currentUser }
+//
+//                    val bookingList : MutableList<Booking>  = mutableListOf<Booking>()
+//                    if (passengers != null) {
+//                        for (passenger in passengers) {
+//                            val booking = Booking()
+//                            var user = User()
+//                            user.name = passenger.name
+//                            user.photo = passenger.photo
+//                            user.reviewsStats = passenger.reviewsStats
+//                            booking.user = user
+//                            booking._id = tripID
+//                            bookingList.add(booking)
+//                        }
+//                    }
+//
+//
+////                    tvNoComTripsPassengersAvailable.isVisible = true
+////                    rvDriverSidePassengers.isVisible = true
+//                    ltPassengersUserSide.isVisible = true
+//                    tripDetailCompletedAdapter.submitList(bookingList)
+//                }
+
             } else {
-//                tvNoComTripsPassengersAvailable.isVisible = false
-//                rvDriverSidePassengers.isVisible = true
+                val bookingList : MutableList<Booking>  = mutableListOf<Booking>()
                 ltPassengersUserSide.isVisible = true
-                tripDetailCompletedAdapter.submitList(tripsData.bookings)
+                if (sharedPreferenceManager.driverMode()) {
+                    for (booking in tripsData.bookings) {
+                        booking.pricePerPerson = tripsData.trip?.pricePerPerson
+                        booking.driverId = tripDriver
+                        bookingList.add(booking)
+                    }
+                } else {
+
+                    for (booking in tripsData.bookings) {
+                        booking.pricePerPerson = tripsData.pricePerPerson
+                        booking.driverId = tripDriver
+                        bookingList.add(booking)
+                    }
+                }
+                tripDetailCompletedAdapter.submitList(bookingList)
+
             }
 
             // Driver details
@@ -229,6 +317,83 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                         )
                         tvAvgRating.text = checkFloatValue(driver?.reviewsStats?.avgRating)
                         tvTotalReviews.text = "(${checkLongValue(driver?.reviewsStats?.totalReviews)})"
+
+                        // Expending review portion
+                        includeReviewItem.apply {
+                            tvDriverReviewsTitle.setOnClickListener {
+                                ltReviewsItem.apply {
+                                    if (isVisible) {
+                                        isVisible = false
+                                        tvDriverReviewsTitle.setCompoundDrawablesWithIntrinsicBounds(
+                                            null, null, getDrawable(
+                                                R.drawable.ic_arrow_down
+                                            ), null
+                                        )
+                                    } else {
+                                        isVisible = true
+                                        tvDriverReviewsTitle.setCompoundDrawablesWithIntrinsicBounds(
+                                            null, null, getDrawable(
+                                                R.drawable.ic_arrow_up
+                                            ), null
+                                        )
+                                    }
+                                }
+                            }
+
+                            // Review given to driver from user
+//                            tripsData.bookings?.reviewsGivenToDriver?.let {
+//                                ltUserReviews.isVisible = true
+//                                includeDivider.divider.isVisible = true
+//
+//                                tvUserName.text = checkStringValue(
+//                                    tvUserName.context,
+//                                    tripsData.bookings?.user?.name
+//                                )
+//                                tvComment.text = checkStringValue(
+//                                    tvComment.context,
+//                                    booking.reviewsGivenToCar?.comment
+//                                )
+//
+//                                rbExperienceWithDriver.rating = checkFloatValue(
+//                                    booking.reviewsGivenToCar?.rating
+//                                ).toFloat()
+//                                rbRateTheVehicle.rating = checkFloatValue(
+//                                    booking.reviewsGivenToCar?.rating
+//                                ).toFloat()
+//                            }
+
+                            run {
+                                ltWriteReviews.isVisible = true
+                                ltDriverReview.isVisible = false
+
+                                var submitReviewRatingValue = rbSubmitExperienceWithDriver.rating
+
+                                rbSubmitExperienceWithDriver.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                                    submitReviewRatingValue = rating
+                                }
+
+                                btnSubmitReview.setOnClickListener {
+                                    if (
+                                        shareYourThoughts.context.isFieldValid(
+                                            shareYourThoughts,
+                                            "Required"
+                                        )
+                                    ) {
+                                        // Handling on client side
+                                        val comment = shareYourThoughts.text.toString()
+//                                        commentState(binding, comment, submitReviewRatingValue)
+                                        val driverId = tripsData.driver?._id
+                                        // Handling on server side
+                                        if (driverId != null) {
+                                            submitReviewClicked(0,driverId,"Driver",comment,submitReviewRatingValue,tripsData._id)
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+
+
 
                         includeCarDetails.apply {
                             driver?.carDetails.let { carDetails ->
@@ -252,34 +417,80 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                                     this@TripDetailCompletedActivity,
                                     carDetails?.registrationNumber
                                 )
+
+                                ltCardReview.isVisible = true
+                                includeCarRatingDivider.root.isVisible = true
+                                includeCarReviewItem.ltCarReviewsItem.isVisible = false
+                                ltCardReview.setOnClickListener{
+                                    includeCarReviewItem.ltCarReviewsItem.apply {
+                                        if (isVisible) {
+                                            isVisible = false
+                                            tvCarReviewsTitle.setCompoundDrawablesWithIntrinsicBounds(
+                                                null, null, getDrawable(
+                                                    R.drawable.ic_arrow_down
+                                                ), null
+                                            )
+                                        } else {
+                                            isVisible = true
+                                            tvCarReviewsTitle.setCompoundDrawablesWithIntrinsicBounds(
+                                                null, null, getDrawable(
+                                                    R.drawable.ic_arrow_up
+                                                ), null
+                                            )
+                                        }
+                                    }
+
+                                }
+                                includeCarReviewItem.btnSubmitCarReview.setOnClickListener{
+
+                                }
                             }
                         }
                     }
 
                     ltCallInboxSection.isVisible = false
                 }
-            }
 
+            }
 
             // Destination and Schedule Details
             includeDestinationAndScheduleLayout.apply {
                 includeTripRouteLayout.apply {
-                    tvAddressFrom.text = checkStringValue(
-                        this@TripDetailCompletedActivity,
-                        tripsData?.trip?.from_address
-                    )
-                    formatDateTime(
-                        this@TripDetailCompletedActivity,
-                        tvDepartureDate,
-                        tripsData?.trip?.departureDate
-                    )
-                    tvAddressWhereto.text = checkStringValue(
-                        this@TripDetailCompletedActivity,
-                        tripsData?.trip?.whereTo_address
-                    )
+                    if (sharedPreferenceManager.driverMode()) {
+                        tvAddressFrom.text = checkStringValue(
+                            this@TripDetailCompletedActivity,
+                            tripsData?.trip?.from_address
+                        )
+                        formatDateTime(
+                            this@TripDetailCompletedActivity,
+                            tvDepartureDate,
+                            tripsData?.trip?.departureDate
+                        )
+                        tvAddressWhereto.text = checkStringValue(
+                            this@TripDetailCompletedActivity,
+                            tripsData?.trip?.whereTo_address
+                        )
+                        tvPricePerPerson.text = checkPriceValue(tripsData?.trip?.pricePerPerson)
+                    } else {
+                        tvAddressFrom.text = checkStringValue(
+                            this@TripDetailCompletedActivity,
+                            tripsData?.from_address
+                        )
+                        formatDateTime(
+                            this@TripDetailCompletedActivity,
+                            tvDepartureDate,
+                            tripsData?.departureDate
+                        )
+                        tvAddressWhereto.text = checkStringValue(
+                            this@TripDetailCompletedActivity,
+                            tripsData?.whereTo_address
+                        )
+                        tvPricePerPerson.text = checkPriceValue(tripsData?.pricePerPerson)
+                    }
+
                 }
 
-                tvPricePerPerson.text = checkPriceValue(tripsData?.trip?.pricePerPerson)
+
             }
 
             // Trips details

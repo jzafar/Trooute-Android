@@ -38,6 +38,8 @@
                     android:id="@+id/rbSubmitExperienceWithDriver"
                     style="@style/RatingBarTheme"
                     android:layout_alignParentEnd="true"
+                    android:numStars="5"
+                    android:stepSize="0.1"
                     android:layout_marginEnd="@dimen/rating_bar_end_space" />
 
             </RelativeLayout>
@@ -84,12 +86,12 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvUserName"
                 style="@style/HeadLine_6"
-                tools:text="John Smith Review" />
+                tools:text="Review" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvComment"
                 style="@style/Body_6"
-                tools:text="Hold your driver’s license in hand and flash your best smile for the camera. Your journey towards becoming a driver starts with this snapshot." />
+                tools:text="Not Provided" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -112,16 +114,19 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/Body_6"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="@string/rate_the_vehicle" />
 
                 <RatingBar
                     android:id="@+id/rbRateTheVehicle"
                     style="@style/RatingBarTheme"
+                    android:visibility="gone"
                     android:layout_marginEnd="@dimen/rating_bar_end_space"
                     android:isIndicator="true" />
 
@@ -152,7 +157,7 @@
                 android:id="@+id/tvDriverComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Hold your driver’s license in hand and flash your best smile for the camera. Your journey towards becoming a driver starts with this snapshot." />
+                tools:text="Not Provided." />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -162,7 +167,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/experience" />
+                    android:text="@string/experience_passenger" />
 
                 <RatingBar
                     android:id="@+id/rbExperience"

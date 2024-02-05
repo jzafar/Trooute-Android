@@ -14,6 +14,10 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/default_screen_horizontal_space"
             android:paddingVertical="@dimen/default_screen_vertical_space"
@@ -87,6 +91,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:id="@+id/lvCarReview"
                     app:divider="@drawable/divider_section_space"
                     app:showDividers="middle">
 
@@ -117,7 +122,29 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+            <include
+                android:id="@+id/includeCarRatingDivider"
+                layout="@layout/divider_item"
+                android:visibility="gone"
+                />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ltCardReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="@dimen/_5sdp"
+                android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCarReviewsTitle"
+                style="@style/HeadLine_6"
+                android:text="@string/rating"
+                android:drawableEnd="@drawable/ic_arrow_down"/>
 
+            <include
+                android:id="@+id/includeCarReviewItem"
+                layout="@layout/car_reviews_item"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </com.google.android.material.card.MaterialCardView>
 
 </layout>

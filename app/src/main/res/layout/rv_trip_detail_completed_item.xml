@@ -47,11 +47,14 @@
                     android:id="@+id/includeUserDetail"
                     layout="@layout/driver_user_detail_item" />
 
-                <include layout="@layout/divider_item" />
+                <include
+                    android:id="@+id/includeUserDetailDevider"
+                    layout="@layout/divider_item" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/includeUserDetailReviewSection"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -73,6 +76,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
+                android:id="@+id/ltPriceSection"
                 android:paddingHorizontal="@dimen/default_screen_horizontal_space"
                 android:paddingVertical="@dimen/default_screen_vertical_space"
                 app:divider="@drawable/divider_section_space"
