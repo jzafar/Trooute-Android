@@ -45,7 +45,7 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingHorizontal="@dimen/sub_section_space"
                     app:divider="@drawable/divider_default_space"
@@ -223,10 +223,10 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvReviews"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:paddingHorizontal="@dimen/section_space"
-                    tools:listitem="@layout/rv_reviews_item" />
+                    android:layout_marginBottom="@dimen/section_space"
+                    tools:listitem="@layout/rv_reviews_item"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
