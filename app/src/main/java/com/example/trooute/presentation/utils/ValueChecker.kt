@@ -44,9 +44,9 @@ object ValueChecker {
     fun checkFloatValue(value: Float?): String {
         var flt = "0.0"
         value?.let {
-            flt = it.toString()
+            flt =  String.format("%.2f", it)
         }
-        return flt
+        return flt.replace(",",".")
     }
 
     fun checkDoubleValue(value: Double?): String {

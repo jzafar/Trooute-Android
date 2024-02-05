@@ -65,14 +65,20 @@ class DriverSidePassengersAdapter(
                             startCall.invoke(item.user)
                         }
                     }
-
                     val platFormFee = Constants.PLATFORM_FEE_PRICE * item.numberOfSeats!!
-                    val pricePerSeat = (item.tripData?.pricePerPerson?.toDouble() ?: 0.0) * item.numberOfSeats!!
+                    if (sharedPreferenceManager.driverMode()) {
+                        val pricePerSeat = (item.pricePerPerson ?: 1.0) * item.numberOfSeats!!
+                        tvNxSeats.text = checkNumOfSeatsValue(item.numberOfSeats)
+                        tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+                        tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
+                    } else {
+
+                    }
 
 
-                    tvNxSeats.text = checkNumOfSeatsValue(item.numberOfSeats)
-                    tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
-                    tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
+
+
+
                 }
             }
         }

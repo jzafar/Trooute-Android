@@ -231,51 +231,16 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
 //                    rvDriverSidePassengers.isVisible = false
                     ltDriverSidePassengers.isVisible = false
                 } else {
-//                    tvDriverSidePassengersNotAvailable.isVisible = false
-//                    rvDriverSidePassengers.isVisible = true
+
+                    val bookingList : MutableList<Booking>  = mutableListOf<Booking>()
+                    for (booking in tripsData.bookings) {
+                        booking.pricePerPerson = tripsData.trip?.pricePerPerson
+                        bookingList.add(booking)
+                    }
                     ltDriverSidePassengers.isVisible = true
-                    driverSidePassengersAdapter.submitList(tripsData.bookings)
+                    driverSidePassengersAdapter.submitList(bookingList)
                 }
 
-                // My Details
-//                tripsData.trip?.driver.let { driver ->
-//                    includeUserDetailLayout.apply {
-//                        ltCallInboxSection.isVisible = false
-//                        loadProfileImage(imgUserProfile, driver?.photo)
-//                        tvUserName.text = checkStringValue(this@TripDetailActivity, driver?.name)
-//
-//                        driver?.reviewsStats.let { review ->
-//                            tvAvgRating.text = checkFloatValue(review?.avgRating)
-//                            tvTotalReviews.text = "(${
-//                                checkLongValue(review?.totalReviews)
-//                            })"
-//                        }
-//
-//                        driver?.carDetails.let { car ->
-//                            includeVehicleInfoLayout.apply {
-//                                loadImage(imgVehicleProfile, car?.photo)
-//                                tvVehicleModel.text = checkStringValue(
-//                                    this@TripDetailActivity, car?.model
-//                                )
-//                                tvVehicleYear.text = checkLongValue(car?.year)
-//                                tvVehicleColor.text = checkStringValue(
-//                                    this@TripDetailActivity, car?.color
-//                                )
-//
-//                                car?.reviewsStats.let { review ->
-//                                    tvVehicleAvgRating.text = checkFloatValue(review?.avgRating)
-//                                    tvVehicleTotalReviews.text = "(${
-//                                        checkLongValue(review?.totalReviews)
-//                                    })"
-//                                }
-//
-//                                tvVehicleRegistrationNumber.text = checkStringValue(
-//                                    this@TripDetailActivity, car?.registrationNumber
-//                                )
-//                            }
-//                        }
-//                    }
-//                }
 
                 tripsData.trip.let { trip ->
                     Log.e(TAG, "setupViews: trip -> $trip")

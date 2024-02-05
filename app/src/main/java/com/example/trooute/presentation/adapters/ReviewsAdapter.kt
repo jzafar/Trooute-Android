@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trooute.R
 import com.example.trooute.data.model.review.response.Reviews
+import com.example.trooute.databinding.RvDriverSidePassengersItemBinding
 import com.example.trooute.databinding.RvReviewsItemBinding
 import com.example.trooute.presentation.utils.ValueChecker
 import com.example.trooute.presentation.utils.loadProfileImage
@@ -41,6 +42,7 @@ class ReviewsAdapter : ListAdapter<Reviews, ReviewsAdapter.ViewHolder>(DiffCallb
             LayoutInflater.from(parent.context), R.layout.rv_reviews_item, parent, false
         )
         return ViewHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

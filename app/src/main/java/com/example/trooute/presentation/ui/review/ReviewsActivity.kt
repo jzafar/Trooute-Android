@@ -41,10 +41,7 @@ class ReviewsActivity : AppCompatActivity() {
     private lateinit var rvSkeleton: Skeleton
     @Inject
     lateinit var loader: Loader
-
-    private val reviewsAdapter: ReviewsAdapter by lazy {
-        ReviewsAdapter()
-    }
+    private lateinit var reviewsAdapter: ReviewsAdapter
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +49,7 @@ class ReviewsActivity : AppCompatActivity() {
         statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_reviews)
         val userId = intent.getStringExtra(Constants.USER_ID).toString()
+        reviewsAdapter = ReviewsAdapter()
         binding.apply {
             includeAppBar.apply {
                 this.toolbarTitle.text = "Reviews"
@@ -69,7 +67,6 @@ class ReviewsActivity : AppCompatActivity() {
                 adapter = reviewsAdapter
                 rvSkeleton = this.applySkeleton(R.layout.rv_reviews_item)
                 rvSkeleton.showSkeleton()
-
             }
 
             getReviewsViewModel.getReviews(userId)
