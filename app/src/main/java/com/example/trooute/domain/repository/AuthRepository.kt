@@ -18,4 +18,5 @@ interface AuthRepository {
     suspend fun resendVerificationCode(request: ResendVerificationCodeRequest): Resource<AuthResponse>
     suspend fun updateMyProfile(request: MultipartBody): Resource<AuthResponse>
     suspend fun updateMyPassword(request: UpdateMyPasswordRequest): Resource<AuthResponse>
+    suspend fun getMe(): Resource<AuthResponse>
 }

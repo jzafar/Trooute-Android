@@ -97,6 +97,21 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
         editor.putString(PREF_AUTH_DATA, gson.toJson(model)).apply()
     }
 
+    fun updateUserInPref(model: User) {
+        val json = sharedPreferences.getString(PREF_AUTH_DATA, null)
+        var user = gson.fromJson(json, User::class.java)
+        user.carDetails = model.carDetails
+        user.name = model.name
+        user.role = model.role
+        user.photo = model.photo
+        user.isApprovedDriver = model.isApprovedDriver
+        user.phoneNumber = model.phoneNumber
+        user.isEmailVerified = model.isEmailVerified
+        user.stripeConnectedAccountId = model.stripeConnectedAccountId
+        user.gender = model.gender
+        user.reviewsStats = model.reviewsStats
+        saveAuthModelInPref(user)
+    }
     fun getAuthModelFromPref(): User? {
         val json = sharedPreferences.getString(PREF_AUTH_DATA, null) ?: return null
         return gson.fromJson(json, User::class.java)

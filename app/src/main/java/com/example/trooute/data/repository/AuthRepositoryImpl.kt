@@ -78,4 +78,11 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getMe(): Resource<AuthResponse> {
+        return withContext(ioDispatcher) {
+            safeApiCall {
+                authAPI.getMe()
+            }
+        }
+    }
 }
