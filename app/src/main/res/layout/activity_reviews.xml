@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,10 +16,6 @@
             android:layout_height="wrap_content" />
         <androidx.core.widget.NestedScrollView
             android:id="@+id/ltRoot"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-            <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -43,182 +35,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/HeadLine_4"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/ratingDropDown"
+                    android:text="@string/reviews"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Body_6"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/sub_section_space"
-                    app:divider="@drawable/divider_default_space"
-                    app:showDividers="middle">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/HeadLine_4"
-                            android:layout_centerVertical="true"
-                            android:layout_toStartOf="@+id/ratingDropDown"
-                            android:text="@string/reviews" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/ratingDropDown"
-                            style="@style/DropDownStyle"
-                            android:visibility="gone"
-                            android:layout_width="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true">
-
-                            <AutoCompleteTextView
-                                style="@style/CustomAutoCompleteTextView"
-                                android:hint="Top Rated" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </RelativeLayout>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        app:divider="@drawable/divider_default_space"
-                        app:showDividers="middle">
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            app:divider="@drawable/divider_sub_section_space"
-                            app:showDividers="middle">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/HeadLine_1"
-                                android:id="@+id/tvMainAvgRating"
-                                tools:text="4.7" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/Body_6"
-                                android:drawableStart="@drawable/ic_star"
-                                tools:text=""
-                                android:gravity="center"
-                                android:id="@+id/totalNumberOfRating"
-                                android:textColor="@color/secondary_cadet_blue_color" />
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:divider="@drawable/divider_default_space"
-                            app:showDividers="middle">
-
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                app:divider="@drawable/divider_sub_section_space"
-                                app:showDividers="middle">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Body_7"
-                                    android:layout_width="wrap_content"
-                                    tools:text="5" />
-
-                                <com.google.android.material.progressindicator.LinearProgressIndicator
-                                    style="@style/LinearProgressIndicator"
-                                    android:id="@+id/tvProgress5"
-                                    android:progress="80" />
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
-
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                app:divider="@drawable/divider_sub_section_space"
-                                app:showDividers="middle">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Body_7"
-                                    android:layout_width="wrap_content"
-                                    tools:text="4" />
-
-                                <com.google.android.material.progressindicator.LinearProgressIndicator
-                                    style="@style/LinearProgressIndicator"
-                                    android:id="@+id/tvProgress4"
-                                    android:progress="70" />
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
-
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                app:divider="@drawable/divider_sub_section_space"
-                                app:showDividers="middle">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Body_7"
-                                    android:layout_width="wrap_content"
-                                    tools:text="3" />
-
-                                <com.google.android.material.progressindicator.LinearProgressIndicator
-                                    style="@style/LinearProgressIndicator"
-                                    android:id="@+id/tvProgress3"
-                                    android:progress="30" />
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
-
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                app:divider="@drawable/divider_sub_section_space"
-                                app:showDividers="middle">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Body_7"
-                                    android:layout_width="wrap_content"
-                                    tools:text="2" />
-
-                                <com.google.android.material.progressindicator.LinearProgressIndicator
-                                    style="@style/LinearProgressIndicator"
-                                    android:id="@+id/tvProgress2"
-                                    android:progress="40" />
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
-
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                app:divider="@drawable/divider_sub_section_space"
-                                app:showDividers="middle">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Body_7"
-                                    android:layout_width="wrap_content"
-                                    tools:text="1" />
-
-                                <com.google.android.material.progressindicator.LinearProgressIndicator
-                                    style="@style/LinearProgressIndicator"
-                                    android:id="@+id/tvProgress1"
-                                    android:progress="20" />
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:layout_height="match_parent"
+                    android:id="@+id/noReviews"
+                    android:text="@string/no_reviews_yet"
+                    android:paddingVertical="@dimen/_30sdp"
+                    android:gravity="center_horizontal"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvReviews"
@@ -226,11 +56,11 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:layout_marginBottom="@dimen/section_space"
-                    tools:listitem="@layout/rv_reviews_item"/>
+                    tools:listitem="@layout/rv_reviews_item"
+                    android:visibility="gone"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-        </androidx.core.widget.NestedScrollView>
         </androidx.core.widget.NestedScrollView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

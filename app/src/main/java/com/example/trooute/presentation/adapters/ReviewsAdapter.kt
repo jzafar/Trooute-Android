@@ -22,12 +22,12 @@ class ReviewsAdapter : ListAdapter<Reviews, ReviewsAdapter.ViewHolder>(DiffCallb
         fun bindViews(currentItem: Reviews?) {
             currentItem?.let { item ->
                 binding.apply {
-                    loadProfileImage(userImage, item.target?.photo.toString())
+                    loadProfileImage(userImage, item.user?.photo.toString())
                     tvUserName.text = ValueChecker.checkStringValue(
-                        tvUserName.context, item.target?.name
+                        tvUserName.context, item.user?.name
                     )
                     tvAvgRating.text =
-                        ValueChecker.checkFloatValue(item.target?.reviewsStats?.avgRating)
+                        ValueChecker.checkFloatValue(item.rating?.toFloat())
                     tvComment.text =
                         ValueChecker.checkStringValue(
                             tvComment.context, item.comment

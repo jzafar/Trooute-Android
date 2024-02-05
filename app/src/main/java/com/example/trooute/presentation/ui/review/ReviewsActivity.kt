@@ -124,15 +124,15 @@ class ReviewsActivity : AppCompatActivity() {
                 )
             })"
 
-            binding.tvMainAvgRating.text = ValueChecker.checkFloatValue(firstReview.target?.reviewsStats?.avgRating)
-            binding.totalNumberOfRating.text = "(${
-                ValueChecker.checkLongValue(
-                    firstReview.target?.reviewsStats?.totalReviews
-                )
-            })"
-
-
+        if(reviewsData.size  > 0) {
+            binding.noReviews.isVisible = false
+            binding.rvReviews.isVisible = true
             reviewsAdapter.submitList(reviewsData)
+        } else {
+            binding.noReviews.isVisible = true
+            binding.rvReviews.isVisible = false
+        }
+
         }
     }
 }
