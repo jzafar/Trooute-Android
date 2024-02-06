@@ -337,6 +337,9 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
             binding.imgDrivingLicense.isVisible = true
             binding.ltClickToUploadDrivingLicense.isVisible  = false
 
+            setUpYearDropDown(binding.actYear)
+            setUpColorDropDown(binding.actColor)
+
         }
 
     }
