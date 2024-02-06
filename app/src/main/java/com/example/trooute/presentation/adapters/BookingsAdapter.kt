@@ -21,6 +21,7 @@ import com.example.trooute.presentation.utils.FilterBookings
 import com.example.trooute.presentation.utils.StatusChecker.checkStatus
 import com.example.trooute.presentation.utils.Utils.formatDateTime
 import com.example.trooute.presentation.utils.Utils.getSubString
+import com.example.trooute.presentation.utils.ValueChecker
 import com.example.trooute.presentation.utils.ValueChecker.checkFloatValue
 import com.example.trooute.presentation.utils.ValueChecker.checkLongValue
 import com.example.trooute.presentation.utils.ValueChecker.checkNumOfSeatsValue
@@ -70,6 +71,17 @@ class BookingsAdapter(
                                 tvUserName.context,
                                 item.user?.name
                             )
+                            var genderStr = ValueChecker.checkStringValue(
+                                gender.context, item.user?.gender
+                            )
+
+                            if (genderStr.equals(gender.context.getString(R.string.not_provided))){
+                                gender.isVisible = false
+                            }
+                            else {
+                                gender.text = genderStr
+                            }
+
                             tvAvgRating.text = checkFloatValue(
                                 item.user?.reviewsStats?.avgRating
                             )
@@ -104,6 +116,18 @@ class BookingsAdapter(
                                 tvUserName.context,
                                 item.trip?.driver?.name
                             )
+                            var genderStr = ValueChecker.checkStringValue(
+                                gender.context, item.trip?.driver?.gender
+                            )
+
+                            if (genderStr.equals(gender.context.getString(R.string.not_provided))){
+                                gender.isVisible = false
+                            }
+                            else {
+                                gender.text = genderStr
+                            }
+
+
                             tvAvgRating.text = checkFloatValue(
                                 item.trip?.driver?.reviewsStats?.avgRating
                             )

@@ -66,6 +66,18 @@ class TripDetailCompletedAdapter(
                             tvUserName.context,
                             booking.user?.name
                         )
+
+                        var genderStr = checkStringValue(
+                            gender.context, booking.user?.gender
+                        )
+
+                        if (genderStr.equals(gender.context.getString(R.string.not_provided))){
+                            gender.isVisible = false
+                        }
+                        else {
+                            gender.text = genderStr
+                        }
+
                         tvAvgRating.text = checkFloatValue(booking.user?.reviewsStats?.avgRating)
                         tvTotalReviews.text = "(${
                             checkLongValue(booking.user?.reviewsStats?.totalReviews)

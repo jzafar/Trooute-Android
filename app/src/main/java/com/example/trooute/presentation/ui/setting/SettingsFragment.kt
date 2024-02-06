@@ -38,6 +38,7 @@ import com.example.trooute.presentation.ui.trip.SetUpYourTripActivity
 import com.example.trooute.presentation.ui.trip.TripsHistoryActivity
 import com.example.trooute.presentation.ui.wishlist.WishListActivity
 import com.example.trooute.presentation.utils.Loader
+import com.example.trooute.presentation.utils.ValueChecker
 import com.example.trooute.presentation.utils.ValueChecker.checkFloatValue
 import com.example.trooute.presentation.utils.ValueChecker.checkLongValue
 import com.example.trooute.presentation.utils.ValueChecker.checkStringValue
@@ -328,6 +329,16 @@ class SettingsFragment : Fragment() {
                     tvUserName.text = checkStringValue(
                         requireContext(), user?.name
                     )
+                    var genderStr = ValueChecker.checkStringValue(
+                        requireContext(), user?.gender
+                    )
+
+                    if (genderStr.equals(getString(R.string.not_provided))){
+                        gender.isVisible = false
+                    }
+                    else {
+                        gender.text = genderStr
+                    }
 
                     if (sharedPreferenceManager.getDriverStatus() == "approved") {
                         setDrawableEnd(

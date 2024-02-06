@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/ltRoot"
         style="@style/ElevatedCardViewStyle">
@@ -32,18 +28,18 @@
                     style="@style/CircleProfileImageStyle"
                     android:layout_width="@dimen/_75sdp"
                     android:layout_height="@dimen/_75sdp"
-                    app:srcCompat="@drawable/profile_place_holder" />
+                    app:srcCompat="@drawable/profile_place_holder"
+                    android:layout_gravity="center_vertical"/>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:divider="@drawable/divider_section_space"
                         app:showDividers="middle">
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -54,11 +50,19 @@
                             android:maxLines="1"
                             tools:text="" />
 
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/gender"
+                            style="@style/Body_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            tools:text=""/>
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:paddingTop="@dimen/section_space"
                             app:divider="@drawable/divider_section_space"
                             app:showDividers="middle">
 
@@ -97,42 +101,35 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    >
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/gender"
-                        style="@style/Body_6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        tools:text="" />
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/ltCallInboxSection"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="end|bottom"
-                        android:orientation="horizontal"
-                        android:visibility="invisible"
-                        app:divider="@drawable/divider_sub_section_space"
-                        app:showDividers="middle">
+                        android:orientation="horizontal" >
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/messageIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_open_inbox" />
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/ltCallInboxSection"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="end|bottom"
+                            android:orientation="horizontal"
+                            android:visibility="invisible"
+                            app:divider="@drawable/divider_sub_section_space"
+                            app:showDividers="middle">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/callIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_call" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/messageIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_open_inbox" />
 
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/callIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_call" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.appcompat.widget.LinearLayoutCompat>
-                </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -140,8 +137,7 @@
             <include
                 android:id="@+id/includeUserDetailDivider"
                 layout="@layout/divider_item"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/driverReviewSection"
@@ -161,8 +157,8 @@
                     layout="@layout/reviews_item"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.appcompat.widget.LinearLayoutCompat>
 
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </com.google.android.material.card.MaterialCardView>
 </layout>

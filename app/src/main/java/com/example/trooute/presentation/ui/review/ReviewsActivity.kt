@@ -113,9 +113,17 @@ class ReviewsActivity : AppCompatActivity() {
             tvUserName.text = ValueChecker.checkStringValue(
                 this@ReviewsActivity, firstReview.target?.name
             )
-            gender.text = ValueChecker.checkStringValue(
+            var genderStr = ValueChecker.checkStringValue(
                 this@ReviewsActivity, firstReview.target?.gender
             )
+
+            if (genderStr.equals(getString(R.string.not_provided))){
+                gender.isVisible = false
+            }
+            else {
+                gender.text = genderStr
+            }
+
             tvAvgRating.text =
                 ValueChecker.checkFloatValue(firstReview.target?.reviewsStats?.avgRating)
             tvTotalReviews.text = "(${

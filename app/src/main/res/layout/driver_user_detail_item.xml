@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,18 +17,18 @@
             style="@style/CircleProfileImageStyle"
             android:layout_width="@dimen/_75sdp"
             android:layout_height="@dimen/_75sdp"
-            app:srcCompat="@drawable/profile_place_holder" />
+            app:srcCompat="@drawable/profile_place_holder"
+            android:layout_gravity="center_vertical"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:divider="@drawable/divider_section_space"
                 app:showDividers="middle">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -42,11 +38,19 @@
                     android:drawableEnd="@drawable/ic_verified_done"
                     android:maxLines="1"
                     tools:text="Sheraz Ahmad" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/gender"
+                    style="@style/Body_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    tools:text=""/>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:paddingTop="@dimen/section_space"
                     app:divider="@drawable/divider_section_space"
                     app:showDividers="middle">
 

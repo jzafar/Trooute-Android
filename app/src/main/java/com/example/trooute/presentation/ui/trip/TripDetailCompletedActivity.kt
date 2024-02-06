@@ -315,6 +315,18 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                             this@TripDetailCompletedActivity,
                             driver?.name
                         )
+                        var genderStr = checkStringValue(
+                            this@TripDetailCompletedActivity, driver?.gender
+                        )
+
+                        if (genderStr.equals(getString(R.string.not_provided))){
+                            gender.isVisible = false
+                        }
+                        else {
+                            gender.text = genderStr
+                        }
+
+
                         tvAvgRating.text = checkFloatValue(driver?.reviewsStats?.avgRating)
                         tvTotalReviews.text = "(${checkLongValue(driver?.reviewsStats?.totalReviews)})"
 

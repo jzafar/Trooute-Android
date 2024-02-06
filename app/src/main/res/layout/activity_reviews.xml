@@ -48,7 +48,8 @@
                     android:id="@+id/noReviews"
                     android:text="@string/no_reviews_yet"
                     android:paddingVertical="@dimen/_30sdp"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvReviews"
@@ -56,8 +57,7 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:layout_marginBottom="@dimen/section_space"
-                    tools:listitem="@layout/rv_reviews_item"
-                    android:visibility="gone"/>
+                    tools:listitem="@layout/rv_reviews_item"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

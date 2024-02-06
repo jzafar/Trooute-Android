@@ -605,6 +605,18 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                 tvUserName.text = checkStringValue(
                     this@BookingDetailActivity, bookingData.user?.name
                 )
+
+                var genderStr = checkStringValue(
+                    this@BookingDetailActivity, bookingData.user?.gender
+                )
+
+                if (genderStr.equals(getString(R.string.not_provided))){
+                    gender.isVisible = false
+                }
+                else {
+                    gender.text = genderStr
+                }
+
                 tvAvgRating.text = checkFloatValue(bookingData.user?.reviewsStats?.avgRating)
                 tvTotalReviews.text = "(${
                     checkLongValue(
@@ -762,6 +774,18 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                 tvUserName.text = checkStringValue(
                     this@BookingDetailActivity, bookingData.trip?.driver?.name
                 )
+
+                var genderStr = checkStringValue(
+                    this@BookingDetailActivity, bookingData.trip?.driver?.gender
+                )
+
+                if (genderStr.equals(getString(R.string.not_provided))){
+                    gender.isVisible = false
+                }
+                else {
+                    gender.text = genderStr
+                }
+
                 tvAvgRating.text = checkFloatValue(
                     bookingData.trip?.driver?.reviewsStats?.avgRating
                 )
