@@ -1,6 +1,7 @@
 package com.example.trooute.presentation.adapters
 
 import android.annotation.SuppressLint
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -38,6 +39,12 @@ class DriverSidePassengersAdapter(
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n", "RestrictedApi")
         fun bindViews(currentItem: Booking?) {
+            val width = binding.root.context.resources.displayMetrics?.widthPixels
+            if (width != null && this@DriverSidePassengersAdapter.itemCount > 1) {
+                val params = RecyclerView.LayoutParams((width * 0.85).toInt(), RecyclerView.LayoutParams.WRAP_CONTENT)
+                itemView.layoutParams = params
+            }
+
             currentItem?.let { item ->
                 binding.apply {
                     checkStatus(sharedPreferenceManager.driverMode(), tvBookingStatus, item.status)
@@ -94,6 +101,7 @@ class DriverSidePassengersAdapter(
                 }
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -103,10 +111,6 @@ class DriverSidePassengersAdapter(
             parent,
             false
         )
-//        val params: ViewGroup.LayoutParams = binding.parentView.layoutParams
-//        params.width = (ViewGroup.LayoutParams.MATCH_PARENT * 0.6).toInt()
-//        params.height = binding.parentView.height
-//        binding.parentView.requestLayout()
         return ViewHolder(binding)
     }
 

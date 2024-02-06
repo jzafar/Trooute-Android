@@ -3,14 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-
-    </data>
-
-    <com.google.android.material.card.MaterialCardView style="@style/ElevatedCardViewStyle70Percent"
+    <com.google.android.material.card.MaterialCardView
+        style="@style/ElevatedCardViewStyle70Percent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_1sdp"
         android:id="@+id/parentView">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
