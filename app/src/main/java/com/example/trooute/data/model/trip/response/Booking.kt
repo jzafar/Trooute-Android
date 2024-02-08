@@ -18,6 +18,7 @@ data class Booking(
     val reviewsGivenToCar: ReviewsGiven? = null,
     val reviewsGivenToDriver: ReviewsGiven? = null,
     var reviewsGivenToUser: ReviewsGiven? = null,
+    var reviewsGivenToUsersByUser: List<ReviewsGiven?> = emptyList(),
     val status: String? = null ?: "",
     val createdAt:String? = null?: "",
     val updatedAt:String? = null?: "",

@@ -194,7 +194,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                                     if (tripsData.trip?.driver?._id != null) {
                                         tripDriver = tripsData.trip.driver._id
                                     } else {
-                                        tripID = sharedPreferenceManager.getAuthIdFromPref().toString()
+//                                        tripID = sharedPreferenceManager.getAuthIdFromPref().toString()
                                     }
 
                                 }
@@ -254,34 +254,6 @@ class TripDetailCompletedActivity : AppCompatActivity() {
             // Passengers detail
             if (tripsData.bookings?.isEmpty() == true || tripsData.bookings == null) {
                 ltPassengersUserSide.isVisible = false
-//                if (tripsData.passengers?.size == 1) { // he was only one passanger
-//                    tvNoComTripsPassengersAvailable.isVisible = false
-//                    rvDriverSidePassengers.isVisible = false
-//                    ltPassengersUserSide.isVisible = false
-//                } else {
-//                    val currentUser = sharedPreferenceManager.getAuthIdFromPref()
-//                    val passengers = tripsData.passengers?.filter { it._id != currentUser }
-//
-//                    val bookingList : MutableList<Booking>  = mutableListOf<Booking>()
-//                    if (passengers != null) {
-//                        for (passenger in passengers) {
-//                            val booking = Booking()
-//                            var user = User()
-//                            user.name = passenger.name
-//                            user.photo = passenger.photo
-//                            user.reviewsStats = passenger.reviewsStats
-//                            booking.user = user
-//                            booking._id = tripID
-//                            bookingList.add(booking)
-//                        }
-//                    }
-//
-//
-////                    tvNoComTripsPassengersAvailable.isVisible = true
-////                    rvDriverSidePassengers.isVisible = true
-//                    ltPassengersUserSide.isVisible = true
-//                    tripDetailCompletedAdapter.submitList(bookingList)
-//                }
 
             } else {
                 val bookingList : MutableList<Booking>  = mutableListOf<Booking>()
@@ -353,60 +325,67 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                             }
 
                             // Review given to driver from user
-//                            tripsData.bookings?.reviewsGivenToDriver?.let {
-//                                ltUserReviews.isVisible = true
-//                                includeDivider.divider.isVisible = true
-//
-//                                tvUserName.text = checkStringValue(
-//                                    tvUserName.context,
-//                                    tripsData.bookings?.user?.name
-//                                )
-//                                tvComment.text = checkStringValue(
-//                                    tvComment.context,
-//                                    booking.reviewsGivenToCar?.comment
-//                                )
-//
-//                                rbExperienceWithDriver.rating = checkFloatValue(
-//                                    booking.reviewsGivenToCar?.rating
-//                                ).toFloat()
+                            val userBooking: Booking? = tripsData.bookings?.filter {
+                                it.user?._id ==  sharedPreferenceManager.getAuthIdFromPref()
+                            }?.single()
+                            userBooking?.reviewsGivenToDriver?.let {
+                                ltUserReviews.isVisible = true
+                                includeDivider.divider.isVisible = true
+
+                                tvUserName.text = checkStringValue(
+                                    tvUserName.context,
+                                    userBooking.user?.name
+                                )
+                                tvComment.text = checkStringValue(
+                                    tvComment.context,
+                                    userBooking.reviewsGivenToDriver.comment
+                                )
+
+                                rbExperienceWithDriver.rating = checkFloatValue(
+                                    userBooking.reviewsGivenToDriver.rating
+                                ).toFloat()
 //                                rbRateTheVehicle.rating = checkFloatValue(
 //                                    booking.reviewsGivenToCar?.rating
 //                                ).toFloat()
-//                            }
+                            }
 
                             run {
-                                ltWriteReviews.isVisible = true
-                                ltDriverReview.isVisible = false
+                                if (userBooking != null) {
+                                    btnSubmitReview.isVisible = false
+                                    ltWriteReviews.isVisible = false
+                                    ltDriverReview.isVisible = false
+                                } else {
+                                    btnSubmitReview.isVisible = true
+                                    ltWriteReviews.isVisible = true
+                                    ltDriverReview.isVisible = false
+                                    var submitReviewRatingValue = rbSubmitExperienceWithDriver.rating
 
-                                var submitReviewRatingValue = rbSubmitExperienceWithDriver.rating
-
-                                rbSubmitExperienceWithDriver.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-                                    submitReviewRatingValue = rating
-                                }
-
-                                btnSubmitReview.setOnClickListener {
-                                    if (
-                                        shareYourThoughts.context.isFieldValid(
-                                            shareYourThoughts,
-                                            "Required"
-                                        )
-                                    ) {
-                                        // Handling on client side
-                                        val comment = shareYourThoughts.text.toString()
+                                    rbSubmitExperienceWithDriver.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                                        submitReviewRatingValue = rating
+                                        btnSubmitReview.setOnClickListener {
+                                            if (
+                                                shareYourThoughts.context.isFieldValid(
+                                                    shareYourThoughts,
+                                                    "Comment Required"
+                                                )
+                                            ) {
+                                                // Handling on client side
+                                                val comment = shareYourThoughts.text.toString()
 //                                        commentState(binding, comment, submitReviewRatingValue)
-                                        val driverId = tripsData.driver?._id
-                                        // Handling on server side
-                                        if (driverId != null) {
-                                            submitReviewClicked(0,driverId,"Driver",comment,submitReviewRatingValue,tripsData._id)
-                                        }
+                                                val driverId = tripsData.driver?._id
+                                                // Handling on server side
+                                                if (driverId != null) {
+                                                    submitReviewClicked(0,driverId,"Driver",comment,submitReviewRatingValue,tripsData._id)
+                                                }
 
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
 
-
-
+                        // User to Car review
                         includeCarDetails.apply {
                             driver?.carDetails.let { carDetails ->
                                 loadImage(imgVehicleProfile, carDetails?.photo)
@@ -433,8 +412,19 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                                 ltCardReview.isVisible = true
                                 includeCarRatingDivider.root.isVisible = true
                                 includeCarReviewItem.ltCarReviewsItem.isVisible = false
+                                // User to car rating
                                 ltCardReview.setOnClickListener{
                                     includeCarReviewItem.ltCarReviewsItem.apply {
+                                        val userBooking: Booking? = tripsData.bookings?.filter {
+                                            it.user?._id ==  sharedPreferenceManager.getAuthIdFromPref()
+                                        }?.single()
+                                        userBooking?.reviewsGivenToCar?.let {
+                                            includeCarReviewItem.btnSubmitCarReview.isVisible = false
+                                            includeCarReviewItem.rbSubmitExperienceWithDriver.rating =
+                                                checkFloatValue(
+                                                    it.rating
+                                                ).toFloat()
+                                        }
                                         if (isVisible) {
                                             isVisible = false
                                             tvCarReviewsTitle.setCompoundDrawablesWithIntrinsicBounds(
@@ -450,10 +440,23 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                                                 ), null
                                             )
                                         }
+                                        includeCarReviewItem.btnSubmitCarReview.setOnClickListener{
+                                            var submitReviewRatingValue = checkFloatValue(
+                                                includeCarReviewItem.rbSubmitExperienceWithDriver.rating
+                                            ).toFloat()
+                                            if (submitReviewRatingValue.toDouble() == 0.0) {
+                                                Toast(this@TripDetailCompletedActivity).showErrorMessage(
+                                                    this@TripDetailCompletedActivity,
+                                                    "Please select rating"
+                                                )
+                                                return@setOnClickListener
+                                            }
+                                            driver?._id?.let { it1 ->
+                                                submitReviewClicked(0,
+                                                    it1,"Car","", submitReviewRatingValue,tripsData._id)
+                                            }
+                                        }
                                     }
-
-                                }
-                                includeCarReviewItem.btnSubmitCarReview.setOnClickListener{
 
                                 }
                             }

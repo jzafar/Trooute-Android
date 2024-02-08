@@ -76,7 +76,7 @@
                         android:layout_weight=".25"
                         android:src="@drawable/edit_info"
                         app:tint="@color/primary_color"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                     </androidx.appcompat.widget.AppCompatImageButton>
 
