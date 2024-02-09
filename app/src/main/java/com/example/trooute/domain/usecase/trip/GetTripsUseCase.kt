@@ -7,10 +7,10 @@ import javax.inject.Inject
 
 class GetTripsUseCase @Inject constructor(private val tripsRepository: TripsRepository) {
     suspend operator fun invoke(
-        fromLatitude: Double?, fromLongitude: Double?
+        fromLatitude: Double?, fromLongitude: Double?, departureDate: String?
     ): Resource<GetTripsResponse> {
         return tripsRepository.getTrips(
-            fromLatitude = fromLatitude, fromLongitude = fromLongitude
+            fromLatitude = fromLatitude, fromLongitude = fromLongitude, departureDate = departureDate
         )
     }
 }

@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -26,8 +25,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.trooute.R
 import com.example.trooute.core.interceptor.SessionUtils
 import com.example.trooute.core.util.Constants.INTENT_IS_TRIP_WISH_LISTED
-import com.example.trooute.core.util.Constants.PLACES_DESTINATION_LAT_LNG
-import com.example.trooute.core.util.Constants.PLACES_START_LAT_LNG
 import com.example.trooute.core.util.Constants.SEARCH_TRIPS_DATA
 import com.example.trooute.core.util.Constants.TRIP_ID
 import com.example.trooute.core.util.Constants.TROOUTE_TOPIC
@@ -54,12 +51,12 @@ import com.example.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishLis
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.material.slider.RangeSlider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
 import javax.inject.Inject
@@ -248,10 +245,15 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
     }
 
     private fun callGetTripsApi(location: Location?) {
+        var departureDate: String? = null
+        if (sharedPreferenceManager.driverMode()) {
+            departureDate = LocalDate.now().toString()
+        }
+
         location.let {
             Log.e(TAG, "callGetTripsApi: lat -> ${it?.latitude}, lng -> ${it?.longitude}")
             getTripsViewModel.getTrips(
-                fromLatitude = it?.latitude, fromLongitude = it?.longitude
+                fromLatitude = it?.latitude, fromLongitude = it?.longitude, departureDate =  departureDate
             )
             bindGetTripsObserver()
         }

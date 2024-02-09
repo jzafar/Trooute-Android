@@ -24,7 +24,8 @@ interface TripsAPI {
     @GET(GET_TRIPS_END_POINT)
     suspend fun getTrips(
         @Query("fromCoordinates[0]") fromLatitude: Double?,
-        @Query("fromCoordinates[1]") fromLongitude: Double?
+        @Query("fromCoordinates[1]") fromLongitude: Double?,
+        @Query("departureDate") departureDate: String?,
     ): Response<GetTripsResponse>
 
     @GET(GET_TRIPS_END_POINT)
