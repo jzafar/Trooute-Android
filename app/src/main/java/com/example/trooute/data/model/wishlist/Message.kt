@@ -21,5 +21,6 @@ data class Message(
     val totalAmount: Double?,
     val totalSeats: Long?,
     val whereTo_address: String?,
-    val whereTo_location: WhereToLocation?
+    val whereTo_location: WhereToLocation?,
+    val isAddedInWishList: Boolean
 )

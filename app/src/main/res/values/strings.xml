@@ -244,5 +244,6 @@
     <string name="authentication_error">Unable to autheticate</string>
     <string name="enable_biometric_login">Enable Biometric Login</string>
     <string name="no_reviews_yet">No Reviews submitted for this User</string>
-
+    <string name="wish_list_added">Trip is added to your wishlist</string>
+    <string name="wish_list_removed">Trip is removed from your wishlist</string>
 </resources>

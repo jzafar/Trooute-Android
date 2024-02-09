@@ -1,9 +1,9 @@
 package com.example.trooute.presentation.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -16,6 +16,7 @@ import com.example.trooute.data.model.trip.response.TripsData
 import com.example.trooute.databinding.RvTripsItemBinding
 import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.interfaces.WishListEventListener
+import com.example.trooute.presentation.ui.trip.SearchForTripsActivity
 import com.example.trooute.presentation.utils.Utils.formatDateTime
 import com.example.trooute.presentation.utils.ValueChecker.checkFloatValue
 import com.example.trooute.presentation.utils.ValueChecker.checkLongValue
@@ -26,9 +27,9 @@ import com.example.trooute.presentation.utils.loadProfileImage
 import com.example.trooute.presentation.utils.setRVOverlayHorizontal
 
 class TripsAdapter(
-    private val sharedPreferenceManager: SharedPreferenceManager? = null,
+    private val sharedPreferenceManager: SharedPreferenceManager,
     private val adapterItemClickListener: AdapterItemClickListener? = null,
-    private val wishLisEvent: WishListEventListener? = null
+    private val wishListEventListener: WishListEventListener? = null
 ) : ListAdapter<TripsData, TripsAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: RvTripsItemBinding) :
@@ -83,13 +84,13 @@ class TripsAdapter(
                         icHeart.setOnClickListener {
                             icHeart.isVisible = false
                             icRedHeart.isVisible = true
-                            wishLisEvent?.onWishListEventClick(position = bindingAdapterPosition, data = item)
+                            wishListEventListener?.onWishListEventClick(position = bindingAdapterPosition, data = item, added = true)
                         }
 
                         icRedHeart.setOnClickListener {
                             icHeart.isVisible = true
                             icRedHeart.isVisible = false
-                            wishLisEvent?.onWishListEventClick(position = bindingAdapterPosition, data = item)
+                            wishListEventListener?.onWishListEventClick(position = bindingAdapterPosition, data = item, added = false)
                         }
 
                         includeDriverInfo.apply {

@@ -184,10 +184,13 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
 
     override fun onResume() {
         super.onResume()
+        loadTripDetails()
+    }
+
+    private fun loadTripDetails(){
         getTripDetailsViewModel.getTrips(tripsID = tripID)
         bindGetTripDetailsObserver()
     }
-
     @SuppressLint("SetTextI18n", "RepeatOnLifecycleWrongUsage")
     private fun bindGetTripDetailsObserver() {
         lifecycleScope.launch {
@@ -502,7 +505,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                     intent.putExtra(INTENT_IS_TRIP_WISH_LISTED, tripsData.isAddedInWishList)
                     setResult(WISH_LIST_CHECKER_CODE, intent)
 
-                    addToWishList(tripsData._id)
+                    addToWishList(tripsData._id,true)
                 }
 
                 imgRedHeart.setOnClickListener {
@@ -515,7 +518,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                     intent.putExtra(INTENT_IS_TRIP_WISH_LISTED, tripsData.isAddedInWishList)
                     setResult(WISH_LIST_CHECKER_CODE, intent)
 
-                    addToWishList(tripsData._id)
+                    addToWishList(tripsData._id, false)
                 }
 
                 btnBookNow.setOnClickListener {
@@ -537,13 +540,13 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
         }
     }
 
-    private fun addToWishList(id: String) {
+    private fun addToWishList(id: String, added: Boolean) {
         addToWishListViewModel.addToWishList(id)
-        binAddToWishListObserver()
+        binAddToWishListObserver(added)
     }
 
     @SuppressLint("RepeatOnLifecycleWrongUsage")
-    private fun binAddToWishListObserver() {
+    private fun binAddToWishListObserver(added: Boolean) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 addToWishListViewModel.addToWishListState.collect {
@@ -553,6 +556,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                                 TAG,
                                 "binAddToWishListObserver: error -> " + it.message.toString()
                             )
+                            loadTripDetails()
                         }
 
                         Resource.LOADING -> {
@@ -560,7 +564,19 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                         }
 
                         is Resource.SUCCESS -> {
-                            Log.e(TAG, "binAddToWishListObserver: success -> " + it.data)
+                            Log.i(TAG, "binAddToWishListObserver: success -> " + it.data)
+                            if (added) {
+                                Toast(this@TripDetailActivity).showSuccessMessage(
+                                    this@TripDetailActivity,
+                                    getString(R.string.wish_list_added)
+                                )
+                            } else {
+                                Toast(this@TripDetailActivity).showSuccessMessage(
+                                    this@TripDetailActivity,
+                                    getString(R.string.wish_list_removed)
+                                )
+                            }
+                            loadTripDetails()
                         }
                     }
                 }

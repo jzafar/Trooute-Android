@@ -40,7 +40,7 @@ class TripsRepositoryImpl @Inject constructor(
 
     override suspend fun getSearchedTrips(
         fromLatitude: Double, fromLongitude: Double,
-        whereToLatitude: Double, whereToLongitude: Double,
+        whereToLatitude: Double, whereToLongitude: Double, currentDate: String
     ): Resource<GetTripsResponse> {
         return withContext(ioDispatcher) {
             safeApiCall {
@@ -49,6 +49,8 @@ class TripsRepositoryImpl @Inject constructor(
                     fromLongitude = fromLongitude,
                     whereToLatitude = whereToLatitude,
                     whereToLongitude = whereToLongitude,
+                    currentDate = currentDate
+
                 )
             }
         }

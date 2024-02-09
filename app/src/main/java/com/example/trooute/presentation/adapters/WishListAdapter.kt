@@ -13,6 +13,7 @@ import com.example.trooute.R
 import com.example.trooute.data.model.common.Passenger
 import com.example.trooute.data.model.wishlist.Message
 import com.example.trooute.databinding.RvTripsItemBinding
+import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.interfaces.WishListEventListener
 import com.example.trooute.presentation.utils.Utils.formatDateTime
 import com.example.trooute.presentation.utils.ValueChecker.checkLongValue
@@ -21,7 +22,8 @@ import com.example.trooute.presentation.utils.ValueChecker.checkStringValue
 import com.example.trooute.presentation.utils.setRVOverlayHorizontal
 
 class WishListAdapter(
-    private val wishLisEvent: WishListEventListener? = null
+    private val wishLisEvent: WishListEventListener? = null,
+    private val adapterItemClickListener: AdapterItemClickListener? = null
 ) : ListAdapter<Message, WishListAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: RvTripsItemBinding) :
@@ -47,7 +49,8 @@ class WishListAdapter(
                     icHeart.setOnClickListener {
                         wishLisEvent?.onWishListEventClick(
                             position = bindingAdapterPosition,
-                            data = item
+                            data = item,
+                            added = false
                         )
                     }
 
@@ -102,6 +105,10 @@ class WishListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bindViews(currentItem)
+
+        holder.itemView.setOnClickListener {
+            adapterItemClickListener?.onAdapterItemClicked(position = position, data = currentItem)
+        }
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Message>() {

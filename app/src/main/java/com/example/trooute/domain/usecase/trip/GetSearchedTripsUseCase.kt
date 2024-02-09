@@ -8,11 +8,12 @@ import javax.inject.Inject
 class GetSearchedTripsUseCase @Inject constructor(private val tripsRepository: TripsRepository) {
     suspend operator fun invoke(
         fromLatitude: Double, fromLongitude: Double,
-        whereToLatitude: Double, whereToLongitude: Double,
+        whereToLatitude: Double, whereToLongitude: Double, currentDate: String
     ): Resource<GetTripsResponse> {
         return tripsRepository.getSearchedTrips(
             fromLatitude = fromLatitude, fromLongitude = fromLongitude,
-            whereToLatitude = whereToLatitude, whereToLongitude = whereToLongitude
+            whereToLatitude = whereToLatitude, whereToLongitude = whereToLongitude,
+            currentDate = currentDate
         )
     }
 }

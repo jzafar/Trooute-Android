@@ -6,10 +6,17 @@ import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.trooute.R
 import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.SharedPreferenceManager
@@ -18,16 +25,23 @@ import com.example.trooute.databinding.ActivitySearchForTripsBinding
 import com.example.trooute.presentation.adapters.TripsAdapter
 import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.core.util.Constants.TRIP_ID
+import com.example.trooute.core.util.Resource
+import com.example.trooute.presentation.interfaces.WishListEventListener
 import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
 import com.example.trooute.presentation.utils.setRVVertical
+import com.example.trooute.presentation.utils.showErrorMessage
+import com.example.trooute.presentation.utils.showSuccessMessage
+import com.example.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishListViewModel
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Suppress("INFERRED_TYPE_VARIABLE_INTO_POSSIBLE_EMPTY_INTERSECTION")
 @AndroidEntryPoint
-class SearchForTripsActivity : AppCompatActivity(), AdapterItemClickListener {
+class SearchForTripsActivity : AppCompatActivity(), AdapterItemClickListener,
+    WishListEventListener {
 
     private val TAG = "SearchForTrips"
 
@@ -35,7 +49,7 @@ class SearchForTripsActivity : AppCompatActivity(), AdapterItemClickListener {
     private lateinit var tripsAdapter: TripsAdapter
     private lateinit var skeleton: Skeleton
     private lateinit var rvSkeleton: Skeleton
-
+    private val addToWishListViewModel: AddToWishListViewModel by viewModels()
     private var tripsData: List<TripsData> = emptyList()
 
 
@@ -48,7 +62,7 @@ class SearchForTripsActivity : AppCompatActivity(), AdapterItemClickListener {
         statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_for_trips)
         tripsAdapter = TripsAdapter(
-            sharedPreferenceManager = sharedPreferenceManager, adapterItemClickListener = this
+            sharedPreferenceManager = sharedPreferenceManager, adapterItemClickListener = this, wishListEventListener = this
         )
         val extras = intent.extras
         val trips = if(SDK_INT >= Build.VERSION_CODES.TIRAMISU){
@@ -103,6 +117,52 @@ class SearchForTripsActivity : AppCompatActivity(), AdapterItemClickListener {
             startActivity(Intent(this, TripDetailActivity::class.java).apply {
                 putExtra(TRIP_ID, data._id)
             })
+        }
+    }
+
+    override fun onWishListEventClick(position: Int, data: Any, added: Boolean) {
+        if (data is TripsData) {
+            addToWishListViewModel.addToWishList(data._id)
+            binAddToWishListObserver(added)
+        }
+    }
+    private fun binAddToWishListObserver(added: Boolean) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                addToWishListViewModel.addToWishListState.collect {
+                    when (it) {
+                        is Resource.ERROR -> {
+                            Log.e(
+                                TAG,
+                                "binAddToWishListObserver: error -> " + it.message.toString()
+                            )
+                            tripsAdapter.notifyDataSetChanged()
+                            Toast(this@SearchForTripsActivity).showErrorMessage(
+                                this@SearchForTripsActivity,it.message.toString())
+                        }
+
+                        Resource.LOADING -> {
+
+                        }
+
+                        is Resource.SUCCESS -> {
+                            Log.i(TAG, "binAddToWishListObserver: success -> " + it.data)
+                            if (added) {
+                                Toast(this@SearchForTripsActivity).showSuccessMessage(
+                                    this@SearchForTripsActivity,
+                                    getString(R.string.wish_list_added)
+                                )
+                            } else {
+                                Toast(this@SearchForTripsActivity).showSuccessMessage(
+                                    this@SearchForTripsActivity,
+                                    getString(R.string.wish_list_removed)
+                                )
+                            }
+
+                        }
+                    }
+                }
+            }
         }
     }
 

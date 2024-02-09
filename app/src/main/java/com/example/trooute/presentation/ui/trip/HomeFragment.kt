@@ -365,7 +365,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
             }
         }
 
-    override fun onWishListEventClick(position: Int, data: Any) {
+    override fun onWishListEventClick(position: Int, data: Any, added: Boolean) {
         if (data is TripsData) {
             addToWishListViewModel.addToWishList(data._id)
             binAddToWishListObserver()
@@ -398,6 +398,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
     }
 
     private fun callSearchUserTripApi() {
+
         placesStartLocationLatLng?.latitude?.let { startLat ->
             placesStartLocationLatLng?.longitude?.let { startLong ->
                 placesDestinationLocationLatLng?.latitude?.let { destLat ->
@@ -406,7 +407,8 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
                             fromLatitude = startLat,
                             fromLongitude = startLong,
                             whereToLatitude = destLat,
-                            whereToLongitude = destLong
+                            whereToLongitude = destLong,
+                            currentDate =  LocalDate.now().toString()
                         )
                     }
                 }

@@ -1,8 +1,10 @@
 package com.example.trooute.presentation.ui.wishlist
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -11,12 +13,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.trooute.R
+import com.example.trooute.core.util.Constants
 import com.example.trooute.core.util.Resource
+import com.example.trooute.data.model.trip.response.TripsData
 import com.example.trooute.data.model.wishlist.Message
 import com.example.trooute.databinding.ActivityWishListBinding
 import com.example.trooute.presentation.adapters.WishListAdapter
+import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.interfaces.WishListEventListener
+import com.example.trooute.presentation.ui.trip.TripDetailActivity
 import com.example.trooute.presentation.utils.setRVVertical
+import com.example.trooute.presentation.utils.showSuccessMessage
 import com.example.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishListViewModel
 import com.example.trooute.presentation.viewmodel.wishlistviewmodel.GetMyWishListViewModel
 import com.faltenreich.skeletonlayout.Skeleton
@@ -25,7 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class WishListActivity : AppCompatActivity(), WishListEventListener {
+class WishListActivity : AppCompatActivity(), WishListEventListener, AdapterItemClickListener {
 
     private val TAG = "WishListActivity"
 
@@ -41,7 +48,7 @@ class WishListActivity : AppCompatActivity(), WishListEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_wish_list)
-        wishListAdapter = WishListAdapter(this)
+        wishListAdapter = WishListAdapter(this, this)
 
         binding.apply {
             includeAppBar.apply {
@@ -95,10 +102,10 @@ class WishListActivity : AppCompatActivity(), WishListEventListener {
                             } else {
                                 binding.rvWishList.isVisible = true
                                 binding.tvNoDataAvailable.isVisible = false
-                                it.data.message?.let { message ->
-                                    wishList = message.toMutableList()
+                                it.data.data?.let { data ->
+                                    wishList = data.toMutableList()
                                     Log.e(TAG, "bindGetWishListObservers: wishList -> $wishList")
-                                    wishListAdapter.submitList(message)
+                                    wishListAdapter.submitList(data)
                                 }
                             }
 
@@ -110,31 +117,41 @@ class WishListActivity : AppCompatActivity(), WishListEventListener {
         }
     }
 
-    override fun onWishListEventClick(position: Int, data: Any) {
+    override fun onWishListEventClick(position: Int, data: Any, added: Boolean) {
         if (data is Message) {
-            if (wishList.isNotEmpty()) {
-                wishList.removeAt(position)
-                wishListAdapter.submitList(wishList)
-                if (wishListAdapter.itemCount == 0) {
-                    binding.rvWishList.isVisible = false
-                    binding.tvNoDataAvailable.isVisible = true
-                } else {
-                    binding.rvWishList.isVisible = true
-                    binding.tvNoDataAvailable.isVisible = false
-                }
-                addToWishListViewModel.addToWishList(data._id)
-                binAddToWishListObserver()
-            }
+            addToWishListViewModel.addToWishList(data._id)
+            binAddToWishListObserver(added)
+//            if (wishList.isNotEmpty()) {
+//                wishList.removeAt(position)
+//                wishListAdapter.submitList(wishList)
+//                if (wishListAdapter.itemCount == 0) {
+//                    binding.rvWishList.isVisible = false
+//                    binding.tvNoDataAvailable.isVisible = true
+//                } else {
+//                    binding.rvWishList.isVisible = true
+//                    binding.tvNoDataAvailable.isVisible = false
+//                }
+//                addToWishListViewModel.addToWishList(data._id)
+//                binAddToWishListObserver(added)
+//            }
         }
     }
 
-    private fun binAddToWishListObserver() {
+    override fun onAdapterItemClicked(position: Int, data: Any) {
+        if (data is Message) {
+            startActivity(Intent(this, TripDetailActivity::class.java).apply {
+                putExtra(Constants.TRIP_ID, data._id)
+            })
+        }
+    }
+
+    private fun binAddToWishListObserver(added: Boolean) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 addToWishListViewModel.addToWishListState.collect {
                     when (it) {
                         is Resource.ERROR -> {
-                            Log.e(
+                            Log.i(
                                 TAG,
                                 "binAddToWishListObserver: error -> " + it.message.toString()
                             )
@@ -145,7 +162,19 @@ class WishListActivity : AppCompatActivity(), WishListEventListener {
                         }
 
                         is Resource.SUCCESS -> {
-                            Log.e(TAG, "binAddToWishListObserver: success -> " + it.data)
+                            Log.i(TAG, "binAddToWishListObserver: success -> " + it.data)
+                            if (added) {
+                                Toast(this@WishListActivity).showSuccessMessage(
+                                    this@WishListActivity,
+                                    getString(R.string.wish_list_added)
+                                )
+                            } else {
+                                Toast(this@WishListActivity).showSuccessMessage(
+                                    this@WishListActivity,
+                                    getString(R.string.wish_list_removed)
+                                )
+                                getWishListViewModel.getMyWishList()
+                            }
                         }
                     }
                 }

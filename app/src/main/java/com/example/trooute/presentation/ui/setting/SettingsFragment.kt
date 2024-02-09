@@ -142,6 +142,7 @@ class SettingsFragment : Fragment() {
                 requireContext().inviteFriend()
             }
 
+            tvWishlist.isVisible = !sharedPreferenceManager.driverMode()
             tvWishlist.setOnClickListener {
                 startActivity(
                     Intent(

@@ -14,7 +14,7 @@ interface TripsRepository {
 
     suspend fun getSearchedTrips(
         fromLatitude: Double, fromLongitude: Double,
-        whereToLatitude: Double, whereToLongitude: Double,
+        whereToLatitude: Double, whereToLongitude: Double, currentDate: String
     ): Resource<GetTripsResponse>
 
     suspend fun getTripsDetails(tripId: String): Resource<GetTripDetailsResponse>
