@@ -22,6 +22,7 @@ import com.example.trooute.presentation.adapters.WishListAdapter
 import com.example.trooute.presentation.interfaces.AdapterItemClickListener
 import com.example.trooute.presentation.interfaces.WishListEventListener
 import com.example.trooute.presentation.ui.trip.TripDetailActivity
+import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
 import com.example.trooute.presentation.utils.setRVVertical
 import com.example.trooute.presentation.utils.showSuccessMessage
 import com.example.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishListViewModel
@@ -47,6 +48,7 @@ class WishListActivity : AppCompatActivity(), WishListEventListener, AdapterItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_wish_list)
         wishListAdapter = WishListAdapter(this, this)
 
@@ -96,7 +98,7 @@ class WishListActivity : AppCompatActivity(), WishListEventListener, AdapterItem
                         is Resource.SUCCESS -> {
                             Log.e(TAG, "bindGetWishListObservers: Success -> " + it.data)
 
-                            if (it.data.message?.isEmpty() == true) {
+                            if (it.data.data?.isEmpty() == true) {
                                 binding.rvWishList.isVisible = false
                                 binding.tvNoDataAvailable.isVisible = true
                             } else {

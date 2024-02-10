@@ -43,6 +43,7 @@ object URL {
     const val SWITCH_DRIVER_END_POINT = "/api/v1/users/driver/switch-to-driver-mode"
     const val GET_DRIVERS_REQUESTS_END_POINT = "/api/v1/users/driver/get-drivers-requests"
     const val APPROVE_DRIVER_END_POINT = "/api/v1/users/driver"
+    const val UPDATE_CAR_INFO_END_POINT = "/api/v1/users/driver/update-car-info"
 
     // WISH LIST POINT
     const val ADD_TO_WISH_LIST = "api/v1/trips"

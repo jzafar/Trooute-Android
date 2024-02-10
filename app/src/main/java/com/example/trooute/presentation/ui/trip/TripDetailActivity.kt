@@ -373,7 +373,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                             includeVehicleInfoLayout.apply {
                                 loadImage(imgVehicleProfile, car?.photo)
                                 tvVehicleModel.text = checkStringValue(
-                                    this@TripDetailActivity, car?.model
+                                    this@TripDetailActivity, car?.make + " " + car?.model
                                 )
                                 tvVehicleYear.text = checkLongValue(car?.year)
                                 tvVehicleColor.text = checkStringValue(

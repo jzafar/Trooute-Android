@@ -373,7 +373,7 @@ class SettingsFragment : Fragment() {
                     user?.carDetails.let { carDetails ->
                         loadImage(imgVehicleProfile, carDetails?.photo.toString())
                         tvVehicleModel.text = checkStringValue(
-                            requireContext(), carDetails?.model
+                            requireContext(), carDetails?.make + " " + carDetails?.model
                         )
                         tvVehicleYear.text = checkLongValue(carDetails?.year)
                         tvVehicleColor.text = checkStringValue(requireContext(), carDetails?.color)

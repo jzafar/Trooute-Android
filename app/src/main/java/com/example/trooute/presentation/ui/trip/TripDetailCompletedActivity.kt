@@ -391,7 +391,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                                 loadImage(imgVehicleProfile, carDetails?.photo)
                                 tvVehicleModel.text = checkStringValue(
                                     this@TripDetailCompletedActivity,
-                                    carDetails?.model
+                                    carDetails?.make + " " + carDetails?.model
                                 )
                                 tvVehicleYear.text = checkLongValue(carDetails?.year)
                                 tvVehicleColor.text = checkStringValue(

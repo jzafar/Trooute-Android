@@ -839,7 +839,9 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
             includeVehicleInfoLayout.apply {
                 loadImage(imgVehicleProfile, bookingData.trip?.driver?.carDetails?.photo)
                 tvVehicleModel.text = checkStringValue(
-                    this@BookingDetailActivity, bookingData.trip?.driver?.carDetails?.model
+                    this@BookingDetailActivity,
+                    bookingData.trip?.driver?.carDetails?.make + " " +
+                            bookingData.trip?.driver?.carDetails?.model
                 )
                 tvVehicleYear.text = checkLongValue(
                     bookingData.trip?.driver?.carDetails?.year

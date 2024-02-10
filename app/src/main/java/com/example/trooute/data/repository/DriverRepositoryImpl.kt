@@ -8,6 +8,7 @@ import com.example.trooute.data.model.common.BaseResponse
 import com.example.trooute.data.model.driver.request.UploadDriverDetailsRequest
 import com.example.trooute.data.model.driver.response.GetDriversRequestsResponse
 import com.example.trooute.data.datasource.network.DriverAPI
+import com.example.trooute.data.model.driver.response.UpdateCarInfoRequestsResponse
 import com.example.trooute.domain.repository.DriverRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -53,6 +54,21 @@ class DriverRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             safeApiCall {
                 driverAPI.approveDriver(id = driverId)
+            }
+        }
+    }
+
+    override suspend fun updateCarInfoDetails(request: UploadDriverDetailsRequest): Resource<UpdateCarInfoRequestsResponse> {
+        return withContext(ioDispatcher) {
+            safeApiCall {
+                driverAPI.updateCarInfoDetails(
+                    carPhoto = imgFileMultipartBody("carPhoto", request.carPhoto),
+                    make = stringRequestBody(request.make),
+                    model = stringRequestBody(request.model),
+                    registrationNumber = stringRequestBody(request.registrationNumber),
+                    year = stringRequestBody(request.year),
+                    color = stringRequestBody(request.color)
+                )
             }
         }
     }

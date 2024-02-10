@@ -38,15 +38,16 @@ class TripsAdapter(
         fun bindViews(currentItem: TripsData?) {
             currentItem?.let { item ->
                 binding.apply {
-                    val isDriverMode = sharedPreferenceManager?.driverMode()
-                    if (isDriverMode == true) {
+                    val isDriverMode = sharedPreferenceManager.driverMode()
+                    if (isDriverMode) {
                         tvAvailableSeat.text = "${
                             checkLongValue(item.availableSeats)
                         } Seats Left"
                         ltDriverInfo.isVisible = false
                         ltDriverModePassengers.isVisible = true
                         rvPassengersUserMode.isVisible = false
-
+                        icHeart.isVisible = false
+                        icRedHeart.isVisible = false
                         var passengersList: List<Passenger> = arrayListOf()
                         item.passengers?.let { passengers ->
                             passengersList = passengers

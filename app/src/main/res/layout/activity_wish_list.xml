@@ -29,16 +29,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
+
                 tools:listitem="@layout/rv_trips_item" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvNoDataAvailable"
-                style="@style/NoDataMessageStyle"
+                style="@style/Body_6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="No Wish List Available" />
 
+                android:textColor="@color/secondary_cadet_blue_color"
+                android:text="@string/no_wish_list_available" />
         </com.faltenreich.skeletonlayout.SkeletonLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

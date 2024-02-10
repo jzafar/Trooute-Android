@@ -33,6 +33,7 @@ import com.example.trooute.presentation.utils.isImageAdded
 import com.example.trooute.presentation.utils.loadImage
 import com.example.trooute.presentation.utils.showErrorMessage
 import com.example.trooute.presentation.utils.showSuccessMessage
+import com.example.trooute.presentation.viewmodel.driverviewmodel.UpdateCarDetailsViewModel
 import com.example.trooute.presentation.viewmodel.driverviewmodel.UploadDriverDetailsViewModel
 import com.google.android.material.internal.ViewUtils
 import com.hbisoft.pickit.PickiT
@@ -101,6 +102,8 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
 
     private val uploadDriverDetailsViewModel: UploadDriverDetailsViewModel by viewModels()
 
+    private val updateCarInfoDetailsViewModel: UpdateCarDetailsViewModel by viewModels()
+
     @Inject
     lateinit var loader: Loader
 
@@ -122,7 +125,12 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
 
         binding.apply {
             includeAppBar.apply {
-                this.toolbarTitle.text = "Become a Driver"
+                if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {
+                    this.toolbarTitle.text = "Update Car Info"
+                } else {
+                    this.toolbarTitle.text = "Become a Driver"
+                }
+
                 this.filter.isVisible = false
 
                 this.arrowBackPress.setOnClickListener {
@@ -140,37 +148,68 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
             ltClickToUploadDrivingLicense.setOnClickListener {
                 licenseImagePicker.openDialog()
             }
+            if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {
+                btnSubmitRequest.text = getString(R.string.update)
+            } else {
+                btnSubmitRequest.text = getString(R.string.submit_request)
+            }
 
-            btnSubmitRequest.setOnClickListener {
-                if (
-                    isImageAdded(isVehicleImageUriAvailable, "Vehicle")
-                    && isFieldValid(etMake, "Make")
-                    && isFieldValid(etModel, "Model")
-                    && isDropdownValid(actYear, yearArrayList, "year")
-                    && isDropdownValid(actColor, colorArrayList, "color")
-                    && isFieldValid(etVehicleLicensePlate, "Vehicle license plate")
-                    && isImageAdded(isLicenseImageUriAvailable, "License")
-                ) {
-                    uploadDriverDetailsViewModel.uploadDriverDetails(
-                        UploadDriverDetailsRequest(
-                            make = etMake.text.toString(),
-                            model = etModel.text.toString(),
-                            registrationNumber = etVehicleLicensePlate.text.toString(),
-                            year = actYear.text.toString(),
-                            color = actColor.text.toString(),
-                            carPhoto = vehicleImgFile,
-                            driverLicense = licenseImgFile,
+            if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {
+                btnSubmitRequest.setOnClickListener {
+                    if (
+                        isFieldValid(etMake, "Make")
+                        && isFieldValid(etModel, "Model")
+                        && isDropdownValid(actYear, yearArrayList, "year")
+                        && isDropdownValid(actColor, colorArrayList, "color")
+                        && isFieldValid(etVehicleLicensePlate, "Vehicle license plate")
+
+                    ) {
+                        updateCarInfoDetailsViewModel.updateCarDetails(
+                            UploadDriverDetailsRequest(
+                                make = etMake.text.toString(),
+                                model = etModel.text.toString(),
+                                registrationNumber = etVehicleLicensePlate.text.toString(),
+                                year = actYear.text.toString(),
+                                color = actColor.text.toString(),
+                                carPhoto = vehicleImgFile,
+                                driverLicense = null,
+                            )
                         )
-                    )
-                    bindUploadDriverDetailsObserver()
+                        bindUpdateCarDetailsObserver()
+                    }
+                }
+            } else {
+                btnSubmitRequest.setOnClickListener {
+                    if (
+                        isImageAdded(isVehicleImageUriAvailable, "Vehicle")
+                        && isFieldValid(etMake, "Make")
+                        && isFieldValid(etModel, "Model")
+                        && isDropdownValid(actYear, yearArrayList, "year")
+                        && isDropdownValid(actColor, colorArrayList, "color")
+                        && isFieldValid(etVehicleLicensePlate, "Vehicle license plate")
+                        && isImageAdded(isLicenseImageUriAvailable, "License")
+                    ) {
+                        uploadDriverDetailsViewModel.uploadDriverDetails(
+                            UploadDriverDetailsRequest(
+                                make = etMake.text.toString(),
+                                model = etModel.text.toString(),
+                                registrationNumber = etVehicleLicensePlate.text.toString(),
+                                year = actYear.text.toString(),
+                                color = actColor.text.toString(),
+                                carPhoto = vehicleImgFile,
+                                driverLicense = licenseImgFile,
+                            )
+                        )
+                        bindUploadDriverDetailsObserver()
+                    }
                 }
             }
+
         }
 
-        if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {
-            addVehicleData()
-        }
+        addVehicleData()
     }
+
 
     private fun setUpYearDropDown(actYear: AutoCompleteTextView) {
         yearArrayList.add("2024")
@@ -268,6 +307,41 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
         }
     }
 
+    private fun bindUpdateCarDetailsObserver() {
+        lifecycleScope.launch {
+            updateCarInfoDetailsViewModel.updateCarInfoDetailsState.collect {
+                loader.cancel()
+                when (it) {
+                    is Resource.ERROR -> {
+                        Log.e(
+                            TAG,
+                            "bindUpdateCarDetailsObserver: Error -> " + it.message.toString()
+                        )
+                        Toast(this@BecomeDriverActivity).showErrorMessage(
+                            this@BecomeDriverActivity, it.message.toString()
+                        )
+                    }
+
+                    Resource.LOADING -> {
+                        loader.show()
+                    }
+
+                    is Resource.SUCCESS -> {
+                        Toast(this@BecomeDriverActivity).showSuccessMessage(
+                            this@BecomeDriverActivity, it.data.message.toString()
+                        )
+                        sharedPreferenceManager.getAuthModelFromPref().let { user ->
+                            user?.carDetails = it.data.data
+                            if (user != null) {
+                                sharedPreferenceManager.updateUserInPref(user)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     override fun PickiTonUriReturned() {
 
     }
@@ -330,16 +404,25 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
             binding.etVehicleLicensePlate.setText(carDetails?.registrationNumber)
             binding.actYear.setText(carDetails?.year.toString())
             binding.actColor.setText(carDetails?.color)
-            loadImage(binding.imgVehicle, carDetails?.photo.toString())
+            if (vehicleUri != null) {
+                binding.imgVehicle.setImageURI(vehicleUri)
+            } else {
+                loadImage(binding.imgVehicle, carDetails?.photo.toString())
+            }
+
             binding.imgVehicle.isVisible = true
-            binding.ltClickToUploadPhoto.isVisible  = false
-            loadImage(binding.imgDrivingLicense, carDetails?.driverLicense.toString())
+//            binding.ltClickToUploadPhoto.isVisible  = false
+//            loadImage(binding.imgDrivingLicense, carDetails?.driverLicense.toString())
             binding.imgDrivingLicense.isVisible = true
             binding.ltClickToUploadDrivingLicense.isVisible  = false
 
             setUpYearDropDown(binding.actYear)
             setUpColorDropDown(binding.actColor)
-
+            if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {
+                binding.ltDrivingLicenseSection.isVisible = false
+            } else {
+                binding.ltDrivingLicenseSection.isVisible = true
+            }
         }
 
     }

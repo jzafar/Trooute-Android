@@ -83,7 +83,7 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
                                 android:visibility="gone"
-                                app:srcCompat="@drawable/passenger_1" />
+                                 />
 
                         </RelativeLayout>
 
@@ -213,6 +213,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ltDrivingLicenseSection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
