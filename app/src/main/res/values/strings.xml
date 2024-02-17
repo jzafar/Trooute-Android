@@ -247,5 +247,15 @@
     <string name="wish_list_added">Trip is added to your wishlist</string>
     <string name="wish_list_removed">Trip is removed from your wishlist</string>
     <string name="no_wish_list_available">No trip is in your wish list</string>
-
+    <string name="pickup_passengers">Pickup Passengers</string>
+    <string name="pickup_passengers_status">Pending Pickup</string>
+    <string name="pickup_passengers_status_details">When you notify passenger to get ready we\'ll send a notification to passenger to get ready for  pickup</string>
+    <string name="notify_pickup">Notify passenger to get ready</string>
+    <string name="pickup_marked">Marked as Pickup</string>
+    <string name="pickedup">Picked up</string>
+    <string name="going_to_pickup">Going To Pickup</string>
+    <string name="passenger_not_showed">Passenger Not Showed up</string>
+    <string name="waiting_to_be_Picked_up">Waiting To Be Picked up</string>
+    <string name="not_Picked_up">Not Picked up</string>
+    <string name="not_showed_up">Not Showed up</string>
 </resources>

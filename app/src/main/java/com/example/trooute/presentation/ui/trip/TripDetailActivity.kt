@@ -72,6 +72,7 @@ import com.example.trooute.presentation.viewmodel.tripviewmodel.GetTripDetailsVi
 import com.example.trooute.presentation.viewmodel.tripviewmodel.UpdateTripStatusViewModel
 import com.example.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishListViewModel
 import com.faltenreich.skeletonlayout.Skeleton
+import com.faltenreich.skeletonlayout.applySkeleton
 import com.faltenreich.skeletonlayout.createSkeleton
 import com.google.android.material.internal.ViewUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -328,14 +329,11 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                 }
 
                 btnStartTrip.setOnClickListener {
-                    updateTripStatusViewModel.updateTripStatus(tripID, IN_PROGRESS)
-                    bindUpdateTripStatusObserver(
-                        START_BOOKING_TITLE,
-                        START_BOOKING_BODY,
-                        tripsData.bookings
-                    )
-
-                    sendNotification(START_BOOKING_TITLE, START_BOOKING_BODY, tripsData.bookings)
+                    startActivity(Intent(
+                        this@TripDetailActivity, PickupPassengersActivity::class.java
+                    ).apply {
+                        putExtra(TRIP_ID, tripID)
+                    })
                 }
 
                 btnCancel.setOnClickListener {

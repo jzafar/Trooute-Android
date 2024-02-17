@@ -3,6 +3,7 @@ package com.example.trooute.domain.repository
 import com.example.trooute.core.util.Resource
 import com.example.trooute.data.model.common.BaseResponse
 import com.example.trooute.data.model.trip.request.CreateTripRequest
+import com.example.trooute.data.model.trip.request.UpdatePickupStatusRequest
 import com.example.trooute.data.model.trip.response.GetTripDetailsResponse
 import com.example.trooute.data.model.trip.response.GetTripsResponse
 
@@ -20,4 +21,6 @@ interface TripsRepository {
     suspend fun getTripsDetails(tripId: String): Resource<GetTripDetailsResponse>
     suspend fun tripsHistory(): Resource<GetTripsResponse>
     suspend fun updateTripStatus(tripId: String, status: String): Resource<BaseResponse>
+    suspend fun getPickupStatus(tripId: String): Resource<GetTripDetailsResponse>
+    suspend fun updatePickupStatus(request: UpdatePickupStatusRequest): Resource<GetTripDetailsResponse>
 }

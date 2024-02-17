@@ -69,4 +69,66 @@ object StatusChecker {
             }
         }
     }
+    @SuppressLint("RestrictedApi")
+    fun checkPickupStatus(isDriverApproved: Boolean, tvStatus: AppCompatTextView, passengerStatus: String?, driverStatus: String?) {
+        val context = tvStatus.context
+        if (isDriverApproved) {
+            when (passengerStatus.toString()) {
+                "WaitingToBePickedup" -> {
+                    TextViewBindingAdapter.setDrawableStart(
+                        tvStatus,
+                        ContextCompat.getDrawable(context, R.drawable.ic_status_waiting)
+                    )
+                    tvStatus.text =
+                        ContextCompat.getString(context, R.string.waiting_to_be_Picked_up)
+                }
+
+                "Pickedup" -> {
+                    TextViewBindingAdapter.setDrawableStart(
+                        tvStatus,
+                        ContextCompat.getDrawable(context, R.drawable.ic_confirm_check)
+                    )
+
+                    tvStatus.text = ContextCompat.getString(context, R.string.pickup_marked)
+                }
+
+                "NotPickedup" -> {
+                    TextViewBindingAdapter.setDrawableStart(
+                        tvStatus,
+                        ContextCompat.getDrawable(context, R.drawable.ic_status_cancelled)
+                    )
+                    tvStatus.text = ContextCompat.getString(context, R.string.not_Picked_up)
+                }
+
+            }
+        } else {
+            when (driverStatus.toString()) {
+                "Pickedup" -> {
+                    TextViewBindingAdapter.setDrawableStart(
+                        tvStatus,
+                        ContextCompat.getDrawable(context, R.drawable.ic_confirm_check)
+                    )
+
+                    tvStatus.text = ContextCompat.getString(context, R.string.pickup_marked)
+                }
+
+                "GoingToPickup" -> {
+                    TextViewBindingAdapter.setDrawableStart(
+                        tvStatus,
+                        ContextCompat.getDrawable(context, R.drawable.ic_status_waiting)
+                    )
+                    tvStatus.text =
+                        ContextCompat.getString(context, R.string.waiting_to_be_Picked_up)
+                }
+
+                "PassengerNotShowedup" -> {
+                    TextViewBindingAdapter.setDrawableStart(
+                        tvStatus,
+                        ContextCompat.getDrawable(context, R.drawable.ic_status_cancelled)
+                    )
+                    tvStatus.text = ContextCompat.getString(context, R.string.passenger_not_showed)
+                }
+            }
+        }
+    }
 }

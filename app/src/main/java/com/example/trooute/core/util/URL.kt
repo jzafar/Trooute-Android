@@ -24,6 +24,8 @@ object URL {
     const val GET_TRIPS_DETAILS_END_POINT = "/api/v1/trips"
     const val TRIPS_HISTORY_END_POINT = "/api/v1/trips/trips-history"
     const val UPDATE_TRIP_STATUS = "api/v1/trips/update-trip-status"
+    const val GET_PICKUP_PASSENGERS_STATUS = "api/v1/trips/getPickupStatus"
+    const val UPDATE_PICKUP_PASSENGERS_STATUS = "api/v1/trips/updatePickupStatus"
 
     // BOOKINGS END POINT
     const val CREATE_BOOKING_END_POINT = "/api/v1/bookings"

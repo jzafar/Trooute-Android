@@ -21,6 +21,7 @@ data class TripsData(
     val passengers: List<Passenger>? = null,
     val pricePerPerson: Double? = null,
     val smokingPreference: Boolean,
+    val petPreference: Boolean,
     val status: String? = null ?: "",
     val totalAmount: Double? = null,
     val totalSeats: Long? = null,
@@ -29,5 +30,5 @@ data class TripsData(
     val bookings: List<Booking>? = null,
     val trip: Trip? = null,
     val luggageRestrictions: LanguageRestriction? = null,
-    val roundTrip: Boolean
+    val roundTrip: Boolean,
 ) : Parcelable

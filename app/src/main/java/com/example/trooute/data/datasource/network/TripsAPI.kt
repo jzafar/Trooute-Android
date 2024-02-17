@@ -1,12 +1,15 @@
 package com.example.trooute.data.datasource.network
 
 import com.example.trooute.core.util.URL.CREATE_TRIPS_END_POINT
+import com.example.trooute.core.util.URL.GET_PICKUP_PASSENGERS_STATUS
 import com.example.trooute.core.util.URL.TRIPS_HISTORY_END_POINT
 import com.example.trooute.core.util.URL.GET_TRIPS_DETAILS_END_POINT
 import com.example.trooute.core.util.URL.GET_TRIPS_END_POINT
+import com.example.trooute.core.util.URL.UPDATE_PICKUP_PASSENGERS_STATUS
 import com.example.trooute.core.util.URL.UPDATE_TRIP_STATUS
 import com.example.trooute.data.model.common.BaseResponse
 import com.example.trooute.data.model.trip.request.CreateTripRequest
+import com.example.trooute.data.model.trip.request.UpdatePickupStatusRequest
 import com.example.trooute.data.model.trip.response.GetTripDetailsResponse
 import com.example.trooute.data.model.trip.response.GetTripsResponse
 import retrofit2.Response
@@ -48,4 +51,8 @@ interface TripsAPI {
         @Path("id") tripId: String?,
         @Query("status") status: String?
     ): Response<BaseResponse>
+    @GET("$GET_PICKUP_PASSENGERS_STATUS/{id}")
+    suspend fun getPickupStatus(@Path("id") tripId: String): Response<GetTripDetailsResponse>
+    @POST(UPDATE_PICKUP_PASSENGERS_STATUS)
+    suspend fun updatePickupStatus(@Body body: UpdatePickupStatusRequest): Response<GetTripDetailsResponse>
 }

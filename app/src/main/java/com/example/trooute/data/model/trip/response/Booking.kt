@@ -24,5 +24,6 @@ data class Booking(
     val updatedAt:String? = null?: "",
     val trip: String? = null ?: "",
     val tripData: Trip? = null,
-    val user: User? = null
+    val user: User? = null,
+    val pickupStatus: PickupStatus? = null
 ) : Parcelable

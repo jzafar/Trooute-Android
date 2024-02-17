@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/ElevatedCardViewStyle70Percent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_1sdp"
+        android:id="@+id/parentView">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary_mirage_color"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_bottom_rounded"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_default_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPickupStatus"
+                        style="@style/Body_5"
+                        android:drawableStart="@drawable/ic_status_waiting"
+                        tools:text="@string/pickup_passengers_status" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:text="@string/pickup_passengers_status_details"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <include
+                    android:id="@+id/includeUserDetail"
+                    layout="@layout/driver_user_detail_item" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imgLocationWhereTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        app:srcCompat="@drawable/ic_location_where_to" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_6"
+                        android:text="@string/pickup_location" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <RelativeLayout
+                    android:id="@+id/ltFromLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle"
+                    >
+
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        android:fontFamily="@font/noto_sans_regular"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:text=""
+                        android:layout_centerVertical="true"
+                        android:textAlignment="viewStart"
+                        android:layout_toStartOf="@+id/tvMapButton"
+                        android:layout_alignParentStart="true"
+                        />
+
+
+                    <ImageButton
+                        android:id="@+id/tvMapButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:layout_centerVertical="true"
+                        android:padding="13dp"
+                        android:background="@drawable/bg_bottom_all_rounded"
+                        app:srcCompat="@drawable/google_maps">
+
+                    </ImageButton>
+
+                </RelativeLayout>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ltCancelAccept"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle"
+                        android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnPassengerNotShowedUp"
+                            style="@style/SecondaryRoundedButton"
+                            android:layout_width="match_parent"
+                            android:maxLines="1"
+                            android:layout_weight="1"
+                            android:layout_alignParentEnd="true"
+                            android:visibility="visible"
+                            android:text="@string/not_showed_up" />
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnMarkedPickup"
+                            style="@style/PrimaryRoundedButtonLessPadding"
+                            android:layout_width="match_parent"
+                            android:maxLines="1"
+                            android:layout_weight="1"
+                            android:layout_alignParentEnd="true"
+                            android:visibility="visible"
+                            android:text="@string/pickup_marked" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnNotifyPassenger"
+                        style="@style/PrimaryRoundedButton"
+                        android:layout_width="match_parent"
+                        android:maxLines="1"
+                        android:layout_weight="1"
+                        android:visibility="visible"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/notify_pickup" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

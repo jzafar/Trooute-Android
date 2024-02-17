@@ -7,9 +7,12 @@ import com.example.trooute.data.model.trip.request.CreateTripRequest
 import com.example.trooute.data.model.trip.response.GetTripDetailsResponse
 import com.example.trooute.data.model.trip.response.GetTripsResponse
 import com.example.trooute.data.datasource.network.TripsAPI
+import com.example.trooute.data.model.trip.request.UpdatePickupStatusRequest
 import com.example.trooute.domain.repository.TripsRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import retrofit2.Response
+import retrofit2.http.Body
 import javax.inject.Inject
 
 class TripsRepositoryImpl @Inject constructor(
@@ -76,6 +79,21 @@ class TripsRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             safeApiCall {
                 tripsAPI.updateTripStatus(tripId = tripId, status)
+            }
+        }
+    }
+
+    override suspend fun getPickupStatus(tripId: String): Resource<GetTripDetailsResponse> {
+        return withContext(ioDispatcher) {
+            safeApiCall {
+                tripsAPI.getPickupStatus(tripId = tripId)
+            }
+        }
+    }
+    override suspend fun updatePickupStatus(@Body request: UpdatePickupStatusRequest): Resource<GetTripDetailsResponse> {
+        return withContext(ioDispatcher) {
+            safeApiCall {
+                tripsAPI.updatePickupStatus(body = request)
             }
         }
     }
