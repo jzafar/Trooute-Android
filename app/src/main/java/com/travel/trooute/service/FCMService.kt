@@ -46,9 +46,7 @@ class FCMService : FirebaseMessagingService() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            checkNotificationChannel()
-        }
+        checkNotificationChannel()
 
         val notification = NotificationCompat.Builder(applicationContext, "1")
             .setSmallIcon(R.mipmap.ic_launcher)
@@ -71,7 +69,6 @@ class FCMService : FirebaseMessagingService() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun checkNotificationChannel() {
         val notificationChannel = NotificationChannel(
             CHANNEL_ID,

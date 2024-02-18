@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "78129548686",
-    "project_id": "trooute-b5e1d",
-    "storage_bucket": "trooute-b5e1d.appspot.com"
+    "project_number": "760520396996",
+    "project_id": "trooute-efc11",
+    "storage_bucket": "trooute-efc11.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:78129548686:android:4ad4ac418ffca2c3a128df",
+        "mobilesdk_app_id": "1:760520396996:android:af1df83502cc11be0fb991",
         "android_client_info": {
           "package_name": "com.travel.trooute"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCPKJT0oKiDddcWvYAoL7I8Nhk_ugAm2gA"
+          "current_key": "AIzaSyCtMiBNPxwn4iYidjkj_wGeOAXSd1n1j5Y"
         }
       ],
       "services": {

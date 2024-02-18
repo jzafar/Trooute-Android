@@ -45,7 +45,7 @@ object Constants {
 
     // FCM
     const val FCM_BASE_URL = "https://fcm.googleapis.com"
-    const val SERVER_KEY = "AAAAEjDiTY4:APA91bGnxuPeHRy-4bepbA40C885HRFZhyZ9NIXhvsTYIlQls3iAZB7W7JtgDURx0bLiVXZLR0hABFC91Ong4v5X81AuKsWuS9wRWmJv5rToXg3Vb3r9OSvD755P5hhm0alyadXcjdzZ"
+    const val SERVER_KEY = "AAAAsRKMUMQ:APA91bGTTdh3bQM6oORh38BawUcjBYokEyDT_j4tFkb2scXMMM7QqFRx6OE8yKTrjs9C5l_hHI3OelhaHDVnSg0LUtl0XQhWa5nPLUJ-Ul046k6w4gqIjElov_c_ycjKxCuUaO_qNaKk"
     const val CONTENT_TYPE = "application/json"
 
     const val TOPIC = "/topics/"
