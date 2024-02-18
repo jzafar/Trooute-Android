@@ -13,7 +13,7 @@ class AppLifecycleTracker : Application.ActivityLifecycleCallbacks  {
 
     override fun onActivityStarted(p0: Activity) {
         if (numStarted == 0) {
-            Log.i("LifeCycle","Applcaiotn become active")
+            Log.i("LifeCycle","Application become active")
         }
         numStarted++
     }
