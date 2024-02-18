@@ -1,7 +1,10 @@
 package com.example.trooute.presentation.ui.main
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -11,19 +14,25 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.trooute.R
 import com.example.trooute.core.util.Resource
 import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.databinding.ActivityMainBinding
 import com.example.trooute.presentation.adapters.MainBNVMenuAdapter
 import com.example.trooute.presentation.utils.WindowsManager.statusBarColor
+import com.example.trooute.presentation.viewmodel.authviewmodel.GetMeVM
 import com.example.trooute.presentation.viewmodel.notification.PushNotificationViewModel
 import com.google.android.material.internal.ViewUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -32,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val pushNotificationViewModel: PushNotificationViewModel by viewModels()
+    private val getMeViewModel: GetMeVM by viewModels()
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -112,6 +122,12 @@ class MainActivity : AppCompatActivity() {
                 return@setOnItemSelectedListener true
             }
         }
+
+        // Register to receive messages.
+        // We are registering an observer (mMessageReceiver) to receive Intents
+        // with actions named "custom-event-name".
+        val lbm = LocalBroadcastManager.getInstance(this)
+        lbm.registerReceiver(receiver, IntentFilter("application_active"))
     }
     override fun onBackPressed() {
         var current = binding.vpMainMenu.currentItem
@@ -184,5 +200,43 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }.launchIn(lifecycleScope)
+    }
+
+    var receiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent != null) {
+                Log.i("tag","Receive notification")
+                getMeViewModel.getMe()
+                bindGetMeApi()
+            }
+        }
+    }
+
+    @SuppressLint("RepeatOnLifecycleWrongUsage")
+    private fun bindGetMeApi() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                getMeViewModel.getMeState.collect {
+                    when (it) {
+                        is Resource.ERROR -> {
+                            Log.e(TAG, "getMe: Error -> " + it.message.toString())
+                        }
+
+                        Resource.LOADING -> {
+
+                        }
+
+                        is Resource.SUCCESS -> {
+                            it.data.data?.let { user ->
+                                sharedPreferenceManager.saveIsDriverStatus(user.isApprovedDriver)
+                                sharedPreferenceManager.saveDriverMode(user.driverMode)
+                                sharedPreferenceManager.updateUserInPref(user)
+                            }
+                            Log.i(TAG, "getMe: success -> " + it.data)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

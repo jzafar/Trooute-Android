@@ -2,8 +2,11 @@ package com.example.trooute.presentation.utils
 
 import android.app.Activity
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+
 
 class AppLifecycleTracker : Application.ActivityLifecycleCallbacks  {
 
@@ -14,6 +17,8 @@ class AppLifecycleTracker : Application.ActivityLifecycleCallbacks  {
     override fun onActivityStarted(p0: Activity) {
         if (numStarted == 0) {
             Log.i("LifeCycle","Application become active")
+            val intent = Intent("application_active")
+            LocalBroadcastManager.getInstance(p0).sendBroadcast(intent)
         }
         numStarted++
     }

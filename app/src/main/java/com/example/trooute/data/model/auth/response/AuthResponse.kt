@@ -4,5 +4,6 @@ data class AuthResponse(
     val data: User? = null,
     val message: String? = null,
     val success: Boolean = false,
-    val token: String? = null
+    val token: String? = null,
+    val name: String? = null,
 )
