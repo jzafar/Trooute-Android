@@ -1,0 +1,17 @@
+package com.travel.trooute.data.model.common
+
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Driver(
+    val _id: String? = null ?: "0",
+    val carDetails: CarDetails? = null,
+    val name: String? = null ?: "No name",
+    val phoneNumber: String? = null ?: "No phone number",
+    val photo: String? = null ?: "",
+    val isApprovedDriver: Boolean,
+    val reviewsStats: ReviewsStats? = null,
+    val stripeConnectedAccountId: String? = null,
+    val gender: String? = null
+) : Parcelable

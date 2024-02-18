@@ -1,0 +1,54 @@
+package com.travel.trooute.presentation.adapters
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.travel.trooute.R
+import com.travel.trooute.data.model.common.Passenger
+import com.travel.trooute.databinding.RvPassengersPrimaryItemBinding
+import com.travel.trooute.presentation.interfaces.AdapterItemClickListener
+import com.travel.trooute.presentation.utils.loadProfileImage
+
+class PassengersPrimaryAdapter(private val adapterItemClickListener: AdapterItemClickListener?) : ListAdapter<Passenger, PassengersPrimaryAdapter.ViewHolder>(DiffCallback()) {
+    inner class ViewHolder(private val binding: RvPassengersPrimaryItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bindViews(currentItem: Passenger?) {
+            currentItem?.let { item ->
+                binding.apply {
+                    loadProfileImage(imgPassengerProfile, item.photo)
+                }
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = DataBindingUtil.inflate<RvPassengersPrimaryItemBinding>(
+            LayoutInflater.from(parent.context), R.layout.rv_passengers_primary_item, parent, false
+        )
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currentItem = getItem(position)
+        holder.bindViews(currentItem)
+        holder.itemView.setOnClickListener {
+            adapterItemClickListener?.onAdapterItemClicked(position = position, data = currentItem)
+        }
+    }
+
+    class DiffCallback :
+        DiffUtil.ItemCallback<Passenger>() {
+        override fun areItemsTheSame(
+            oldItem: Passenger,
+            newItem: Passenger
+        ) = oldItem._id == newItem._id
+
+        override fun areContentsTheSame(
+            oldItem: Passenger,
+            newItem: Passenger
+        ) = oldItem == newItem
+    }
+}

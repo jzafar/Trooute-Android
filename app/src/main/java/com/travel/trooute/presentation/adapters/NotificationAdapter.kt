@@ -1,0 +1,46 @@
+package com.travel.trooute.presentation.adapters
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.travel.trooute.R
+import com.travel.trooute.data.model.auth.response.User
+import com.travel.trooute.databinding.RvNotificationItemBinding
+
+class NotificationAdapter : ListAdapter<User, NotificationAdapter.ViewHolder>(DiffCallback()) {
+    inner class ViewHolder(private val binding: RvNotificationItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bindViews(currentItem: User?) {
+            currentItem?.let { item ->
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = DataBindingUtil.inflate<RvNotificationItemBinding>(
+            LayoutInflater.from(parent.context), R.layout.rv_notification_item, parent, false
+        )
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currentItem = getItem(position)
+        holder.bindViews(currentItem)
+    }
+
+    class DiffCallback :
+        DiffUtil.ItemCallback<User>() {
+        override fun areItemsTheSame(
+            oldItem: User,
+            newItem: User
+        ) = oldItem.name == newItem.name
+
+        override fun areContentsTheSame(
+            oldItem: User,
+            newItem: User
+        ) = oldItem == newItem
+    }
+}
