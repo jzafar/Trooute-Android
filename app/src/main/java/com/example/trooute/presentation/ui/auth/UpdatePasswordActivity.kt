@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.trooute.R
 import com.example.trooute.core.util.Resource
+import com.example.trooute.core.util.SharedPreferenceManager
 import com.example.trooute.data.model.auth.request.UpdateMyPasswordRequest
 import com.example.trooute.databinding.ActivityUpdatePasswordBinding
 import com.example.trooute.presentation.utils.Loader
@@ -32,6 +33,9 @@ class UpdatePasswordActivity : AppCompatActivity() {
 
     @Inject
     lateinit var loader: Loader
+
+    @Inject
+    lateinit var sharedPreferenceManager: SharedPreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +83,12 @@ class UpdatePasswordActivity : AppCompatActivity() {
                             this@UpdatePasswordActivity,
                             "Password Updated successfully"
                         )
-
+                        sharedPreferenceManager.saveAuthTokenInPref(it.data.token.toString())
+                        it.data.data?.let { user ->
+                            sharedPreferenceManager.saveIsDriverStatus(user.isApprovedDriver)
+                            sharedPreferenceManager.saveDriverMode(user.driverMode)
+                            sharedPreferenceManager.saveAuthModelInPref(user)
+                        }
                         finish()
                     }
                 }
