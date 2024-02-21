@@ -1,32 +1,44 @@
 package com.travel.trooute.presentation.ui.main
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.internal.ViewUtils
+import com.google.firebase.messaging.FirebaseMessaging
 import com.travel.trooute.R
 import com.travel.trooute.core.util.Resource
 import com.travel.trooute.core.util.SharedPreferenceManager
+import com.travel.trooute.data.model.auth.request.UpdateDeviceIdRequest
 import com.travel.trooute.databinding.ActivityMainBinding
 import com.travel.trooute.presentation.adapters.MainBNVMenuAdapter
 import com.travel.trooute.presentation.utils.WindowsManager.statusBarColor
+import com.travel.trooute.presentation.utils.showErrorMessage
+import com.travel.trooute.presentation.utils.showWarningMessage
 import com.travel.trooute.presentation.viewmodel.authviewmodel.GetMeVM
+import com.travel.trooute.presentation.viewmodel.authviewmodel.UpdateDeviceIdVM
 import com.travel.trooute.presentation.viewmodel.notification.PushNotificationViewModel
-import com.google.android.material.internal.ViewUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -42,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     private val pushNotificationViewModel: PushNotificationViewModel by viewModels()
     private val getMeViewModel: GetMeVM by viewModels()
-
+    private val updateDeviceIdVM: UpdateDeviceIdVM by viewModels()
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
 
@@ -122,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                 return@setOnItemSelectedListener true
             }
         }
-
+        askNotificationPermission()
         // Register to receive messages.
         // We are registering an observer (mMessageReceiver) to receive Intents
         // with actions named "custom-event-name".
@@ -239,4 +251,61 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                getToken()
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    // Declare the launcher at the top of your Activity/Fragment:
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // FCM SDK (and your app) can post notifications.
+            getToken()
+        } else {
+            Toast(this@MainActivity).showWarningMessage(
+                this@MainActivity,
+                "You'll not get notification if your trip is updated"
+            )
+        }
+    }
+
+    private fun getToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            sharedPreferenceManager.saveDeviceId(token)
+            sendTokenToServer()
+        })
+    }
+
+    private fun sendTokenToServer(){
+        val token = sharedPreferenceManager.getDeviceId()
+        val request = token?.let { UpdateDeviceIdRequest("android", it) }
+        if (request != null) {
+            updateDeviceIdVM.updateDeviceId(request)
+        }
+    }
+
 }

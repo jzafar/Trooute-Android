@@ -22,6 +22,7 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
         const val PREF_AUTH_DATA = "AuthData"
         const val BIOMETRIC_INFO = "biometricInfo"
         const val BIOMETRIC_ENABLED = "biometricEnabled"
+        const val PREF_DEVICE_ID = "DeviceId"
     }
 
     private val sharedPreferences = context.getSharedPreferences(
@@ -115,6 +116,15 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
     fun getAuthModelFromPref(): User? {
         val json = sharedPreferences.getString(PREF_AUTH_DATA, null) ?: return null
         return gson.fromJson(json, User::class.java)
+    }
+
+    fun saveDeviceId(value: String?) {
+        editor.putString(PREF_DEVICE_ID, value)
+        editor.apply()
+    }
+
+    fun getDeviceId(): String? {
+        return sharedPreferences.getString(PREF_DEVICE_ID, "")
     }
 
     fun getBiometricUserName(): String? {

@@ -6,14 +6,18 @@ import com.travel.trooute.core.util.URL.GET_ME_END_POINT
 import com.travel.trooute.core.util.URL.LOGIN_END_POINT
 import com.travel.trooute.core.util.URL.RESEND_EMAIL_VERIFICATION_END_POINT
 import com.travel.trooute.core.util.URL.SIGNUP_END_POINT
+import com.travel.trooute.core.util.URL.UPDATE_DEVICEID_END_POINT
 import com.travel.trooute.core.util.URL.UPDATE_MY_PASSWORD_END_POINT
 import com.travel.trooute.core.util.URL.UPDATE_PROFILE_END_POINT
 import com.travel.trooute.data.model.auth.request.EmailVerificationRequest
 import com.travel.trooute.data.model.auth.request.ForgotPasswordRequest
 import com.travel.trooute.data.model.auth.request.LoginRequest
 import com.travel.trooute.data.model.auth.request.ResendVerificationCodeRequest
+import com.travel.trooute.data.model.auth.request.UpdateDeviceIdRequest
 import com.travel.trooute.data.model.auth.request.UpdateMyPasswordRequest
 import com.travel.trooute.data.model.auth.response.AuthResponse
+import com.travel.trooute.data.model.auth.response.DeviceIdResponse
+import com.travel.trooute.data.model.common.BaseResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -44,4 +48,6 @@ interface AuthAPI {
     suspend fun updateMyPassword(@Body body: UpdateMyPasswordRequest): Response<AuthResponse>
     @GET(GET_ME_END_POINT)
     suspend fun getMe(): Response<AuthResponse>
+    @POST(UPDATE_DEVICEID_END_POINT)
+    suspend fun updateDeviceId(@Body body: UpdateDeviceIdRequest): Response<DeviceIdResponse>
 }
