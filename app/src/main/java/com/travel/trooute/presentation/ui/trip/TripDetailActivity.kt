@@ -68,6 +68,8 @@ import com.travel.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishList
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
 import com.google.android.material.internal.ViewUtils
+import com.travel.trooute.data.model.common.Passenger
+import com.travel.trooute.presentation.ui.review.ReviewsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -685,6 +687,13 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                 ).apply {
                     putExtra(Constants.BOOKING_ID, data._id)
                 })
+        } else if (data is Passenger) {
+            startActivity(
+                Intent(this@TripDetailActivity,
+                    ReviewsActivity::class.java).apply {
+                    putExtra(Constants.USER_ID, data._id)
+                }
+            )
         }
     }
 }

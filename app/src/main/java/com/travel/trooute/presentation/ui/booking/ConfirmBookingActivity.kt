@@ -202,7 +202,7 @@ class ConfirmBookingActivity : AppCompatActivity() {
                             )
                             Log.e(TAG, "bindCreateBookingObserver: Success -> " + it.data)
 
-                            sendNotification()
+//                            sendNotification()
                         }
                     }
                 }
