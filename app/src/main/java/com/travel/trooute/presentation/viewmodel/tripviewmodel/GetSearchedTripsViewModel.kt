@@ -20,14 +20,18 @@ class GetSearchedTripsViewModel @Inject constructor(
 
     fun getSearchedTrips(
         fromLatitude: Double, fromLongitude: Double,
-        whereToLatitude: Double, whereToLongitude: Double, currentDate: String
+        whereToLatitude: Double, whereToLongitude: Double, currentDate: String, flexibleDays: Int?,
+        toRange: Int?, fromRange: Int?
     ) {
         viewModelScope.launch {
             _getTripsState.emit(Resource.LOADING)
             _getTripsState.emit(useCase.invoke(
                 fromLatitude = fromLatitude, fromLongitude = fromLongitude,
                 whereToLatitude = whereToLatitude, whereToLongitude = whereToLongitude,
-                currentDate = currentDate
+                currentDate = currentDate,
+                flexibleDays = flexibleDays,
+                toRange = toRange,
+                fromRange = fromRange
             ))
         }
     }

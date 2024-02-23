@@ -70,6 +70,13 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
     private var placesStartLocationAddress: String? = null
     private var placesDestinationLocationLatLng: LatLng? = null
     private var placesDestinationLocationAddress: String? = null
+
+    private var flexibleDays: Int? = null
+    private var fromRange: Int? = null
+    private var toRange: Int? = null
+    private var selectedDate: String? = null
+
+
     private var isStartLocationRequired = false
     private var tripList: List<TripsData> = listOf()
 
@@ -102,7 +109,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
             requireActivity().activityResultRegistry
         )
         lifecycle.addObserver(locationManager)
-
+        selectedDate = LocalDate.now().toString()
         googlePlacesManager = GooglePlacesManager(
             requireActivity(),
             requireActivity().activityResultRegistry
@@ -203,6 +210,8 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
         val simpleDateFormat = SimpleDateFormat("dd MMMM yyyy")
         val dateTime = simpleDateFormat.format(calendar.time)
 
+        val otehrFormate = SimpleDateFormat("yyyy-MM-dd")
+        selectedDate = otehrFormate.format(calendar.time)
         binding.includeTripDestinationLayout.chooseDate.setText(dateTime)
     }
     override fun onResume() {
@@ -398,7 +407,22 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
     }
 
     private fun callSearchUserTripApi() {
+        binding.includeTripDestinationLayout.apply {
+            fromRange = fromSlider.values.first().toInt()
+            toRange = whereSlider.values.first().toInt()
+            if (checkBoxFlexibleDates.isChecked) {
+                flexibleDays = itemQuanEt.text.toString().toIntOrNull()
+            }
+        }
+        var from = 10
+        if (fromRange!! > from) {
+            from = fromRange!!
+        }
 
+        var to = 10
+        if (toRange!! > to) {
+            to = toRange!!
+        }
         placesStartLocationLatLng?.latitude?.let { startLat ->
             placesStartLocationLatLng?.longitude?.let { startLong ->
                 placesDestinationLocationLatLng?.latitude?.let { destLat ->
@@ -408,7 +432,10 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
                             fromLongitude = startLong,
                             whereToLatitude = destLat,
                             whereToLongitude = destLong,
-                            currentDate =  LocalDate.now().toString()
+                            currentDate =  selectedDate!!,
+                            flexibleDays = flexibleDays,
+                            toRange = to,
+                            fromRange = from
                         )
                     }
                 }

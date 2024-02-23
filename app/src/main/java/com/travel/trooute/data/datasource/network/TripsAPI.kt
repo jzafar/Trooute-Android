@@ -37,7 +37,10 @@ interface TripsAPI {
         @Query("fromCoordinates[1]") fromLongitude: Double?,
         @Query("whereToCoordinates[0]") whereToLatitude: Double?,
         @Query("whereToCoordinates[1]") whereToLongitude: Double?,
-        @Query("currentDate") currentDate: String?
+        @Query("currentDate") currentDate: String?,
+        @Query("flexibleDays") flexibleDays: Int?,
+        @Query("toRange") toRange: Int?,
+        @Query("fromRange") fromRange: Int?,
     ): Response<GetTripsResponse>
 
     @GET("$GET_TRIPS_DETAILS_END_POINT/{id}")
