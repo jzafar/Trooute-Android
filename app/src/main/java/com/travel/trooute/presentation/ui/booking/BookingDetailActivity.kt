@@ -68,6 +68,8 @@ import com.travel.trooute.presentation.viewmodel.reviewviewmodel.CreateReviewVie
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
 import com.google.android.material.internal.ViewUtils
+import com.travel.trooute.core.util.Constants
+import com.travel.trooute.presentation.ui.trip.PickupPassengersActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -107,7 +109,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
 
         binding.apply {
             includeAppBar.apply {
-                this.toolbarTitle.text = "Booking Detail"
+                this.toolbarTitle.text = getString(R.string.booking_details)
                 this.filter.isVisible = false
 
                 this.arrowBackPress.setOnClickListener {
@@ -174,6 +176,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                                     setUpUserSideDesignationAndScheduleViews(bookingData)
                                     setUpUserSideTripDetailsViews(bookingData)
                                     setUpDriverSidePickupLocationViews(bookingData)
+                                    showPassengerPickupStatusButton(bookingData)
                                 }
                             }
 
@@ -183,6 +186,24 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                 }
             }
         }
+    }
+
+    private fun showPassengerPickupStatusButton(bookingData: BookingDetailsData){
+        if (bookingData.status == getString(R.string.confirmed)) {
+            binding.apply {
+                includeAppBar.apply {
+                    this.filter.isVisible = true
+                    filter.setOnClickListener {
+                        startActivity(Intent(
+                            this@BookingDetailActivity, PickupPassengersActivity::class.java
+                        ).apply {
+                            putExtra(Constants.TRIP_ID, bookingData.trip?._id)
+                        })
+                    }
+                }
+            }
+        }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -210,7 +231,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                                 this@BookingDetailActivity, R.string.waiting
                             )
                         }
-                        tvBookingId.text = "Booking # ${getSubString(bookingData._id)}"
+                        tvBookingId.text = getString(R.string.booking) + " # ${getSubString(bookingData._id)}"
                         formatDateTime(
                             this@BookingDetailActivity,
                             tvDepartureDate,
@@ -301,7 +322,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                         tvStatus.text = checkStringValue(
                             this@BookingDetailActivity, bookingData.status
                         )
-                        tvBookingId.text = "Booking # ${getSubString(bookingData._id)}"
+                        tvBookingId.text = getString(R.string.booking) + " # ${getSubString(bookingData._id)}"
                         formatDateTime(
                             this@BookingDetailActivity,
                             tvDepartureDate,
@@ -351,7 +372,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                         tvStatus.text = ContextCompat.getString(
                             this@BookingDetailActivity, R.string.cancelled
                         )
-                        tvBookingId.text = "Booking # ${getSubString(bookingData._id)}"
+                        tvBookingId.text = getString(R.string.booking) + " # ${getSubString(bookingData._id)}"
                         formatDateTime(
                             this@BookingDetailActivity,
                             tvDepartureDate,
@@ -395,7 +416,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                                 this@BookingDetailActivity, R.string.approved
                             )
                         }
-                        tvBookingId.text = "Booking # ${getSubString(bookingData._id)}"
+                        tvBookingId.text = getString(R.string.booking) + " # ${getSubString(bookingData._id)}"
                         formatDateTime(
                             this@BookingDetailActivity,
                             tvDepartureDate,
@@ -462,7 +483,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                         tvStatus.text = checkStringValue(
                             this@BookingDetailActivity, bookingData.status
                         )
-                        tvBookingId.text = "Booking # ${getSubString(bookingData._id)}"
+                        tvBookingId.text = getString(R.string.booking) + " # ${getSubString(bookingData._id)}"
                         formatDateTime(
                             this@BookingDetailActivity,
                             tvDepartureDate,
@@ -493,9 +514,9 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
 
     private fun showConnectStripeAccountAlert() {
         AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setMessage("You can't accept this booking. You must have to connect your stripe account to accept this booking. When we accepts you as driver, we have send you and email to connect your stripe account.")
-            .setPositiveButton("OK") { _, _ ->
+            .setTitle(getString(R.string.error))
+            .setMessage(getString(R.string.connect_stripe))
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
 
             }
             .create()
@@ -504,9 +525,9 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
 
     private fun showNumberOfSeatsAlertDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setMessage("You can't accept this booking. Remaining available seats are less than from what you are accepting")
-            .setPositiveButton("OK") { _, _ ->
+            .setTitle(getString(R.string.error))
+            .setMessage(getString(R.string.less_remaining_seats))
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
 
             }
             .create()
@@ -868,7 +889,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
         binding.apply {
             tvUserSidePassengerSeatsAvailable.text = "${
                 checkLongValue(bookingData.numberOfSeats)
-            } Seats Available"
+            } " + getString(R.string.seats_available)
             includePassengersInfoLayout.apply {
                 rvPassengers.apply {
                     setRVHorizontal()
@@ -916,14 +937,14 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                 checkLongValue(bookingData.trip?.luggageRestrictions?.weight)
             }$WEIGHT_SIGN"
             tvRoundTripValue.text = if (bookingData.trip?.roundTrip == true) {
-                "Yes"
+                getString(R.string.yes)
             } else {
-                "No"
+                getString(R.string.no)
             }
             tvSmokingAllowedValue.text = if (bookingData.trip?.smokingPreference == true) {
-                "Yes"
+                getString(R.string.yes)
             } else {
-                "No"
+                getString(R.string.no)
             }
             bookingData.trip?.languagePreference.itOrNull({ tvLanguagePreferenceValue.text = it }, {
                 tvLanguagePreferenceValue.text =

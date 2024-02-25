@@ -168,7 +168,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
                     } else {
                         Toast.makeText(
                             context,
-                            "Flexible days can't be greater than 365",
+                            getString(R.string.flexible_days),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -178,11 +178,11 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
                     if (
                         requireActivity().isFieldValid(
                             etStartingLocation,
-                            "Start location"
+                            getString(R.string.start_locaction)
                         )
                         && requireActivity().isFieldValid(
                             etDestinationLocation,
-                            "Destination location"
+                            getString(R.string.destination_location)
                         )
                     ) {
                         callSearchUserTripApi()
@@ -220,7 +220,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
             if (sharedPreferenceManager.driverMode()) {
                 includeTripDestinationLayout.cardTripRoute.isVisible = false
                 tvTripsTitle.text = getString(R.string.ongoing_trips)
-                tvNoTripsAvailable.text = "You do not have any ongoing trip"
+                tvNoTripsAvailable.text = getString(R.string.no_on_going_trip)
             } else {
                 includeTripDestinationLayout.cardTripRoute.isVisible = true
                 tvTripsTitle.text = getString(R.string.trips_around_you)
@@ -469,7 +469,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
                             if (it.data.data?.isEmpty() == true) {
                                 Toast.makeText(
                                     context,
-                                    "No trip found",
+                                    getString(R.string.no_trip),
                                     Toast.LENGTH_LONG
                                 ).show()
                             } else {

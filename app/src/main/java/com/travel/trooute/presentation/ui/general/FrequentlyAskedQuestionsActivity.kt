@@ -35,43 +35,38 @@ class FrequentlyAskedQuestionsActivity : AppCompatActivity() {
             }
 
             includeExpandText1.apply {
-                tvExpandableHeader.text = "How does Trooute ensure user safety?"
-                tvExpandableBody.text = "Trooute prioritizes user safety by implementing features such as user ratings, reviews, and optional verification badges. We encourage users to provide feedback on their experiences to maintain a safe and reliable community."
+                tvExpandableHeader.text = getString(R.string.trooute_safty)
+                tvExpandableBody.text = getString(R.string.trooute_safty_answer)
                 setUpExpandableView(ltExpandableView, icExpandText, tvExpandableBody)
             }
 
             includeExpandText2.apply {
-                tvExpandableHeader.text = "Can I cancel a ride, and what is the cancellation policy?"
-                tvExpandableBody.text =
-                    "Yes, you can cancel a ride. However, please note that no costs will be refunded for cancellations. It's important to review and understand our cancellation policy before confirming a ride."
+                tvExpandableHeader.text = getString(R.string.cancel_policy)
+                tvExpandableBody.text = getString(R.string.cancel_policy_answer)
                 setUpExpandableView(ltExpandableView, icExpandText, tvExpandableBody)
             }
 
             includeExpandText3.apply {
-                tvExpandableHeader.text = "What happens in the event of an accident or damage during a ride?"
-                tvExpandableBody.text =
-                    "Users (both drivers and passengers) are solely responsible for any accidents or damages that may occur during a ride. Trooute assumes no liability for such incidents. Users are encouraged to report any issues promptly through our support channels."
+                tvExpandableHeader.text = getString(R.string.accident_event)
+                tvExpandableBody.text =getString(R.string.accident_event_answer)
                 setUpExpandableView(ltExpandableView, icExpandText, tvExpandableBody)
             }
 
             includeExpandText4.apply {
-                tvExpandableHeader.text = "Is my personal information secure on Trooute?"
-                tvExpandableBody.text =
-                    "We take the security of user information seriously. Trooute employs industry-standard security measures to protect user data. For more details, please refer to our Privacy Policy."
+                tvExpandableHeader.text = getString(R.string.personal_info_secure)
+                tvExpandableBody.text = getString(R.string.personal_info_secure_answer)
                 setUpExpandableView(ltExpandableView, icExpandText, tvExpandableBody)
             }
 
             includeExpandText5.apply {
-                tvExpandableHeader.text = "Can I choose my travel companions based on preferences?"
-                tvExpandableBody.text =
-                    "Yes, allows users to set preferences, such as music preferences, smoking/non-smoking preferences, and other travel-related preferences. This information can help you find compatible travel companions."
+                tvExpandableHeader.text = getString(R.string.travel_companion)
+                tvExpandableBody.text = getString(R.string.travel_companion_answer)
                 setUpExpandableView(ltExpandableView, icExpandText, tvExpandableBody)
             }
 
             includeExpandText6.apply {
-                tvExpandableHeader.text = "How can I contact customer support?"
-                tvExpandableBody.text =
-                    "For any inquiries or assistance, you can reach our customer support team at trooute@outlook.com. We are here to help with any questions or concerns you may have."
+                tvExpandableHeader.text = getString(R.string.contact_customer)
+                tvExpandableBody.text = getString(R.string.contact_customer_answer)
                 setUpExpandableView(ltExpandableView, icExpandText, tvExpandableBody)
             }
         }

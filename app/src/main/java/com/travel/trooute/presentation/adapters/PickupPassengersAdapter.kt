@@ -77,7 +77,7 @@ class PickupPassengersAdapter(private val adapterItemClickListener: PickUpPassen
                         if(!sharedPreferenceManager.driverMode()) {
                             val eBuilder = AlertDialog.Builder(applicationContext)
                             eBuilder.setTitle("Warning")
-                            eBuilder.setMessage("Once you Makred as pickup, you can't change status after that.")
+                            eBuilder.setMessage("Once you Marked as pickup, you can't change status after that.")
                             eBuilder.setPositiveButton("Ok", fun(_: DialogInterface, _: Int) {
                                 adapterItemClickListener.onUpdateStatusButtonClick(data = currentItem, status = PickUpPassengersStatus.Pickedup)
 
@@ -95,6 +95,7 @@ class PickupPassengersAdapter(private val adapterItemClickListener: PickUpPassen
                         }
 
                     }
+
                     btnNotifyPassenger.setOnClickListener{
                         adapterItemClickListener.onUpdateStatusButtonClick(data = currentItem, status = PickUpPassengersStatus.GoingToPickup)
                     }
@@ -104,6 +105,21 @@ class PickupPassengersAdapter(private val adapterItemClickListener: PickUpPassen
                     }
                     btnPassengerNotShowedUp.setOnClickListener {
                         adapterItemClickListener.onUpdateStatusButtonClick(data = currentItem, status = PickUpPassengersStatus.PassengerNotShowedup)
+                    }
+
+                    // hide notify passengers map button for passengers
+                    if (!sharedPreferenceManager.driverMode()) {
+                        btnNotifyPassenger.isVisible = false
+                        tvMapButton.isVisible = false
+                    }
+                    // Hide other buttons if it's not your self
+                    if (sharedPreferenceManager.getAuthIdFromPref() != currentItem.user?._id) {
+                        btnMarkedPickup.isVisible = false
+                        btnPassengerNotShowedUp.isVisible = false
+                        includeUserDetail.apply {
+                            callIcon.isVisible = false
+                            messageIcon.isVisible = false
+                        }
                     }
 
                 }

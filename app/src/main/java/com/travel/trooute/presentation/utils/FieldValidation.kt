@@ -11,10 +11,11 @@ import com.fredporciuncula.phonemoji.PhonemojiTextInputEditText
 import com.google.android.material.internal.ViewUtils.showKeyboard
 import com.google.android.material.textfield.TextInputEditText
 import com.google.i18n.phonenumbers.PhoneNumberUtil
+import com.travel.trooute.R
 
 fun Context.isImageAdded(image: Boolean, message: String): Boolean {
     return if (!image) {
-        Toast(this).showWarningMessage(this, "$message image is required")
+        Toast(this).showWarningMessage(this, "$message " + getString(R.string.image_require))
         false
     } else {
         true
@@ -27,7 +28,7 @@ fun Context.isFieldValid(field: TextInputEditText, message: String): Boolean {
     return if (mField.isBlank() || mField.isEmpty() || mField.trim() == "") {
         field.requestFocus()
         showKeyboard(field)
-        Toast(this).showWarningMessage(this, "$message field can't be blank")
+        Toast(this).showWarningMessage(this, "$message " + getString(R.string.field_blank))
         false
     } else {
         true
@@ -41,7 +42,7 @@ fun Context.isFieldPriceValid(field: TextInputEditText, message: String): Boolea
     return if (number.isBlank() || number.isEmpty() || number.trim() == "") {
         field.requestFocus()
         showKeyboard(field)
-        Toast(this).showWarningMessage(this, "$message field can't be blank")
+        Toast(this).showWarningMessage(this, "$message " + getString(R.string.field_blank))
         false
     } else {
         true
@@ -64,7 +65,7 @@ fun Context.isTermsCheckBoxClicked(field: CheckBox): Boolean {
     if (field.isChecked) {
         return true
     } else {
-        Toast(this).showWarningMessage(this, "Please accept terms and conditions")
+        Toast(this).showWarningMessage(this, getString(R.string.accept_term_conditions))
         return false
     }
 }
@@ -94,7 +95,7 @@ fun Context.isDropdownValid(
     return if (field.validator.isValid(selectedText)) {
         true
     } else {
-        Toast(this).showWarningMessage(this, "Please select $message")
+        Toast(this).showWarningMessage(this, getString(R.string.please_select) + " $message")
         false
     }
 }
@@ -105,12 +106,12 @@ fun Context.isEmailValid(email: TextInputEditText): Boolean {
     return if (mEmail.isBlank() || mEmail.isEmpty() || mEmail.trim() == "") {
         email.requestFocus()
         showKeyboard(email)
-        Toast(this).showWarningMessage(this, "Email can't be blank")
+        Toast(this).showWarningMessage(this, getString(R.string.email_blank))
         false
     } else if (!Patterns.EMAIL_ADDRESS.matcher(mEmail).matches()) {
         email.requestFocus()
         showKeyboard(email)
-        Toast(this).showErrorMessage(this, "Email is not valid")
+        Toast(this).showErrorMessage(this, getString(R.string.email_valid))
         false
     } else {
         true
@@ -133,7 +134,7 @@ fun Context.isPhoneNumberValid(phone: PhonemojiTextInputEditText): Boolean {
     if (!isValid) {
         phone.requestFocus()
         showKeyboard(phone)
-        Toast(this).showWarningMessage(this, "Phone number is not correct")
+        Toast(this).showWarningMessage(this, getString(R.string.no_not_correct))
         return false
     } else {
         return true
@@ -165,14 +166,14 @@ fun Context.isPasswordValid(
     return if (mPassword.isBlank() || mPassword.isEmpty() || mPassword.trim() == "") {
         password.requestFocus()
         showKeyboard(password)
-        Toast(this).showWarningMessage(this, "Password can't be blank")
+        Toast(this).showWarningMessage(this, getString(R.string.pass_not_blank))
         false
     } else if (!isLogin && mPassword.length < 8) {
         password.requestFocus()
         showKeyboard(password)
         Toast(this).showErrorMessage(
             this,
-            "Password needs to consist of at least 8 characters"
+            getString(R.string.password_rule)
         )
         false
     } else {
@@ -191,7 +192,7 @@ fun Context.isConfirmPasswordValid(
         mConfirmPassword.trim().isEmpty() || mConfirmPassword.isBlank() -> {
             confirmPassword.requestFocus()
             showKeyboard(confirmPassword)
-            Toast(this).showWarningMessage(this, "Retype your password can't be blank")
+            Toast(this).showWarningMessage(this, getString(R.string.password_blank))
             false
         }
 
@@ -200,7 +201,7 @@ fun Context.isConfirmPasswordValid(
             showKeyboard(confirmPassword)
             Toast(this).showErrorMessage(
                 this,
-                "Passwords not matched"
+                getString(R.string.pass_match)
             )
             false
         }

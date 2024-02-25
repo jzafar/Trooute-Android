@@ -51,7 +51,7 @@ class ReviewsActivity : AppCompatActivity() {
         reviewsAdapter = ReviewsAdapter()
         binding.apply {
             includeAppBar.apply {
-                this.toolbarTitle.text = "Reviews"
+                this.toolbarTitle.text = getString(R.string.reviews)
                 this.filter.isVisible = false
 
                 this.arrowBackPress.setOnClickListener {

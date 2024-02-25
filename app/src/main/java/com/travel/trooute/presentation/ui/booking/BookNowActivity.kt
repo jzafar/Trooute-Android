@@ -62,7 +62,7 @@ class BookNowActivity : AppCompatActivity() {
 
         binding.apply {
             includeAppBar.apply {
-                this.toolbarTitle.text = "Booking"
+                this.toolbarTitle.text = getString(R.string.booking)
                 this.filter.isVisible = false
 
                 this.arrowBackPress.setOnClickListener {
@@ -96,7 +96,7 @@ class BookNowActivity : AppCompatActivity() {
                 includeTripsItemLayout.apply {
                     tvAvailableSeat.text = "${
                         checkLongValue(tripsData.availableSeats)
-                    } Seats Available"
+                    } " + getString(R.string.seats_available)
 
                     tripsData.availableSeats?.let { availableSeats ->
                         availableSeat = availableSeats
@@ -188,7 +188,7 @@ class BookNowActivity : AppCompatActivity() {
                         } else {
                             Toast(this@BookNowActivity).showWarningMessage(
                                 this@BookNowActivity,
-                                "No more seats available"
+                                getString(R.string.no_more_seats)
                             )
                         }
                     }
@@ -198,11 +198,11 @@ class BookNowActivity : AppCompatActivity() {
                     if (
                         isFieldValid(
                             includePickupLocationItemLayout.etPickUpLocation,
-                            "Pickup location"
+                            getString(R.string.pickup_location)
                         )
                         && isFieldValid(
                             includePickupLocationItemLayout.etDestinationNote,
-                            "Other relevant detail"
+                            getString(R.string.other_relevent_details)
                         )
                     ) {
                         startActivity(

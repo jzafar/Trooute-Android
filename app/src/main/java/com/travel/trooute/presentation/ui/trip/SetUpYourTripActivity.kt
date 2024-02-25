@@ -87,7 +87,7 @@ class SetUpYourTripActivity : AppCompatActivity() {
 
         binding.apply {
             includeAppBar.apply {
-                this.toolbarTitle.text = "Set Up Your Trip"
+                this.toolbarTitle.text = getString(R.string.set_up_trip)
                 this.filter.isVisible = false
 
                 this.arrowBackPress.setOnClickListener {
@@ -192,23 +192,23 @@ class SetUpYourTripActivity : AppCompatActivity() {
                     if (
                         isFieldValid(
                             includeDestinationAndSchedule.etStartingLocation,
-                            "Start location"
+                            getString(R.string.start_locaction)
                         )
                         && isFieldValid(
                             includeDestinationAndSchedule.etDestinationLocation,
-                            "Destination location"
+                            getString(R.string.destination_location)
                         )
                         && isFieldPriceValid(
                             includeTripDetailsDriverItemLayout.etPrice,
-                            "Price"
+                            getString(R.string.price)
                         )
                         && isFieldValid(
                             includeTripDetailsDriverItemLayout.tvLanguageRestrictionType,
-                            "Type"
+                            getString(R.string.type)
                         )
                         && isFieldValid(
                             includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeight,
-                            "weight"
+                            getString(R.string.weight)
                         )
                     ) {
                         Log.e(TAG, "onCreate: departureDate -> $departureDate")

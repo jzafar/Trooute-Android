@@ -116,7 +116,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
 
         binding.apply {
             includeAppBar.apply {
-                this.toolbarTitle.text = "Trip Detail"
+                this.toolbarTitle.text = getString(R.string.trip_details)
                 this.filter.isVisible = false
 
                 this.arrowBackPress.setOnClickListener {
@@ -224,7 +224,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
             if (sharedPreferenceManager.driverMode()) {
                 // Data handling on driver side
                 // Passengers
-                tvSeatsLeft.text = "${checkLongValue(tripsData.trip?.availableSeats)} Seats Left"
+                tvSeatsLeft.text = "${checkLongValue(tripsData.trip?.availableSeats)} " + getString(R.string.seats_left)
                 if (tripsData.bookings?.isEmpty() == true || tripsData.bookings == null) {
 //                    tvDriverSidePassengersNotAvailable.isVisible = true
 //                    rvDriverSidePassengers.isVisible = false
@@ -271,14 +271,14 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                             }$WEIGHT_SIGN"
                         }
                         tvRoundTripValue.text = if (trip?.roundTrip == true) {
-                            "Yes"
+                            getString(R.string.yes)
                         } else {
-                            "No"
+                            getString(R.string.no)
                         }
                         tvSmokingAllowedValue.text = if (trip?.smokingPreference == true) {
-                            "Yes"
+                            getString(R.string.yes)
                         } else {
-                            "No"
+                            getString(R.string.no)
                         }
                         tvLanguagePreferenceValue.text = checkStringValue(
                             this@TripDetailActivity, trip?.languagePreference
@@ -324,11 +324,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                 }
 
                 btnStartTrip.setOnClickListener {
-                    startActivity(Intent(
-                        this@TripDetailActivity, PickupPassengersActivity::class.java
-                    ).apply {
-                        putExtra(TRIP_ID, tripID)
-                    })
+
                 }
 
                 btnCancel.setOnClickListener {
@@ -390,7 +386,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
 
                 tvPassengersAvailableSeat.text = "${
                     checkLongValue(tripsData.availableSeats)
-                } Seats Available"
+                } " + getString(R.string.seats_available)
                 if (tripsData.passengers.isNullOrEmpty()) {
                     includePassengersInfo.apply {
                         tvPassengersNotAvailable.isVisible = true
@@ -435,14 +431,14 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                         )
                     }$WEIGHT_SIGN"
                     tvRoundTripValue.text = if (tripsData.roundTrip) {
-                        "Yes"
+                        getString(R.string.yes)
                     } else {
-                        "No"
+                        getString(R.string.no)
                     }
                     if (tripsData.smokingPreference) {
-                        tvSmokingAllowedValue.text = "Yes"
+                        tvSmokingAllowedValue.text = getString(R.string.yes)
                     } else {
-                        tvSmokingAllowedValue.text = "No"
+                        tvSmokingAllowedValue.text = getString(R.string.no)
                     }
                     tvLanguagePreferenceValue.text = checkStringValue(
                         this@TripDetailActivity, tripsData.languagePreference
@@ -518,7 +514,7 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                     Log.e(TAG, "setupViews: tripID -> $tripID")
                     if (tripsData.availableSeats!! <= 0) {
                         Toast(this@TripDetailActivity).showSuccessMessage(
-                            this@TripDetailActivity, "No seats available"
+                            this@TripDetailActivity, getString(R.string.no_seats_available)
                         )
                     } else {
                         startActivity(Intent(

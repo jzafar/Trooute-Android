@@ -83,7 +83,7 @@ class SearchForTripsActivity : AppCompatActivity(), AdapterItemClickListener,
 
         binding.apply {
             includeAppBar.apply {
-                this.toolbarTitle.text = "Search results for Trip"
+                this.toolbarTitle.text = getString(R.string.search_results)
                 this.filter.isVisible = false
 
                 this.arrowBackPress.setOnClickListener {

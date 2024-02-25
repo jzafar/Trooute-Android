@@ -71,7 +71,7 @@ class BookingConfirmedActivity : AppCompatActivity() {
                         tvStatus,
                         ContextCompat.getString(this@BookingConfirmedActivity, R.string.waiting)
                     )
-                    tvBookingId.text = "Booking # ${getSubString(trips?._id)}"
+                    tvBookingId.text = getString(R.string.booking) + " # ${getSubString(trips?._id)}"
                     formatDateTime(
                         this@BookingConfirmedActivity,
                         tvDepartureDate,

@@ -81,7 +81,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
                     is Resource.SUCCESS -> {
                         Toast(this@UpdatePasswordActivity).showSuccessMessage(
                             this@UpdatePasswordActivity,
-                            "Password Updated successfully"
+                            getString(R.string.password_updated_success)
                         )
                         sharedPreferenceManager.saveAuthTokenInPref(it.data.token.toString())
                         it.data.data?.let { user ->

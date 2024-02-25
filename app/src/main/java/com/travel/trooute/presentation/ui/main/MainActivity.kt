@@ -280,7 +280,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast(this@MainActivity).showWarningMessage(
                 this@MainActivity,
-                "You'll not get notification if your trip is updated"
+                getString(R.string.notification_trip_update)
             )
         }
     }

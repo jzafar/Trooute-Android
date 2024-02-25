@@ -85,7 +85,7 @@ class YourProfileActivity : AppCompatActivity(), PickiTCallbacks {
 
             btnUpdate.setOnClickListener {
                 if (
-                    isFieldValid(teFullName, "Full name")
+                    isFieldValid(teFullName, getString(R.string.full_name))
                     && isPhoneNumberValid(tePhoneNumber)
                 ) {
                     if (isImageAdded) {

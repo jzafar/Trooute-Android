@@ -58,8 +58,7 @@ class AuthVerificationActivity : AppCompatActivity() {
         otpCountDownTimer()
 
         binding.apply {
-            tvVerificationDesc.text =
-                "Please enter the verification code sent to your $verificationEmail email address"
+            tvVerificationDesc.text = getString(R.string.verification_code) + " $verificationEmail " + getString(R.string.email_address)
 
             //GenericTextWatcher here works only for moving to next EditText when a number is entered
             //first parameter is the current EditText and second parameter is next EditText
@@ -190,7 +189,7 @@ class AuthVerificationActivity : AppCompatActivity() {
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
                 binding.tvExpiredAfter.isVisible = true
-                binding.tvExpiredAfter.text = "Expired after ${millisUntilFinished / 1000}s"
+                binding.tvExpiredAfter.text = getString(R.string.expired_after) + " ${millisUntilFinished / 1000}s"
             }
 
             override fun onFinish() {

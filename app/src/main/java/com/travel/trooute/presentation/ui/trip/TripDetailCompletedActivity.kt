@@ -160,7 +160,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                         )
                         Toast(this@TripDetailCompletedActivity).showSuccessMessage(
                             this@TripDetailCompletedActivity,
-                            "Review posted successfully"
+                            getString(R.string.review_posted_success)
                         )
                         getTripDetails()
                     }
@@ -220,7 +220,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                         tripId = tripsData.trip?._id?.uppercase() ?: tripID.uppercase()
                 }
 
-                tvBookingId.text = "Trip # ${
+                tvBookingId.text = getString(R.string.trip) + " # ${
                     checkStringValue(
                         this@TripDetailCompletedActivity,
                         tripId
@@ -363,7 +363,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                                             if (
                                                 shareYourThoughts.context.isFieldValid(
                                                     shareYourThoughts,
-                                                    "Comment Required"
+                                                    getString(R.string.comment_required)
                                                 )
                                             ) {
                                                 // Handling on client side
@@ -444,7 +444,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                                             if (submitReviewRatingValue.toDouble() == 0.0) {
                                                 Toast(this@TripDetailCompletedActivity).showErrorMessage(
                                                     this@TripDetailCompletedActivity,
-                                                    "Please select rating"
+                                                    getString(R.string.select_rating)
                                                 )
                                                 return@setOnClickListener
                                             }
@@ -471,33 +471,33 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                     if (sharedPreferenceManager.driverMode()) {
                         tvAddressFrom.text = checkStringValue(
                             this@TripDetailCompletedActivity,
-                            tripsData?.trip?.from_address
+                            tripsData.trip?.from_address
                         )
                         formatDateTime(
                             this@TripDetailCompletedActivity,
                             tvDepartureDate,
-                            tripsData?.trip?.departureDate
+                            tripsData.trip?.departureDate
                         )
                         tvAddressWhereto.text = checkStringValue(
                             this@TripDetailCompletedActivity,
-                            tripsData?.trip?.whereTo_address
+                            tripsData.trip?.whereTo_address
                         )
-                        tvPricePerPerson.text = checkPriceValue(tripsData?.trip?.pricePerPerson)
+                        tvPricePerPerson.text = checkPriceValue(tripsData.trip?.pricePerPerson)
                     } else {
                         tvAddressFrom.text = checkStringValue(
                             this@TripDetailCompletedActivity,
-                            tripsData?.from_address
+                            tripsData.from_address
                         )
                         formatDateTime(
                             this@TripDetailCompletedActivity,
                             tvDepartureDate,
-                            tripsData?.departureDate
+                            tripsData.departureDate
                         )
                         tvAddressWhereto.text = checkStringValue(
                             this@TripDetailCompletedActivity,
-                            tripsData?.whereTo_address
+                            tripsData.whereTo_address
                         )
-                        tvPricePerPerson.text = checkPriceValue(tripsData?.pricePerPerson)
+                        tvPricePerPerson.text = checkPriceValue(tripsData.pricePerPerson)
                     }
 
                 }
@@ -509,23 +509,23 @@ class TripDetailCompletedActivity : AppCompatActivity() {
             includeTripDetailLayout.apply {
                 tvTypeValue.text = checkStringValue(
                     this@TripDetailCompletedActivity,
-                    tripsData?.luggageRestrictions?.text
+                    tripsData.luggageRestrictions?.text
                 )
 
                 tvWeightValue.text = "${
-                    checkLongValue(tripsData?.luggageRestrictions?.weight)
+                    checkLongValue(tripsData.luggageRestrictions?.weight)
                 }$WEIGHT_SIGN"
 
                 if (tripsData?.roundTrip == true) {
-                    tvRoundTripValue.text = "Yes"
+                    tvRoundTripValue.text = getString(R.string.yes)
                 } else {
-                    tvRoundTripValue.text = "No"
+                    tvRoundTripValue.text = getString(R.string.no)
                 }
 
                 if (tripsData?.smokingPreference == true) {
-                    tvSmokingAllowedValue.text = "Yes"
+                    tvSmokingAllowedValue.text = getString(R.string.yes)
                 } else {
-                    tvSmokingAllowedValue.text = "No"
+                    tvSmokingAllowedValue.text = getString(R.string.no)
                 }
 
                 tvLanguagePreferenceValue.text = checkStringValue(

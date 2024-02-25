@@ -123,9 +123,9 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
         binding.apply {
             includeAppBar.apply {
                 if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {
-                    this.toolbarTitle.text = "Update Car Info"
+                    this.toolbarTitle.text = getString(R.string.update_car_info)
                 } else {
-                    this.toolbarTitle.text = "Become a Driver"
+                    this.toolbarTitle.text = getString(R.string.become_driver)
                 }
 
                 this.filter.isVisible = false
@@ -154,11 +154,11 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
             if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {
                 btnSubmitRequest.setOnClickListener {
                     if (
-                        isFieldValid(etMake, "Make")
-                        && isFieldValid(etModel, "Model")
-                        && isDropdownValid(actYear, yearArrayList, "year")
-                        && isDropdownValid(actColor, colorArrayList, "color")
-                        && isFieldValid(etVehicleLicensePlate, "Vehicle license plate")
+                        isFieldValid(etMake, getString(R.string.make))
+                        && isFieldValid(etModel, getString(R.string.model))
+                        && isDropdownValid(actYear, yearArrayList, getString(R.string.year))
+                        && isDropdownValid(actColor, colorArrayList, getString(R.string.color))
+                        && isFieldValid(etVehicleLicensePlate, getString(R.string.vehicle_license_plate))
 
                     ) {
                         updateCarInfoDetailsViewModel.updateCarDetails(
@@ -178,13 +178,13 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
             } else {
                 btnSubmitRequest.setOnClickListener {
                     if (
-                        isImageAdded(isVehicleImageUriAvailable, "Vehicle")
-                        && isFieldValid(etMake, "Make")
-                        && isFieldValid(etModel, "Model")
-                        && isDropdownValid(actYear, yearArrayList, "year")
-                        && isDropdownValid(actColor, colorArrayList, "color")
-                        && isFieldValid(etVehicleLicensePlate, "Vehicle license plate")
-                        && isImageAdded(isLicenseImageUriAvailable, "License")
+                        isImageAdded(isVehicleImageUriAvailable, getString(R.string.vehicle))
+                        && isFieldValid(etMake, getString(R.string.make))
+                        && isFieldValid(etModel, getString(R.string.model))
+                        && isDropdownValid(actYear, yearArrayList, getString(R.string.year))
+                        && isDropdownValid(actColor, colorArrayList, getString(R.string.color))
+                        && isFieldValid(etVehicleLicensePlate, getString(R.string.vehicle_license_plate))
+                        && isImageAdded(isLicenseImageUriAvailable, getString(R.string.license))
                     ) {
                         uploadDriverDetailsViewModel.uploadDriverDetails(
                             UploadDriverDetailsRequest(
@@ -247,19 +247,19 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
     }
 
     private fun setUpColorDropDown(actYear: AutoCompleteTextView) {
-        colorArrayList.add("White")
-        colorArrayList.add("Black")
-        colorArrayList.add("Gray")
-        colorArrayList.add("Silver")
-        colorArrayList.add("Blue")
-        colorArrayList.add("Red")
-        colorArrayList.add("Brown")
-        colorArrayList.add("Green")
-        colorArrayList.add("Orange")
-        colorArrayList.add("Beige")
-        colorArrayList.add("Purple")
-        colorArrayList.add("Gold")
-        colorArrayList.add("Yellow")
+        colorArrayList.add(getString(R.string.white))
+        colorArrayList.add(getString(R.string.black))
+        colorArrayList.add(getString(R.string.gray))
+        colorArrayList.add(getString(R.string.silver))
+        colorArrayList.add(getString(R.string.blue))
+        colorArrayList.add(getString(R.string.red))
+        colorArrayList.add(getString(R.string.brown))
+        colorArrayList.add(getString(R.string.green))
+        colorArrayList.add(getString(R.string.orange))
+        colorArrayList.add(getString(R.string.beige))
+        colorArrayList.add(getString(R.string.purple))
+        colorArrayList.add(getString(R.string.gold))
+        colorArrayList.add(getString(R.string.yellow))
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, colorArrayList)
 
         actYear.apply {

@@ -89,7 +89,7 @@ class ConfirmBookingActivity : AppCompatActivity() {
 
         binding.apply {
             includeAppBar.apply {
-                this.toolbarTitle.text = "Confirm Booking"
+                this.toolbarTitle.text = getString(R.string.confirm_booking)
                 this.filter.isVisible = false
 
                 this.arrowBackPress.setOnClickListener {
@@ -101,7 +101,7 @@ class ConfirmBookingActivity : AppCompatActivity() {
 
             tripsData?.let { trips ->
                 includeBookingDetailLayout.apply {
-                    tvAvailableSeat.text = "${checkLongValue(trips.availableSeats)} Seats Available"
+                    tvAvailableSeat.text = "${checkLongValue(trips.availableSeats)} " + getString(R.string.seats_available)
 
                     includeUserInfo.apply {
                         loadProfileImage(imgUserProfile, trips.driver?.photo)

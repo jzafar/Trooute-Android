@@ -89,36 +89,42 @@ class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListe
             skeleton = ltMainContent.createSkeleton()
             skeleton.showSkeleton()
 
-            btnStartTrip.setOnClickListener {
-                val bookings = tripData?.bookings?.reversed()
-                var allMarkedAsPickedUp = true
-                if (bookings != null) {
-                    for (booking in bookings) {
-                        if (booking.pickupStatus?.passengerStatus != PickUpPassengersStatus.Pickedup.toString() &&
-                            booking.pickupStatus?.driverStatus != PickUpPassengersStatus.PassengerNotShowedup.toString()) {
-                            allMarkedAsPickedUp = false
+            if (sharedPreferenceManager.driverMode()) {
+                btnStartTrip.setOnClickListener {
+                    val bookings = tripData?.bookings?.reversed()
+                    var allMarkedAsPickedUp = true
+                    if (bookings != null) {
+                        for (booking in bookings) {
+                            if (booking.pickupStatus?.passengerStatus != PickUpPassengersStatus.Pickedup.toString() &&
+                                booking.pickupStatus?.driverStatus != PickUpPassengersStatus.PassengerNotShowedup.toString()) {
+                                allMarkedAsPickedUp = false
+                            }
                         }
                     }
-                }
-                if (!allMarkedAsPickedUp) {
-                    val eBuilder = AlertDialog.Builder(this@PickupPassengersActivity)
-                    eBuilder.setTitle("Error")
-                    eBuilder.setMessage("You can't start trip until all passengers are marked as pickup.\nIf a passenger is not showed up you need to mark as Not Showed Up")
-                    eBuilder.setPositiveButton("Ok", fun(_: DialogInterface, _: Int) {
+                    if (!allMarkedAsPickedUp) {
+                        val eBuilder = AlertDialog.Builder(this@PickupPassengersActivity)
+                        eBuilder.setTitle(getString(R.string.error))
+                        eBuilder.setMessage(getString(R.string.can_not_start_trip))
+                        eBuilder.setPositiveButton(getString(R.string.ok), fun(_: DialogInterface, _: Int) {
 
-                    })
+                        })
 
 
-                    eBuilder.create()
-                    eBuilder.show()
-                } else {
-                    updateTripStatusViewModel.updateTripStatus(tripID!!, IN_PROGRESS)
-                    bindUpdateTripStatusObserver()
-                }
+                        eBuilder.create()
+                        eBuilder.show()
+                    } else {
+                        updateTripStatusViewModel.updateTripStatus(tripID!!, IN_PROGRESS)
+                        bindUpdateTripStatusObserver()
+                    }
 
 
 //                    sendNotification(START_BOOKING_TITLE, START_BOOKING_BODY, tripsData.bookings)
+                }
+            } else {
+                ltButtonSection.isVisible = false
             }
+
+
         }
         val mainHandler = Handler(Looper.getMainLooper())
 
@@ -172,15 +178,17 @@ class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListe
     private fun setUpViews(tripsData:TripsData) {
         pickupPassengersAdapter.submitList(tripsData.bookings)
         binding.apply {
-            if (tripsData.status == IN_PROGRESS) {
-                btnStartTrip.isVisible = false
-                btnTripEnd.isVisible = true
-            } else if (tripsData.status == SCHEDULED) {
-                btnStartTrip.isVisible = true
-                btnTripEnd.isVisible = false
-            } else {
-                ltButtonSection.isVisible = false
+            if (sharedPreferenceManager.driverMode()) {
+                if (tripsData.status == IN_PROGRESS) {
+                    btnStartTrip.isVisible = false
+                    btnTripEnd.isVisible = true
+                } else if (tripsData.status == SCHEDULED) {
+                    btnStartTrip.isVisible = true
+                    btnTripEnd.isVisible = false
+                } else {
+                    ltButtonSection.isVisible = false
 //                btnTripEnd.isVisible = false
+                }
             }
         }
 
@@ -256,7 +264,7 @@ class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListe
                                 setUpViews(tripsData)
                             }
                             Toast(this@PickupPassengersActivity).showSuccessMessage(
-                                this@PickupPassengersActivity, "Status updated successfully"
+                                this@PickupPassengersActivity, getString(R.string.status_updated_successfully)
                             )
                         }
                         else -> {}

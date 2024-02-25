@@ -97,9 +97,9 @@ class SignUpActivity : AppCompatActivity(), PickiTCallbacks {
             btnSignup.setOnClickListener {
 
                 if (
-                    isFieldValid(teFullName, "Full name")
+                    isFieldValid(teFullName, getString(R.string.full_name))
                     && isEmailValid(teEmailAddress)
-                    && isGenderSelected(gender, "Please select gender")
+                    && isGenderSelected(gender, getString(R.string.select_gender))
                     && isPhoneNumberValid(tePhoneNumber)
                     && isPasswordValid(true, tePassword)
                     && isConfirmPasswordValid(tePassword, teRetypePassword)

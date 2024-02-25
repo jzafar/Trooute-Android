@@ -102,7 +102,7 @@ class SettingsFragment : Fragment() {
                     startActivity(Intent(requireContext(), SetUpYourTripActivity::class.java))
                 }
             } else if (sharedPreferenceManager.getDriverStatus()?.lowercase() == "pending") {
-                tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " (Request pending)"
+                tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " " + getString(R.string.reques_pending)
                 ltBecomeADriver.setOnClickListener {
                     startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
                 }
@@ -228,7 +228,7 @@ class SettingsFragment : Fragment() {
         button_submit.setOnClickListener {
             Toast(requireContext()).showSuccessMessage(
                 requireContext(),
-                "Rating submitted successfully!"
+                getString(R.string.ratting_submitted)
             )
             builder.dismiss()
         }
@@ -345,7 +345,7 @@ class SettingsFragment : Fragment() {
                             requireContext(), R.string.driver_mode
                         )
                     } else if(sharedPreferenceManager.getDriverStatus() == "pending") {
-                        tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " (Request pending)"
+                        tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " " + getString(R.string.reques_pending)
                     }
                     else {
                         setDrawableEnd(tvUserName, null)

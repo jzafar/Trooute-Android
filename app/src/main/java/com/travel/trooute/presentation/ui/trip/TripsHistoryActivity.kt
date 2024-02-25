@@ -50,7 +50,7 @@ class TripsHistoryActivity : AppCompatActivity(), AdapterItemClickListener {
         authModelInfo = sharedPreferenceManager.getAuthModelFromPref()
         binding.apply {
             includeAppBar.apply {
-                this.toolbarTitle.text = "Trips History"
+                this.toolbarTitle.text = getString(R.string.trip_history)
                 this.filter.isVisible = false
 
                 this.arrowBackPress.setOnClickListener {
