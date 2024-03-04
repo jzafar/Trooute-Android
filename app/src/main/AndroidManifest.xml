@@ -40,7 +40,7 @@
         android:theme="@style/Theme.Trooute"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
-        tools:targetApi="31">
+        tools:targetApi="34">
         <activity
             android:name=".presentation.ui.trip.PickupPassengersActivity"
             android:exported="false" />
