@@ -106,6 +106,11 @@ class SettingsFragment : Fragment() {
                 ltBecomeADriver.setOnClickListener {
                     startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
                 }
+            } else if (sharedPreferenceManager.getDriverStatus()?.lowercase() == "rejected") {
+                tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " " + getString(R.string.request_rejected)
+                ltBecomeADriver.setOnClickListener {
+                    startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
+                }
             } else {
                 ltBecomeADriver.setOnClickListener {
                     startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
@@ -346,8 +351,12 @@ class SettingsFragment : Fragment() {
                         )
                     } else if(sharedPreferenceManager.getDriverStatus() == "pending") {
                         tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " " + getString(R.string.reques_pending)
-                    }
-                    else {
+                    } else if (sharedPreferenceManager.getDriverStatus()?.lowercase() == "rejected") {
+                        tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " " + getString(R.string.request_rejected)
+                        ltBecomeADriver.setOnClickListener {
+                            startActivity(Intent(requireContext(), BecomeDriverActivity::class.java))
+                        }
+                    } else {
                         setDrawableEnd(tvUserName, null)
 
                         tvBecomeADriver.text = ContextCompat.getString(

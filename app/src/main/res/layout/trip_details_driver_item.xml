@@ -116,9 +116,9 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPrice"
                         style="@style/TextInputEditTextStyle"
-                        android:hint="Price"
+                        android:hint="@string/price"
                         android:inputType="number"
-                        android:digits="€ 1234567890"/>
+                        android:digits="€ 1234567890."/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -133,85 +133,103 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/HeadLine_6"
                     android:layout_width="wrap_content"
-                    android:text="Restrictions on luggage type and weight" />
+                    android:text="@string/restrictions_on_luggage_type_and_weight" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/Body_6"
                     android:layout_width="wrap_content"
-                    android:text="Please provide any luggage size or weight restrictions for each passenger."
+                    android:text="@string/restriction_weight_text"
                     android:textColor="@color/secondary_cadet_blue_color" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     app:divider="@drawable/divider_section_space"
                     app:showDividers="middle">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/TextInputLayoutStyle"
-                        android:layout_weight="1">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/sub_section_space">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tvLanguageRestrictionType"
-                            style="@style/TextInputEditTextStyle"
-                            android:hint="E.g Suitcase, Hand carry"
-                            android:inputType="text|textCapWords" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/HeadLine_6"
+                            android:layout_width="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/hand_carry" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_height="@dimen/_40sdp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/TextInputLayoutStyle"
-                        android:layout_weight="1">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tvLanguageRestrictionWeight"
+                                style="@style/TextInputEditTextStyle"
+                                android:hint="@string/luggage_weight"
+                                android:inputType="number" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tvLanguageRestrictionWeight"
-                            style="@style/TextInputEditTextStyle"
-                            android:hint="weight (kg)"
-                            android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <Switch
+                            android:id="@+id/switchHandCarry"
+                            style="@style/SwitchTheme"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    </RelativeLayout>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:divider="@drawable/divider_section_space"
-                app:showDividers="middle">
-
-                <RelativeLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_secondary_athens_gray_bg"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/sub_section_space">
+                    android:orientation="vertical"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/HeadLine_6"
-                        android:layout_width="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Round Trip" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/sub_section_space">
 
-                    <Switch
-                        android:id="@+id/switchRoundTrip"
-                        style="@style/SwitchTheme"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/HeadLine_6"
+                            android:layout_width="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/suitcase" />
 
-                </RelativeLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_height="@dimen/_40sdp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Body_6"
-                    android:layout_width="wrap_content"
-                    android:text="whether the ride is a round-trip or not"
-                    android:textColor="@color/secondary_cadet_blue_color" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tvLanguageRestrictionWeightSuitcase"
+                                style="@style/TextInputEditTextStyle"
+                                android:hint="@string/luggage_weight"
+                                android:inputType="number" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Switch
+                            android:id="@+id/switchSuitcase"
+                            style="@style/SwitchTheme"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -245,12 +263,6 @@
 
                 </RelativeLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Body_6"
-                    android:layout_width="wrap_content"
-                    android:text="whether smoking is allowed or not during the trip"
-                    android:textColor="@color/secondary_cadet_blue_color" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -282,12 +294,6 @@
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                 </RelativeLayout>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Body_6"
-                    android:layout_width="wrap_content"
-                    android:text="whether pets are allowed or not during the trip"
-                    android:textColor="@color/secondary_cadet_blue_color" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

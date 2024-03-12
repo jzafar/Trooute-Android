@@ -324,7 +324,12 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                 }
 
                 btnStartTrip.setOnClickListener {
-
+                    startActivity(Intent(
+                        this@TripDetailActivity, PickupPassengersActivity::class.java
+                    ).apply {
+                        putExtra(TRIP_ID, tripID)
+//                        putExtra(GET_TRIP_DETAIL, tripsData)
+                    })
                 }
 
                 btnCancel.setOnClickListener {

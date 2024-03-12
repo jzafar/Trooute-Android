@@ -268,7 +268,7 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
                                 android:visibility="gone"
-                                app:srcCompat="@drawable/passenger_1" />
+                                 />
 
                         </RelativeLayout>
 

@@ -166,9 +166,9 @@ class SetUpYourTripActivity : AppCompatActivity() {
 
                 etPrice.addTextChangedListener(currencyTextWatcher);
 
-                switchRoundTrip.setOnCheckedChangeListener { buttonView, isChecked ->
-                    roundTrip = isChecked
-                }
+//                switchRoundTrip.setOnCheckedChangeListener { buttonView, isChecked ->
+//                    roundTrip = isChecked
+//                }
 
                 switchSmokingPreference.setOnCheckedChangeListener { buttonView, isChecked ->
                     smokingPreference = isChecked
@@ -201,10 +201,6 @@ class SetUpYourTripActivity : AppCompatActivity() {
                         && isFieldPriceValid(
                             includeTripDetailsDriverItemLayout.etPrice,
                             getString(R.string.price)
-                        )
-                        && isFieldValid(
-                            includeTripDetailsDriverItemLayout.tvLanguageRestrictionType,
-                            getString(R.string.type)
                         )
                         && isFieldValid(
                             includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeight,

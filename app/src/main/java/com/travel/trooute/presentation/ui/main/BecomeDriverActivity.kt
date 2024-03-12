@@ -246,7 +246,7 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
         }
     }
 
-    private fun setUpColorDropDown(actYear: AutoCompleteTextView) {
+    private fun setUpColorDropDown(actColor: AutoCompleteTextView) {
         colorArrayList.add(getString(R.string.white))
         colorArrayList.add(getString(R.string.black))
         colorArrayList.add(getString(R.string.gray))
@@ -262,7 +262,7 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
         colorArrayList.add(getString(R.string.yellow))
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, colorArrayList)
 
-        actYear.apply {
+        actColor.apply {
             setAdapter(adapter)
             setOnItemClickListener { parent, view, position, id ->
                 parent.getItemAtPosition(position).toString()
@@ -383,24 +383,31 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
     }
 
     private fun addVehicleData() {
-//        uploadDriverDetailsViewModel.uploadDriverDetails(
-//            UploadDriverDetailsRequest(
-//                make = etMake.text.toString(),
-//                model = etModel.text.toString(),
-//                registrationNumber = etVehicleLicensePlate.text.toString(),
-//                year = actYear.text.toString(),
-//                color = actColor.text.toString(),
-//                carPhoto = vehicleImgFile,
-//                driverLicense = licenseImgFile,
-//            )
-//        )
         sharedPreferenceManager.getAuthModelFromPref().let { user ->
             var carDetails = user?.carDetails
-            binding.etMake.setText(carDetails?.make)
-            binding.etModel.setText(carDetails?.model)
-            binding.etVehicleLicensePlate.setText(carDetails?.registrationNumber)
-            binding.actYear.setText(carDetails?.year.toString())
-            binding.actColor.setText(carDetails?.color)
+            if (!carDetails?.make.isNullOrEmpty()) {
+                binding.etMake.setText(carDetails?.make)
+            }
+            if (!carDetails?.model.isNullOrEmpty()) {
+                binding.etModel.setText(carDetails?.model)
+            }
+            if (!carDetails?.registrationNumber.isNullOrEmpty()) {
+                binding.etVehicleLicensePlate.setText(carDetails?.registrationNumber)
+            }
+            if (carDetails?.year.toString() != "null") {
+                binding.actYear.setText(carDetails?.year.toString())
+            }
+            if (!carDetails?.color.isNullOrEmpty()) {
+                binding.actColor.setText(carDetails?.color)
+            }
+            if (!carDetails?.driverLicense.isNullOrEmpty()) {
+                binding.imgDrivingLicense.isVisible = true
+                binding.ltClickToUploadDrivingLicense.isVisible  = true
+                loadImage(binding.imgDrivingLicense, carDetails?.driverLicense.toString())
+            }
+
+
+
             if (vehicleUri != null) {
                 binding.imgVehicle.setImageURI(vehicleUri)
             } else {
@@ -408,11 +415,7 @@ class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
             }
 
             binding.imgVehicle.isVisible = true
-//            binding.ltClickToUploadPhoto.isVisible  = false
-//            loadImage(binding.imgDrivingLicense, carDetails?.driverLicense.toString())
-            binding.imgDrivingLicense.isVisible = true
-            binding.ltClickToUploadDrivingLicense.isVisible  = false
-
+            binding.ltClickToUploadPhoto.isVisible  = true
             setUpYearDropDown(binding.actYear)
             setUpColorDropDown(binding.actColor)
             if (sharedPreferenceManager.getDriverStatus()?.lowercase() == approved) {

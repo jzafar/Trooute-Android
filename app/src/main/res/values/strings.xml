@@ -154,7 +154,7 @@
     <string name="become_a_driver">Become a Driver</string>
     <string name="driver_mode">Driver Mode</string>
     <string name="your_profile">Profile</string>
-    <string name="wishlist">Wishlist</string>
+    <string name="wishlist">Book Mark</string>
     <string name="create_a_new_trip">Create a new trip</string>
     <string name="trip_history">Trip History</string>
     <string name="payment_and_withdraw">Payment and withdraw</string>
@@ -297,5 +297,18 @@
     <string name="trip">Trip</string>
     <string name="comment_required">Comment Required</string>
     <string name="select_rating">Please select rating</string>
+
+
+
+
+
+    <string name="request_rejected">(Request rejected)</string>
+    <string name="restriction_weight_text">Please provide any luggage size or weight restrictions for each passenger.</string>
+    <string name="hand_carry">Hand carry</string>
+    <string name="luggage_weight">weight (kg)</string>
+    <string name="suitcase">Suitcase</string>
+
+
+
 
 </resources>
