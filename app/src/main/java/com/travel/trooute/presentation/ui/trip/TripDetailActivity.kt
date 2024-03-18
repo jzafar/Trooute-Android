@@ -1,6 +1,8 @@
 package com.travel.trooute.presentation.ui.trip
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -68,7 +70,11 @@ import com.travel.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishList
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
 import com.google.android.material.internal.ViewUtils
+import com.travel.trooute.core.util.Constants.PICKUP_PASSENGERS_STARTED
+import com.travel.trooute.core.util.Constants.PICKUP_PASSENGERS_STARTED_BODY
+import com.travel.trooute.core.util.Constants.PickupStarted
 import com.travel.trooute.data.model.common.Passenger
+import com.travel.trooute.data.model.trip.response.PickupStatus
 import com.travel.trooute.presentation.ui.review.ReviewsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -324,28 +330,51 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                 }
 
                 btnStartTrip.setOnClickListener {
-                    startActivity(Intent(
-                        this@TripDetailActivity, PickupPassengersActivity::class.java
-                    ).apply {
-                        putExtra(TRIP_ID, tripID)
-//                        putExtra(GET_TRIP_DETAIL, tripsData)
-                    })
+                    if(tripsData.trip?.status == PickupStarted || tripsData.trip?.status == IN_PROGRESS) {
+                        startActivity(Intent(
+                            this@TripDetailActivity, PickupPassengersActivity::class.java
+                        ).apply {
+                            putExtra(TRIP_ID, tripID)
+                        })
+                    } else {
+                        updateTripStatusViewModel.updateTripStatus(tripID, PickupStarted)
+                        bindUpdateTripStatusObserver(
+                            PICKUP_PASSENGERS_STARTED,
+                            PICKUP_PASSENGERS_STARTED_BODY,
+                            tripsData.bookings
+                        )
+                    }
                 }
 
                 btnCancel.setOnClickListener {
                     isScreenNeedToFinish = true
-                    updateTripStatusViewModel.updateTripStatus(tripID, CANCELED)
-                    bindUpdateTripStatusObserver(
-                        BOOKED_CANCELLED_TITLE,
-                        BOOKED_CANCELLED_BODY,
-                        tripsData.bookings
-                    )
+                    val alertDialog = AlertDialog.Builder(this@TripDetailActivity)
 
-                    sendNotification(
-                        BOOKED_CANCELLED_TITLE,
-                        BOOKED_CANCELLED_BODY,
-                        tripsData.bookings
-                    )
+                    alertDialog.apply {
+//                        setIcon(R.drawable.ic_heart)
+                        setTitle(R.string.alert)
+                        setMessage(R.string.sure_cancel_trip)
+                        setPositiveButton(R.string.ok) { _: DialogInterface?, _: Int ->
+                            updateTripStatusViewModel.updateTripStatus(tripID, CANCELED)
+                            bindUpdateTripStatusObserver(
+                                BOOKED_CANCELLED_TITLE,
+                                BOOKED_CANCELLED_BODY,
+                                tripsData.bookings
+                            )
+
+                            sendNotification(
+                                BOOKED_CANCELLED_TITLE,
+                                BOOKED_CANCELLED_BODY,
+                                tripsData.bookings
+                            )
+                        }
+                        setNegativeButton(R.string.cancel) { _, _ ->
+
+                        }
+
+
+                    }.create().show()
+
                 }
             } else {
                 // Data handling on user side
@@ -588,9 +617,15 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                 loader.cancel()
                 when (it) {
                     is Resource.ERROR -> {
-                        Toast(this@TripDetailActivity).showErrorMessage(
-                            this@TripDetailActivity, it.message.toString()
-                        )
+                        if (it.message.toString() ==  "remaining_time_more_than_12h") {
+                            Toast(this@TripDetailActivity).showErrorMessage(
+                                this@TripDetailActivity, getString(R.string.remaining_time_more_than_12h)
+                            )
+                        } else {
+                            Toast(this@TripDetailActivity).showErrorMessage(
+                                this@TripDetailActivity, it.message.toString()
+                            )
+                        }
 
                         Log.e(
                             TAG, "bindMarkTripCompletedObserver: Error -> " + it.message.toString()
@@ -613,14 +648,18 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                             }
                         }
 
-                        Log.e(
+                        Log.i(
                             TAG,
                             "bindMarkTripCompletedObserver: success -> " + it.data.message.toString()
                         )
 
-//                        if (toId?.isEmpty() == false || toId != null) {
-////                            sendNotification(title.toString(), body.toString(), toId)
-//                        }
+                        if (title == PICKUP_PASSENGERS_STARTED) {
+                            startActivity(Intent(
+                                this@TripDetailActivity, PickupPassengersActivity::class.java
+                            ).apply {
+                                putExtra(TRIP_ID, tripID)
+                            })
+                        }
                     }
                 }
             }

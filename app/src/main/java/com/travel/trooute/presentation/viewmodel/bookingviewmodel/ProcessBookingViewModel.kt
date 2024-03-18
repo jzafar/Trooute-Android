@@ -45,7 +45,7 @@ class ProcessBookingViewModel @Inject constructor(
         }
     }
 
-    fun confirmBooking(bookingId: String?) {
+    fun confirmBooking(bookingId: String) {
         viewModelScope.launch {
             _processBookingState.value = Resource.LOADING
             _processBookingState.emit(confirmBookingUseCase.invoke(bookingId = bookingId))

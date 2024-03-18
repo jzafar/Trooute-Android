@@ -25,7 +25,7 @@ import com.travel.trooute.presentation.utils.ValueChecker.checkStringValue
 
 class PickupPassengersAdapter(private val adapterItemClickListener: PickUpPassengersEventListener,
                               private val startMessaging: (User?) -> Unit,
-                              private val startCall: (User?) -> Unit,
+                              private val startCall: (String?) -> Unit,
                               private val sharedPreferenceManager: SharedPreferenceManager,
                               private val applicationContext: Context,
 ) :
@@ -67,7 +67,7 @@ class PickupPassengersAdapter(private val adapterItemClickListener: PickUpPassen
                         }
 
                         callIcon.setOnClickListener {
-                            startCall.invoke(item.user)
+                            startCall.invoke(item.user?.phoneNumber)
                         }
                     }
 
@@ -117,11 +117,16 @@ class PickupPassengersAdapter(private val adapterItemClickListener: PickUpPassen
                         btnMarkedPickup.isVisible = false
                         btnPassengerNotShowedUp.isVisible = false
                         includeUserDetail.apply {
-                            callIcon.isVisible = false
-                            messageIcon.isVisible = false
+                            if (sharedPreferenceManager.driverMode()) {
+                                callIcon.isVisible = true
+                                messageIcon.isVisible = true
+                            } else {
+                                callIcon.isVisible = false
+                                messageIcon.isVisible = false
+                            }
+
                         }
                     }
-
                 }
 
 

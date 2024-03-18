@@ -72,6 +72,13 @@ class WebViewUtil(
             paymentSuccessViewModel.paymentSuccess(url.replace("http://localhost:4000", ""))
             bindPaymentSuccessObservers()
         }
+
+        if (url?.contains("payment-failed") == true) {
+            val intent = Intent(activity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra("paymentSuccess", false)
+            activity.startActivity(intent)
+        }
     }
 
     private fun bindPaymentSuccessObservers() {

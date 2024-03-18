@@ -42,6 +42,7 @@ import com.travel.trooute.presentation.viewmodel.tripviewmodel.UpdatePickupStatu
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.UpdateTripStatusViewModel
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
+import com.travel.trooute.data.model.common.Driver
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -124,11 +125,8 @@ class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListe
                 ltButtonSection.isVisible = false
             }
 
-
         }
         val mainHandler = Handler(Looper.getMainLooper())
-
-
         mainHandler.post(object : Runnable {
             override fun run() {
                 getPickupStatus()
@@ -193,7 +191,6 @@ class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListe
         }
 
     }
-
     private fun startMessaging(user: User?) {
         user?.let {
             startActivity(
@@ -210,8 +207,8 @@ class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListe
         }
     }
 
-    private fun startCall(user: User?) {
-        val uri = "tel:" + user?.phoneNumber
+    private fun startCall(phoneNumber: String?) {
+        val uri = "tel:$phoneNumber"
         val intent = Intent(Intent.ACTION_DIAL)
         intent.setData(Uri.parse(uri))
         startActivity(intent)

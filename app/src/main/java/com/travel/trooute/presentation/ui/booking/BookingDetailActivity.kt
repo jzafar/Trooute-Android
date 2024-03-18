@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
@@ -69,7 +71,12 @@ import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
 import com.google.android.material.internal.ViewUtils
 import com.travel.trooute.core.util.Constants
+import com.travel.trooute.core.util.Constants.PickupStarted
+import com.travel.trooute.core.util.Constants.SCHEDULED
+import com.travel.trooute.data.model.trip.response.Booking
+import com.travel.trooute.data.model.trip.response.TripsData
 import com.travel.trooute.presentation.ui.trip.PickupPassengersActivity
+import com.travel.trooute.presentation.viewmodel.tripviewmodel.GetPickupPassengersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -92,6 +99,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
     private val processBookingViewModel: ProcessBookingViewModel by viewModels()
     private val createReviewViewModel: CreateReviewViewModel by viewModels()
     private val pushNotificationViewModel: PushNotificationViewModel by viewModels()
+    private val getPickupPassengersViewModel: GetPickupPassengersViewModel by viewModels()
 
     @Inject
     lateinit var loader: Loader
@@ -144,7 +152,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                         }
 
                         is Resource.SUCCESS -> {
-                            Log.e(TAG, "bindGetBookingDetailsObserver: Success -> " + it.data)
+                            Log.i(TAG, "bindGetBookingDetailsObserver: Success -> " + it.data)
                             it.data.data?.let { bookingData ->
                                 setUpBookingDetailViews(bookingData)
 
@@ -210,7 +218,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
     private fun setUpBookingDetailViews(bookingData: BookingDetailsData) {
         binding.apply {
             when (bookingData.status) {
-                getString(R.string.waiting) -> {
+                "Waiting" -> {
                     includeWaitingLayout.mcWaitingBooking.isVisible = true
                     includeCancelledLayout.mcCancelledBooking.isVisible = false
                     includeApprovedLayout.mcApprovedBooking.isVisible = false
@@ -308,7 +316,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                     }
                 }
 
-                getString(R.string.confirmed) -> {
+                "Confirmed" -> {
                     includeWaitingLayout.mcWaitingBooking.isVisible = false
                     includeCancelledLayout.mcCancelledBooking.isVisible = false
                     includeApprovedLayout.mcApprovedBooking.isVisible = false
@@ -361,7 +369,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                     }
                 }
 
-                getString(R.string.canceled) -> {
+                "Canceled" -> {
                     includeWaitingLayout.mcWaitingBooking.isVisible = false
                     includeCancelledLayout.mcCancelledBooking.isVisible = true
                     includeApprovedLayout.mcApprovedBooking.isVisible = false
@@ -399,7 +407,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                     }
                 }
 
-                getString(R.string.approved) -> {
+                "Approved" -> {
                     includeWaitingLayout.mcWaitingBooking.isVisible = false
                     includeCancelledLayout.mcCancelledBooking.isVisible = false
                     includeApprovedLayout.mcApprovedBooking.isVisible = true
@@ -472,7 +480,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                     }
                 }
 
-                getString(R.string.completed) -> {
+                "Completed" -> {
                     includeWaitingLayout.mcWaitingBooking.isVisible = false
                     includeCancelledLayout.mcCancelledBooking.isVisible = false
                     includeApprovedLayout.mcApprovedBooking.isVisible = false
@@ -509,7 +517,130 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                     }
                 }
             }
+
+            if (!sharedPreferenceManager.driverMode()) {
+                if (bookingData.trip?.status == SCHEDULED) {
+                    pickUpStatusView.isVisible = false
+                } else {
+                    val mainHandler = Handler(Looper.getMainLooper())
+                    mainHandler.post(object : Runnable {
+                        override fun run() {
+                            getPickupStatus(bookingData.trip?._id)
+                            mainHandler.postDelayed(this, 5000)
+                        }
+                    })
+                    bindGetPickupStatusObserver()
+                }
+
+            }
+
         }
+    }
+
+    private fun setUpViewForPassengerSidePickupStatus(bookingData: Booking){
+        binding.apply {
+            pickUpStatusView.isVisible = true
+            when (bookingData.pickupStatus?.driverStatus) {
+                "NotStarted" -> {
+                    pickUpStatusView.isVisible = false
+                }
+                "PickupStarted" -> {
+                    pickUpStatusView.isVisible = true
+                    includeConfirmedLayout.apply {
+                        btnCancelBooking.isVisible = false
+
+                    }
+                    includePickupStatusLayout.apply {
+                        tvStatus.text = "Pickup started"
+                        statusDetail.text = "Driver has started to pick up passengers."
+                    }
+                }
+                "PassengerNotified" -> {
+                    pickUpStatusView.isVisible = true
+                    includeConfirmedLayout.apply {
+                        btnCancelBooking.isVisible = false
+                    }
+                    includePickupStatusLayout.apply {
+                        tvStatus.text = "Get ready"
+                        statusDetail.text = "Driver is coming to you to pick you up."
+                    }
+                }
+                "PassengerPickedup" -> {
+                    pickUpStatusView.isVisible = true
+                    includeConfirmedLayout.apply {
+                        btnCancelBooking.isVisible = false
+                    }
+                    includePickupStatusLayout.apply {
+                        tvStatus.text = "Picked up"
+                        statusDetail.text = "Driver marked you as a picked up. if it's correct please mark yourself as picked up."
+                    }
+                }
+                "PassengerNotShowedup" -> {
+                    pickUpStatusView.isVisible = true
+                    includeConfirmedLayout.apply {
+                        btnCancelBooking.isVisible = false
+                    }
+                    includePickupStatusLayout.apply {
+                        tvStatus.text = "Not showed up"
+                        statusDetail.text = "Driver marked you as not showed up. If it's not true you can contact support from settings page."
+                    }
+                }
+                // set by passenger for driver
+                "DriverPickedup" -> {
+                    pickUpStatusView.isVisible = true
+                    includeConfirmedLayout.apply {
+                        btnCancelBooking.isVisible = false
+                    }
+                    includePickupStatusLayout.apply {
+                        tvStatus.text = "Picked up"
+                        statusDetail.text = "Trooute wish you sage journey."
+                    }
+                }
+                // set by passenger for driver
+                "DriverNotShowedup" -> {
+                    pickUpStatusView.isVisible = true
+                    includeConfirmedLayout.apply {
+                        btnCancelBooking.isVisible = false
+                    }
+
+                    includePickupStatusLayout.apply {
+                        tvStatus.text = "Not showed up"
+                        statusDetail.text = "You have marked as driver not showed up. You can contact support from settings page."
+                    }
+                }
+            }
+        }
+
+    }
+    private fun bindGetPickupStatusObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                getPickupPassengersViewModel.getPickupState.collect {
+                    when (it) {
+                        is Resource.ERROR -> {
+                            Log.e(
+                                TAG, "bindGetPickupStatusObserver: Error -> " + it.message.toString()
+                            )
+                        }
+
+                        Resource.LOADING -> {}
+
+                        is Resource.SUCCESS -> {
+                            it.data.data?.let { tripsData ->
+                                val booking =
+                                    tripsData.bookings?.single { booking -> booking._id == bookingId }
+                                if (booking != null) {
+                                    setUpViewForPassengerSidePickupStatus(booking)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private fun getPickupStatus(tripID: String?) {
+        tripID?.let { getPickupPassengersViewModel.getPickUpStatus(it) }
     }
 
     private fun showConnectStripeAccountAlert() {

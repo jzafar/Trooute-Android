@@ -21,6 +21,7 @@ object Constants {
     const val IN_PROGRESS = "In Progress"
     const val COMPLETED = "Completed"
     const val CANCELED = "Canceled"
+    const val PickupStarted = "PickupStarted"
 
     // FireStore constant
     const val INBOX_COLLECTION_NAME = "TroouteInbox"
@@ -62,6 +63,9 @@ object Constants {
 
     const val BOOKED_CANCELLED_TITLE = "Booking cancelled"
     const val BOOKED_CANCELLED_BODY = "Sorry, Your trip is cancelled by "
+
+    const val PICKUP_PASSENGERS_STARTED = "Pickup passengers started"
+    const val PICKUP_PASSENGERS_STARTED_BODY = "Driver has started pickup passengers"
 
     const val MAKE_PAYMENT_TITLE = "Booking payment"
     const val MAKE_PAYMENT_BODY = "Get ready for an amazing journey, Payment received for your trip from "

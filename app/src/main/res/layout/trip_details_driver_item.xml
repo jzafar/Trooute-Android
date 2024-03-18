@@ -102,6 +102,11 @@
                         android:text="@string/set_a_price_for_the_trip" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/HeadLine_6"
+                        android:layout_width="wrap_content"
+                        android:text=" " />
+
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Body_6"
                         android:layout_width="wrap_content"
                         android:text="@string/per_person"
@@ -168,7 +173,7 @@
                             android:layout_height="@dimen/_40sdp">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/tvLanguageRestrictionWeight"
+                                android:id="@+id/tvHandCarryRestrictionWeight"
                                 style="@style/TextInputEditTextStyle"
                                 android:hint="@string/luggage_weight"
                                 android:inputType="number" />
@@ -252,7 +257,7 @@
                         style="@style/HeadLine_6"
                         android:layout_width="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Smoking Preference" />
+                        android:text="@string/smoking" />
 
                     <Switch
                         android:id="@+id/switchSmokingPreference"
@@ -284,7 +289,7 @@
                         style="@style/HeadLine_6"
                         android:layout_width="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Pets Preference" />
+                        android:text="@string/pets" />
 
                     <Switch
                         android:id="@+id/switchPetsPreference"
@@ -323,7 +328,7 @@
                             android:id="@+id/tvLanguagePreference"
                             style="@style/HeadLine_6"
                             android:layout_width="wrap_content"
-                            android:text="Language Preference " />
+                            android:text="@string/language" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/Body_6"

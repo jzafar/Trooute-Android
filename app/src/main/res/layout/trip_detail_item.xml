@@ -149,7 +149,31 @@
                         style="@style/Body_6"
                         android:layout_width="0dp"
                         android:layout_weight="3"
-                        android:text="@string/language_preference"
+                        android:text="@string/pets_allowed"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPetPreferenceValue"
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:text="@string/not_provided"
+                        android:textAlignment="textEnd" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:text="@string/language"
                         android:textColor="@color/secondary_cadet_blue_color" />
 
                     <androidx.appcompat.widget.AppCompatTextView

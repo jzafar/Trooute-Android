@@ -44,6 +44,8 @@ class SetUpYourTripActivity : AppCompatActivity() {
     private var departureTime: String = ""
     private var roundTrip = false
     private var smokingPreference: Boolean = false
+    private var handCarryPreference: Boolean = false
+    private var suitCasePreference: Boolean = false
     private var petsPreference: Boolean = false
     private var placesStartLocationLatLng: LatLng? = null
     private var placesStartLocationAddress: String? = null
@@ -166,9 +168,13 @@ class SetUpYourTripActivity : AppCompatActivity() {
 
                 etPrice.addTextChangedListener(currencyTextWatcher);
 
-//                switchRoundTrip.setOnCheckedChangeListener { buttonView, isChecked ->
-//                    roundTrip = isChecked
-//                }
+                switchHandCarry.setOnCheckedChangeListener { buttonView, isChecked ->
+                    handCarryPreference = isChecked
+                }
+
+                switchSuitcase.setOnCheckedChangeListener { buttonView, isChecked ->
+                    suitCasePreference = isChecked
+                }
 
                 switchSmokingPreference.setOnCheckedChangeListener { buttonView, isChecked ->
                     smokingPreference = isChecked
@@ -189,6 +195,18 @@ class SetUpYourTripActivity : AppCompatActivity() {
                 btnPostTrip.setOnClickListener {
                     Log.e(TAG, "onCreate: departureDate -> $departureDate")
                     Log.e(TAG, "onCreate: departureTime -> $departureTime")
+                    if (handCarryPreference) {
+                        isFieldValid(
+                            includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight,
+                            getString(R.string.hand_carry)
+                        )
+                    }
+                    if (suitCasePreference) {
+                        isFieldValid(
+                            includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeightSuitcase,
+                            getString(R.string.suitcase)
+                        )
+                    }
                     if (
                         isFieldValid(
                             includeDestinationAndSchedule.etStartingLocation,
@@ -202,13 +220,9 @@ class SetUpYourTripActivity : AppCompatActivity() {
                             includeTripDetailsDriverItemLayout.etPrice,
                             getString(R.string.price)
                         )
-                        && isFieldValid(
-                            includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeight,
-                            getString(R.string.weight)
-                        )
                     ) {
-                        Log.e(TAG, "onCreate: departureDate -> $departureDate")
-                        Log.e(TAG, "onCreate: departureTime -> $departureTime")
+                        Log.d(TAG, "onCreate: departureDate -> $departureDate")
+                        Log.d(TAG, "onCreate: departureTime -> $departureTime")
                         var languagePreference: String? = null
                         if (binding.includeTripDetailsDriverItemLayout.switchLanguagePreference.isChecked) {
                             var language = binding.includeTripDetailsDriverItemLayout.tlvLanguagePreference.text
@@ -227,8 +241,8 @@ class SetUpYourTripActivity : AppCompatActivity() {
 
                                 languagePreference = languagePreference,
                                 luggageRestrictions = LanguageRestriction(
-                                    text = tvLanguageRestrictionType.text.toString(),
-                                    weight = tvLanguageRestrictionWeight.text.toString().toLong()
+                                    text =  includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight.text.toString() ,
+                                    weight = includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeightSuitcase.text.toString().toLong()
                                 ),
                                 note = etNote.text.toString(),
                                 pricePerPerson = number,
