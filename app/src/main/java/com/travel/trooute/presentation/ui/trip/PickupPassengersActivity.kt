@@ -42,6 +42,7 @@ import com.travel.trooute.presentation.viewmodel.tripviewmodel.UpdatePickupStatu
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.UpdateTripStatusViewModel
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
+import com.travel.trooute.core.util.Constants.PickupStarted
 import com.travel.trooute.data.model.common.Driver
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -96,7 +97,7 @@ class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListe
                     var allMarkedAsPickedUp = true
                     if (bookings != null) {
                         for (booking in bookings) {
-                            if (booking.pickupStatus?.passengerStatus != PickUpPassengersStatus.Pickedup.toString() &&
+                            if (booking.pickupStatus?.passengerStatus != PickUpPassengersStatus.DriverPickedup.toString() &&
                                 booking.pickupStatus?.driverStatus != PickUpPassengersStatus.PassengerNotShowedup.toString()) {
                                 allMarkedAsPickedUp = false
                             }
@@ -104,7 +105,7 @@ class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListe
                     }
                     if (!allMarkedAsPickedUp) {
                         val eBuilder = AlertDialog.Builder(this@PickupPassengersActivity)
-                        eBuilder.setTitle(getString(R.string.error))
+                        eBuilder.setTitle(getString(R.string.warning))
                         eBuilder.setMessage(getString(R.string.can_not_start_trip))
                         eBuilder.setPositiveButton(getString(R.string.ok), fun(_: DialogInterface, _: Int) {
 
@@ -178,9 +179,10 @@ class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListe
         binding.apply {
             if (sharedPreferenceManager.driverMode()) {
                 if (tripsData.status == IN_PROGRESS) {
-                    btnStartTrip.isVisible = false
-                    btnTripEnd.isVisible = true
-                } else if (tripsData.status == SCHEDULED) {
+                    finish()
+//                    btnStartTrip.isVisible = false
+//                    btnTripEnd.isVisible = true
+                } else if (tripsData.status == PickupStarted) {
                     btnStartTrip.isVisible = true
                     btnTripEnd.isVisible = false
                 } else {

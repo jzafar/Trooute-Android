@@ -37,6 +37,7 @@
                         tools:text="@string/pickup_passengers_status" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPickupStatusDetails"
                         style="@style/Body_6"
                         android:text="@string/pickup_passengers_status_details"
                         android:textColor="@color/secondary_cadet_blue_color" />
@@ -128,7 +129,6 @@
                             android:maxLines="1"
                             android:layout_weight="1"
                             android:layout_alignParentEnd="true"
-                            android:visibility="visible"
                             android:text="@string/not_showed_up" />
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnMarkedPickup"
@@ -137,7 +137,6 @@
                             android:maxLines="1"
                             android:layout_weight="1"
                             android:layout_alignParentEnd="true"
-                            android:visibility="visible"
                             android:text="@string/pickup_marked" />
                     </androidx.appcompat.widget.LinearLayoutCompat>>
 

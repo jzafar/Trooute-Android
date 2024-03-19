@@ -2,11 +2,14 @@ package com.travel.trooute.data.model.Enums
 
 enum class PickUpPassengersStatus {
     // DriverSide Statues
-    Pickedup,
-    GoingToPickup,
+    NotStarted,
+    PickupStarted,
+    PassengerNotified,
+    PassengerPickedup,
     PassengerNotShowedup,
 
     // PassengersSide Statues
-    WaitingToBePickedup,
-    NotPickedup
+    NotSetYet,
+    DriverPickedup,
+    DriverNotShowedup
 }

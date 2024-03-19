@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.TextViewBindingAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -73,10 +74,14 @@ import com.google.android.material.internal.ViewUtils
 import com.travel.trooute.core.util.Constants
 import com.travel.trooute.core.util.Constants.PickupStarted
 import com.travel.trooute.core.util.Constants.SCHEDULED
+import com.travel.trooute.data.model.Enums.PickUpPassengersStatus
+import com.travel.trooute.data.model.trip.request.UpdatePickupStatusRequest
 import com.travel.trooute.data.model.trip.response.Booking
 import com.travel.trooute.data.model.trip.response.TripsData
 import com.travel.trooute.presentation.ui.trip.PickupPassengersActivity
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.GetPickupPassengersViewModel
+import com.travel.trooute.presentation.viewmodel.tripviewmodel.UpdatePickupStatusViewModel
+import com.travel.trooute.presentation.viewmodel.tripviewmodel.UpdateTripStatusViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -94,12 +99,14 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
     private lateinit var skeleton: Skeleton
 
     private var authModelInfo: User? = null
+    private var currentBooking: Booking? = null
 
     private val getBookingDetailsViewModel: GetBookingDetailsViewModel by viewModels()
     private val processBookingViewModel: ProcessBookingViewModel by viewModels()
     private val createReviewViewModel: CreateReviewViewModel by viewModels()
     private val pushNotificationViewModel: PushNotificationViewModel by viewModels()
     private val getPickupPassengersViewModel: GetPickupPassengersViewModel by viewModels()
+    private val updatePickUpPassengersStatus: UpdatePickupStatusViewModel by viewModels()
 
     @Inject
     lateinit var loader: Loader
@@ -130,6 +137,15 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
 
             getBookingDetailsViewModel.getBookingDetails(bookingId = bookingId)
             bindGetBookingDetailsObserver()
+            includePickupStatusLayout.apply {
+                btnNotShowedUp.setOnClickListener {
+                    currentBooking?.let { it1 -> onUpdateStatusButtonClick(data = it1, status = PickUpPassengersStatus.DriverNotShowedup) }
+                }
+
+                btnMarkedAsPickedUp.setOnClickListener {
+                    currentBooking?.let { it1 -> onUpdateStatusButtonClick(data = it1, status = PickUpPassengersStatus.DriverPickedup) }
+                }
+            }
         }
     }
 
@@ -184,7 +200,7 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                                     setUpUserSideDesignationAndScheduleViews(bookingData)
                                     setUpUserSideTripDetailsViews(bookingData)
                                     setUpDriverSidePickupLocationViews(bookingData)
-                                    showPassengerPickupStatusButton(bookingData)
+//                                    showPassengerPickupStatusButton(bookingData)
                                 }
                             }
 
@@ -196,23 +212,23 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
         }
     }
 
-    private fun showPassengerPickupStatusButton(bookingData: BookingDetailsData){
-        if (bookingData.status == getString(R.string.confirmed)) {
-            binding.apply {
-                includeAppBar.apply {
-                    this.filter.isVisible = true
-                    filter.setOnClickListener {
-                        startActivity(Intent(
-                            this@BookingDetailActivity, PickupPassengersActivity::class.java
-                        ).apply {
-                            putExtra(Constants.TRIP_ID, bookingData.trip?._id)
-                        })
-                    }
-                }
-            }
-        }
-
-    }
+//    private fun showPassengerPickupStatusButton(bookingData: BookingDetailsData){
+//        if (bookingData.status == getString(R.string.confirmed)) {
+//            binding.apply {
+//                includeAppBar.apply {
+//                    this.filter.isVisible = true
+//                    filter.setOnClickListener {
+//                        startActivity(Intent(
+//                            this@BookingDetailActivity, PickupPassengersActivity::class.java
+//                        ).apply {
+//                            putExtra(Constants.TRIP_ID, bookingData.trip?._id)
+//                        })
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
 
     @SuppressLint("SetTextI18n")
     private fun setUpBookingDetailViews(bookingData: BookingDetailsData) {
@@ -536,76 +552,90 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
 
         }
     }
-
+    @SuppressLint("RestrictedApi")
     private fun setUpViewForPassengerSidePickupStatus(bookingData: Booking){
+        currentBooking = bookingData
         binding.apply {
             pickUpStatusView.isVisible = true
             when (bookingData.pickupStatus?.driverStatus) {
-                "NotStarted" -> {
+                PickUpPassengersStatus.NotStarted.toString() -> {
                     pickUpStatusView.isVisible = false
                 }
-                "PickupStarted" -> {
+                PickUpPassengersStatus.PickupStarted.toString() -> {
                     pickUpStatusView.isVisible = true
                     includeConfirmedLayout.apply {
                         btnCancelBooking.isVisible = false
 
                     }
                     includePickupStatusLayout.apply {
-                        tvStatus.text = "Pickup started"
-                        statusDetail.text = "Driver has started to pick up passengers."
+                        tvStatus.text = getString(R.string.pickup_started)
+                        statusDetail.text = getString(R.string.pickup_started_passenger_details)
                     }
                 }
-                "PassengerNotified" -> {
+                PickUpPassengersStatus.PassengerNotified.toString() -> {
                     pickUpStatusView.isVisible = true
                     includeConfirmedLayout.apply {
                         btnCancelBooking.isVisible = false
                     }
                     includePickupStatusLayout.apply {
-                        tvStatus.text = "Get ready"
-                        statusDetail.text = "Driver is coming to you to pick you up."
+                        tvStatus.text = getString(R.string.get_ready)
+                        statusDetail.text = getString(R.string.get_ready_passenger_details)
                     }
                 }
-                "PassengerPickedup" -> {
+                PickUpPassengersStatus.PassengerPickedup.toString() -> {
                     pickUpStatusView.isVisible = true
                     includeConfirmedLayout.apply {
                         btnCancelBooking.isVisible = false
                     }
                     includePickupStatusLayout.apply {
-                        tvStatus.text = "Picked up"
-                        statusDetail.text = "Driver marked you as a picked up. if it's correct please mark yourself as picked up."
+                        tvStatus.text = getString(R.string.pickedup)
+                        statusDetail.text = getString(R.string.pick_up_passenger_details)
                     }
                 }
-                "PassengerNotShowedup" -> {
+                PickUpPassengersStatus.PassengerNotShowedup.toString() -> {
                     pickUpStatusView.isVisible = true
                     includeConfirmedLayout.apply {
                         btnCancelBooking.isVisible = false
                     }
                     includePickupStatusLayout.apply {
-                        tvStatus.text = "Not showed up"
-                        statusDetail.text = "Driver marked you as not showed up. If it's not true you can contact support from settings page."
+                        tvStatus.text = getString(R.string.not_showed_up)
+                        statusDetail.text = getString(R.string.not_showed_up_passenger_details)
                     }
+                }
+            }
+
+            when (bookingData.pickupStatus?.passengerStatus) {
+                // set by passenger for driver
+                PickUpPassengersStatus.DriverPickedup.toString() -> {
+                    pickUpStatusView.isVisible = true
+                    includeConfirmedLayout.apply {
+                        btnCancelBooking.isVisible = false
+                    }
+                    includePickupStatusLayout.apply {
+                        tvStatus.text = getString(R.string.pickedup)
+                        statusDetail.text = getString(R.string.pick_up_driver_details)
+                        ltCancelAccept.isVisible = false
+                        TextViewBindingAdapter.setDrawableStart(
+                            tvStatus,
+                            ContextCompat.getDrawable(this@BookingDetailActivity, R.drawable.ic_confirm_check)
+                        )
+                    }
+
                 }
                 // set by passenger for driver
-                "DriverPickedup" -> {
-                    pickUpStatusView.isVisible = true
-                    includeConfirmedLayout.apply {
-                        btnCancelBooking.isVisible = false
-                    }
-                    includePickupStatusLayout.apply {
-                        tvStatus.text = "Picked up"
-                        statusDetail.text = "Trooute wish you sage journey."
-                    }
-                }
-                // set by passenger for driver
-                "DriverNotShowedup" -> {
+                PickUpPassengersStatus.DriverNotShowedup.toString() -> {
                     pickUpStatusView.isVisible = true
                     includeConfirmedLayout.apply {
                         btnCancelBooking.isVisible = false
                     }
 
                     includePickupStatusLayout.apply {
-                        tvStatus.text = "Not showed up"
-                        statusDetail.text = "You have marked as driver not showed up. You can contact support from settings page."
+                        tvStatus.text = getString(R.string.not_showed_up)
+                        statusDetail.text = getString(R.string.not_showed_up_driver_details)
+                        TextViewBindingAdapter.setDrawableStart(
+                            tvStatus,
+                            ContextCompat.getDrawable(this@BookingDetailActivity, R.drawable.ic_status_cancelled)
+                        )
                     }
                 }
             }
@@ -1101,6 +1131,56 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                     putExtra(USER_ID, data._id)
                 }
             )
+        }
+    }
+
+
+    private fun onUpdateStatusButtonClick(data: Booking, status: PickUpPassengersStatus) {
+        val request = data.trip?.let { data._id?.let { it1 ->
+            data.pickupStatus?._id?.let { it2 ->
+                UpdatePickupStatusRequest(it,
+                    it1, status.toString(), it2
+                )
+            }
+        } }
+
+        if (request != null) {
+            updatePickUpPassengersStatus.updatePickupStatus(request = request)
+            bindUpdatePickupStatusObserver()
+        }
+    }
+
+    private fun bindUpdatePickupStatusObserver(){
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                updatePickUpPassengersStatus.updateTripStatusState.collect {
+                    loader.cancel()
+                    when (it) {
+                        is Resource.ERROR -> {
+                            Log.e(
+                                TAG, "bindUpdatePickupStatusObserver: Error -> " + it.message.toString()
+                            )
+                        }
+
+                        Resource.LOADING -> {
+                            loader.show()
+                        }
+
+                        is Resource.SUCCESS -> {
+                            it.data.data?.let { tripsData ->
+                                val booking = tripsData.bookings?.single { booking -> booking._id == bookingId }
+                                if (booking != null) {
+                                    setUpViewForPassengerSidePickupStatus(booking)
+                                }
+                            }
+                            Toast(this@BookingDetailActivity).showSuccessMessage(
+                                this@BookingDetailActivity, getString(R.string.status_updated_successfully)
+                            )
+                        }
+                        else -> {}
+                    }
+                }
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ class PickupPassengersAdapter(private val adapterItemClickListener: PickUpPassen
         fun bindViews(currentItem: Booking?) {
             currentItem?.let { item ->
                 binding.apply {
-                    checkPickupStatus(sharedPreferenceManager.driverMode(),tvPickupStatus,
+                    checkPickupStatus(sharedPreferenceManager.driverMode(),tvPickupStatus,tvPickupStatusDetails,
                         item.pickupStatus?.passengerStatus, item.pickupStatus?.driverStatus)
 
                     includeUserDetail.apply {
@@ -74,30 +74,11 @@ class PickupPassengersAdapter(private val adapterItemClickListener: PickUpPassen
                     tvAddress.text = checkStringValue( tvAddress.context, item.pickupLocation?.address)
 
                     btnMarkedPickup.setOnClickListener{
-                        if(!sharedPreferenceManager.driverMode()) {
-                            val eBuilder = AlertDialog.Builder(applicationContext)
-                            eBuilder.setTitle("Warning")
-                            eBuilder.setMessage("Once you Marked as pickup, you can't change status after that.")
-                            eBuilder.setPositiveButton("Ok", fun(_: DialogInterface, _: Int) {
-                                adapterItemClickListener.onUpdateStatusButtonClick(data = currentItem, status = PickUpPassengersStatus.Pickedup)
-
-                            })
-
-                            eBuilder.setNegativeButton("Cancel"){
-                                    _, _ -> eBuilder.setCancelable(true)
-                            }
-
-                            eBuilder.create()
-                            eBuilder.show()
-
-                        } else {
-                            adapterItemClickListener.onUpdateStatusButtonClick(data = currentItem, status = PickUpPassengersStatus.Pickedup)
-                        }
-
+                        adapterItemClickListener.onUpdateStatusButtonClick(data = currentItem, status = PickUpPassengersStatus.PassengerPickedup)
                     }
 
                     btnNotifyPassenger.setOnClickListener{
-                        adapterItemClickListener.onUpdateStatusButtonClick(data = currentItem, status = PickUpPassengersStatus.GoingToPickup)
+                        adapterItemClickListener.onUpdateStatusButtonClick(data = currentItem, status = PickUpPassengersStatus.PassengerNotified)
                     }
 
                     tvMapButton.setOnClickListener {
@@ -107,26 +88,10 @@ class PickupPassengersAdapter(private val adapterItemClickListener: PickUpPassen
                         adapterItemClickListener.onUpdateStatusButtonClick(data = currentItem, status = PickUpPassengersStatus.PassengerNotShowedup)
                     }
 
-                    // hide notify passengers map button for passengers
-                    if (!sharedPreferenceManager.driverMode()) {
-                        btnNotifyPassenger.isVisible = false
-                        tvMapButton.isVisible = false
+                    if (item.pickupStatus?.passengerStatus == PickUpPassengersStatus.DriverPickedup.toString()) {
+                        ltCancelAccept.isVisible = false
                     }
-                    // Hide other buttons if it's not your self
-                    if (sharedPreferenceManager.getAuthIdFromPref() != currentItem.user?._id) {
-                        btnMarkedPickup.isVisible = false
-                        btnPassengerNotShowedUp.isVisible = false
-                        includeUserDetail.apply {
-                            if (sharedPreferenceManager.driverMode()) {
-                                callIcon.isVisible = true
-                                messageIcon.isVisible = true
-                            } else {
-                                callIcon.isVisible = false
-                                messageIcon.isVisible = false
-                            }
 
-                        }
-                    }
                 }
 
 

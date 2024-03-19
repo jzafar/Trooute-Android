@@ -290,4 +290,26 @@
     <string name="trip">Trip</string>
     <string name="comment_required">Comment Required</string>
     <string name="select_rating">Please select rating</string>
+    <string name="request_rejected">(Request rejected)</string>
+    <string name="restriction_weight_text">Please provide any luggage size or weight restrictions for each passenger.</string>
+    <string name="hand_carry">Hand carry</string>
+    <string name="luggage_weight">weight (kg)</string>
+    <string name="suitcase">Suitcase</string>
+    <string name="smoking">Smoking</string>
+    <string name="pets">Pets</string>
+    <string name="pets_allowed">Pets Allowed</string>
+    <string name="language">Language</string>
+    <string name="driver">Driver</string>
+    <string name="remaining_time_more_than_12h">You can\'t start pickup passengers 12 hours before.</string>
+    <string name="alert">Alert</string>
+    <string name="sure_cancel_trip">Are you sure you want to cancel this trip. If you\'ll cancel this trip, your confirmed bookings will be refunded as well.</string>
+    <string name="pickup_status">Pickup Status</string>
+    <string name="pickup_started">Pickup started</string>
+    <string name="pickup_started_passenger_details">Driver has started to pick up passengers.</string>
+    <string name="get_ready">Get ready</string>
+    <string name="get_ready_passenger_details">Driver is coming to you to pick you up.</string>
+    <string name="pick_up_passenger_details">Driver marked you as a picked up. if it\'s correct please mark yourself as picked up.</string>
+    <string name="not_showed_up_passenger_details">Driver marked you as not showed up. If it\'s not true you can contact support from settings page.</string>
+    <string name="pick_up_driver_details">Trooute wish you sage journey.</string>
+    <string name="not_showed_up_driver_details">You have marked as driver not showed up. You can contact support from settings page.</string>
 </resources>

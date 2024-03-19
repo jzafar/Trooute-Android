@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnCancelBooking"
+                        android:id="@+id/btnNotShowedUp"
                         style="@style/SecondaryRoundedButton"
                         android:layout_width="match_parent"
                         android:maxLines="1"
@@ -65,7 +65,7 @@
                         android:text="@string/not_showed_up" />
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnAccept"
+                        android:id="@+id/btnMarkedAsPickedUp"
                         style="@style/PrimaryRoundedButton"
                         android:layout_width="match_parent"
                         android:maxLines="1"
