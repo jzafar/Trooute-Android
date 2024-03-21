@@ -538,14 +538,17 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
                 if (bookingData.trip?.status == SCHEDULED) {
                     pickUpStatusView.isVisible = false
                 } else {
-                    val mainHandler = Handler(Looper.getMainLooper())
-                    mainHandler.post(object : Runnable {
-                        override fun run() {
-                            getPickupStatus(bookingData.trip?._id)
-                            mainHandler.postDelayed(this, 5000)
-                        }
-                    })
-                    bindGetPickupStatusObserver()
+                    if(bookingData.trip?.status == PickupStarted && bookingData.status == "Confirmed") {
+                        val mainHandler = Handler(Looper.getMainLooper())
+                        mainHandler.post(object : Runnable {
+                            override fun run() {
+                                getPickupStatus(bookingData.trip._id)
+                                mainHandler.postDelayed(this, 5000)
+                            }
+                        })
+                        bindGetPickupStatusObserver()
+                    }
+
                 }
 
             }
@@ -1152,35 +1155,34 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
 
     private fun bindUpdatePickupStatusObserver(){
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                updatePickUpPassengersStatus.updateTripStatusState.collect {
-                    loader.cancel()
-                    when (it) {
-                        is Resource.ERROR -> {
-                            Log.e(
-                                TAG, "bindUpdatePickupStatusObserver: Error -> " + it.message.toString()
-                            )
-                        }
-
-                        Resource.LOADING -> {
-                            loader.show()
-                        }
-
-                        is Resource.SUCCESS -> {
-                            it.data.data?.let { tripsData ->
-                                val booking = tripsData.bookings?.single { booking -> booking._id == bookingId }
-                                if (booking != null) {
-                                    setUpViewForPassengerSidePickupStatus(booking)
-                                }
-                            }
-                            Toast(this@BookingDetailActivity).showSuccessMessage(
-                                this@BookingDetailActivity, getString(R.string.status_updated_successfully)
-                            )
-                        }
-                        else -> {}
+            updatePickUpPassengersStatus.updateTripStatusState.collect {
+                loader.cancel()
+                when (it) {
+                    is Resource.ERROR -> {
+                        Log.e(
+                            TAG, "bindUpdatePickupStatusObserver: Error -> " + it.message.toString()
+                        )
                     }
+
+                    Resource.LOADING -> {
+                        loader.show()
+                    }
+
+                    is Resource.SUCCESS -> {
+                        it.data.data?.let { tripsData ->
+                            val booking = tripsData.bookings?.single { booking -> booking._id == bookingId }
+                            if (booking != null) {
+                                setUpViewForPassengerSidePickupStatus(booking)
+                            }
+                        }
+                        Toast(this@BookingDetailActivity).showSuccessMessage(
+                            this@BookingDetailActivity, getString(R.string.status_updated_successfully)
+                        )
+                    }
+                    else -> {}
                 }
             }
+
         }
     }
 }
