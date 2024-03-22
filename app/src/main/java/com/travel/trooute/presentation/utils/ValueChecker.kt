@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import com.travel.trooute.R
 import com.travel.trooute.core.util.Constants.PRICE_SIGN
+import com.travel.trooute.core.util.Constants.WEIGHT_SIGN
 import com.travel.trooute.data.model.trip.response.LuggageRestrictions
 import com.travel.trooute.data.model.trip.response.LuggageType
 
@@ -47,7 +48,10 @@ object ValueChecker {
         for (luggage in value) {
             if (luggage != null) {
                 if (luggage.type == type) {
-                    return  luggage.weight.toString()
+                    if (luggage.weight == null) {
+                        return  context.getString(R.string.not_provided)
+                    }
+                    return  luggage.weight.toString() + WEIGHT_SIGN
                 }
             } else {
                 return  context.getString(R.string.not_provided)

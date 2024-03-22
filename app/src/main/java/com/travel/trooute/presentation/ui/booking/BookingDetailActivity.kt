@@ -1097,13 +1097,11 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
     private fun setUpUserSideTripDetailsViews(bookingData: BookingDetailsData) {
         binding.includeUserSideTripDetails.apply {
             bookingData.trip?.luggageRestrictions?.let { it
-                tvHCWeightValue.text = "${
+                tvHCWeightValue.text =
                     checkLuggageRestrictionValue(it, LuggageType.HandCarry, this@BookingDetailActivity)
-                }$WEIGHT_SIGN"
 
-                tvSCWeightValue.text = "${
+                tvSCWeightValue.text =
                     checkLuggageRestrictionValue(it , LuggageType.SuitCase, this@BookingDetailActivity)
-                }$WEIGHT_SIGN"
             }
 
             tvRoundTripValue.text = if (bookingData.trip?.roundTrip == true) {

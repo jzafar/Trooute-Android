@@ -6,6 +6,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
@@ -17,6 +19,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.faltenreich.skeletonlayout.Skeleton
+import com.faltenreich.skeletonlayout.createSkeleton
+import com.google.android.material.internal.ViewUtils
 import com.travel.trooute.R
 import com.travel.trooute.core.util.Constants
 import com.travel.trooute.core.util.Constants.BOOKED_CANCELLED_BODY
@@ -28,6 +33,9 @@ import com.travel.trooute.core.util.Constants.INTENT_IS_TRIP_WISH_LISTED
 import com.travel.trooute.core.util.Constants.IN_PROGRESS
 import com.travel.trooute.core.util.Constants.MESSAGE_USER_INFO
 import com.travel.trooute.core.util.Constants.MUTABLE_CONTENT
+import com.travel.trooute.core.util.Constants.PICKUP_PASSENGERS_STARTED
+import com.travel.trooute.core.util.Constants.PICKUP_PASSENGERS_STARTED_BODY
+import com.travel.trooute.core.util.Constants.PickupStarted
 import com.travel.trooute.core.util.Constants.SCHEDULED
 import com.travel.trooute.core.util.Constants.TONE
 import com.travel.trooute.core.util.Constants.TOPIC
@@ -40,9 +48,11 @@ import com.travel.trooute.core.util.Constants.WISH_LIST_CHECKER_CODE
 import com.travel.trooute.core.util.Resource
 import com.travel.trooute.core.util.SharedPreferenceManager
 import com.travel.trooute.data.model.chat.Users
+import com.travel.trooute.data.model.common.Passenger
 import com.travel.trooute.data.model.common.User
 import com.travel.trooute.data.model.notification.NotificationRequest
 import com.travel.trooute.data.model.trip.response.Booking
+import com.travel.trooute.data.model.trip.response.LuggageType
 import com.travel.trooute.data.model.trip.response.TripsData
 import com.travel.trooute.databinding.ActivityTripDetailBinding
 import com.travel.trooute.presentation.adapters.DriverSidePassengersAdapter
@@ -51,10 +61,12 @@ import com.travel.trooute.presentation.interfaces.AdapterItemClickListener
 import com.travel.trooute.presentation.ui.booking.BookNowActivity
 import com.travel.trooute.presentation.ui.booking.BookingDetailActivity
 import com.travel.trooute.presentation.ui.chat.MessageActivity
+import com.travel.trooute.presentation.ui.review.ReviewsActivity
 import com.travel.trooute.presentation.utils.Loader
 import com.travel.trooute.presentation.utils.Utils.formatDateTime
 import com.travel.trooute.presentation.utils.ValueChecker.checkFloatValue
 import com.travel.trooute.presentation.utils.ValueChecker.checkLongValue
+import com.travel.trooute.presentation.utils.ValueChecker.checkLuggageRestrictionValue
 import com.travel.trooute.presentation.utils.ValueChecker.checkPriceValue
 import com.travel.trooute.presentation.utils.ValueChecker.checkStringValue
 import com.travel.trooute.presentation.utils.WindowsManager.statusBarColor
@@ -67,22 +79,12 @@ import com.travel.trooute.presentation.viewmodel.notification.PushNotificationVi
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.GetTripDetailsViewModel
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.UpdateTripStatusViewModel
 import com.travel.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishListViewModel
-import com.faltenreich.skeletonlayout.Skeleton
-import com.faltenreich.skeletonlayout.createSkeleton
-import com.google.android.material.internal.ViewUtils
-import com.travel.trooute.core.util.Constants.PICKUP_PASSENGERS_STARTED
-import com.travel.trooute.core.util.Constants.PICKUP_PASSENGERS_STARTED_BODY
-import com.travel.trooute.core.util.Constants.PickupStarted
-import com.travel.trooute.data.model.common.Passenger
-import com.travel.trooute.data.model.trip.response.LuggageType
-import com.travel.trooute.data.model.trip.response.PickupStatus
-import com.travel.trooute.presentation.ui.review.ReviewsActivity
-import com.travel.trooute.presentation.utils.ValueChecker.checkLuggageRestrictionValue
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
@@ -271,13 +273,11 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                     // Trip Details
                     includeTripDetailLayout.apply {
                         trip?.luggageRestrictions?.let { luggageRestrictions ->
-                            tvHCWeightValue.text = "${
+                            tvHCWeightValue.text =
                                 checkLuggageRestrictionValue(luggageRestrictions, LuggageType.HandCarry, this@TripDetailActivity)
-                            }$WEIGHT_SIGN"
 
-                            tvSCWeightValue.text = "${
+                            tvSCWeightValue.text =
                                 checkLuggageRestrictionValue(luggageRestrictions, LuggageType.SuitCase, this@TripDetailActivity)
-                            }$WEIGHT_SIGN"
                         }
                         tvRoundTripValue.text = if (trip?.roundTrip == true) {
                             getString(R.string.yes)
@@ -467,13 +467,12 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                         this@TripDetailActivity, tripsData.languagePreference
                     )
 
-                    tvHCWeightValue.text = "${
+                    tvHCWeightValue.text =
                         checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.HandCarry, this@TripDetailActivity)
-                    }$WEIGHT_SIGN"
 
-                    tvSCWeightValue.text = "${
+
+                    tvSCWeightValue.text =
                         checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.SuitCase, this@TripDetailActivity)
-                    }$WEIGHT_SIGN"
 
                     tvRoundTripValue.text = if (tripsData.roundTrip) {
                         getString(R.string.yes)
@@ -667,6 +666,9 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                                 this@TripDetailActivity, getString(R.string.trip_status_INPROGRESS)
                             )
                         } else if (it.data.message.toString() == "trip_status_Canceled") {
+                            Handler().postDelayed({
+                                finish()
+                            }, 5000)
                             Toast(this@TripDetailActivity).showSuccessMessage(
                                 this@TripDetailActivity, getString(R.string.trip_status_Canceled)
                             )

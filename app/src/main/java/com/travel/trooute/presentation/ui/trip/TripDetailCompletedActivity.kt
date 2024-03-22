@@ -510,13 +510,13 @@ class TripDetailCompletedActivity : AppCompatActivity() {
             // Trips details
             includeTripDetailLayout.apply {
 
-                tvHCWeightValue.text = "${
+                tvHCWeightValue.text =
                     checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.HandCarry, this@TripDetailCompletedActivity)
-                }$WEIGHT_SIGN"
 
-                tvSCWeightValue.text = "${
+
+                tvSCWeightValue.text =
                     checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.SuitCase,this@TripDetailCompletedActivity)
-                }$WEIGHT_SIGN"
+
 
                 if (tripsData?.roundTrip == true) {
                     tvRoundTripValue.text = getString(R.string.yes)

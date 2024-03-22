@@ -45,8 +45,6 @@ class SetUpYourTripActivity : AppCompatActivity() {
     private var departureTime: String = ""
     private var roundTrip = false
     private var smokingPreference: Boolean = false
-    private var handCarryPreference: Boolean = false
-    private var suitCasePreference: Boolean = false
     private var petsPreference: Boolean = false
     private var placesStartLocationLatLng: LatLng? = null
     private var placesStartLocationAddress: String? = null
@@ -167,15 +165,7 @@ class SetUpYourTripActivity : AppCompatActivity() {
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
                 }
 
-                etPrice.addTextChangedListener(currencyTextWatcher);
-
-                switchHandCarry.setOnCheckedChangeListener { buttonView, isChecked ->
-                    handCarryPreference = isChecked
-                }
-
-                switchSuitcase.setOnCheckedChangeListener { buttonView, isChecked ->
-                    suitCasePreference = isChecked
-                }
+                etPrice.addTextChangedListener(currencyTextWatcher)
 
                 switchSmokingPreference.setOnCheckedChangeListener { buttonView, isChecked ->
                     smokingPreference = isChecked
@@ -197,31 +187,12 @@ class SetUpYourTripActivity : AppCompatActivity() {
                     Log.e(TAG, "onCreate: departureDate -> $departureDate")
                     Log.e(TAG, "onCreate: departureTime -> $departureTime")
                     val luggageList: MutableList<LuggageRestrictions> = arrayListOf()
-                    if (handCarryPreference) {
-                        if (isFieldValid(
-                            includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight,
-                            getString(R.string.hand_carry)
-                        )) {
-                            val handCarry = LuggageRestrictions(LuggageType.HandCarry, includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight.text.toString().toLong())
-                            luggageList.add(handCarry)
-                        } else {
-                            return@setOnClickListener
-                        }
+                    val hcWeight =  includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight.text.toString()
+                    val handCarry = LuggageRestrictions(LuggageType.HandCarry, hcWeight.toLongOrNull())
+                    luggageList.add(handCarry)
+                    val suitcase = LuggageRestrictions(LuggageType.SuitCase, includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeightSuitcase.text.toString().toLongOrNull())
+                    luggageList.add(suitcase)
 
-
-                    }
-                    if (suitCasePreference) {
-                        if (isFieldValid(
-                            includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeightSuitcase,
-                            getString(R.string.suitcase)
-                        )) {
-                            val suitcase = LuggageRestrictions(LuggageType.SuitCase, includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeightSuitcase.text.toString().toLong())
-                            luggageList.add(suitcase)
-                        } else {
-                            return@setOnClickListener
-                        }
-
-                    }
                     if (
                         isFieldValid(
                             includeDestinationAndSchedule.etStartingLocation,
@@ -250,8 +221,8 @@ class SetUpYourTripActivity : AppCompatActivity() {
                                 departureDate = "$departureDate, $departureTime",
                                 from_address = includeDestinationAndSchedule.etStartingLocation.text.toString(),
                                 from_location = listOf(
-                                    placesStartLocationLatLng?.latitude,
-                                    placesStartLocationLatLng?.longitude
+                                    placesStartLocationLatLng?.longitude,
+                                    placesStartLocationLatLng?.latitude
                                 ),
 
                                 languagePreference = languagePreference,
@@ -265,8 +236,8 @@ class SetUpYourTripActivity : AppCompatActivity() {
                                 totalSeats = totalSeats,
                                 whereTo_address = includeDestinationAndSchedule.etDestinationLocation.text.toString(),
                                 whereTo_location = listOf(
-                                    placesDestinationLocationLatLng?.latitude,
-                                    placesDestinationLocationLatLng?.longitude
+                                    placesDestinationLocationLatLng?.longitude,
+                                    placesDestinationLocationLatLng?.latitude
                                 )
                             )
                         )

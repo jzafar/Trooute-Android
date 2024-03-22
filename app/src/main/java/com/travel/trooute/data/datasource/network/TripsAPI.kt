@@ -26,17 +26,17 @@ interface TripsAPI {
 
     @GET(GET_TRIPS_END_POINT)
     suspend fun getTrips(
-        @Query("fromCoordinates[0]") fromLatitude: Double?,
-        @Query("fromCoordinates[1]") fromLongitude: Double?,
+        @Query("fromCoordinates[0]") fromLongitude: Double?,
+        @Query("fromCoordinates[1]") fromLatitude: Double?,
         @Query("departureDate") departureDate: String?,
     ): Response<GetTripsResponse>
 
     @GET(GET_TRIPS_END_POINT)
     suspend fun getSearchedTrips(
-        @Query("fromCoordinates[0]") fromLatitude: Double?,
-        @Query("fromCoordinates[1]") fromLongitude: Double?,
-        @Query("whereToCoordinates[0]") whereToLatitude: Double?,
-        @Query("whereToCoordinates[1]") whereToLongitude: Double?,
+        @Query("fromCoordinates[0]") fromLongitude: Double?,
+        @Query("fromCoordinates[1]") fromLatitude: Double?,
+        @Query("whereToCoordinates[0]") whereToLongitude: Double?,
+        @Query("whereToCoordinates[1]") whereToLatitude: Double?,
         @Query("currentDate") currentDate: String?,
         @Query("flexibleDays") flexibleDays: Int?,
         @Query("toRange") toRange: Int?,
