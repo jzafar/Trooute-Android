@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class LanguageRestriction(
-    val text: String? = null ?: "",
+data class LuggageRestrictions(
+    val type: LuggageType? = null ?: LuggageType.HandCarry,
     val weight: Long? = null
 ) : Parcelable

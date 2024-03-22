@@ -44,6 +44,8 @@ import com.travel.trooute.presentation.viewmodel.reviewviewmodel.CreateReviewVie
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.GetTripDetailsViewModel
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
+import com.travel.trooute.data.model.trip.response.LuggageType
+import com.travel.trooute.presentation.utils.ValueChecker.checkLuggageRestrictionValue
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -507,13 +509,13 @@ class TripDetailCompletedActivity : AppCompatActivity() {
 
             // Trips details
             includeTripDetailLayout.apply {
-                tvTypeValue.text = checkStringValue(
-                    this@TripDetailCompletedActivity,
-                    tripsData.luggageRestrictions?.text
-                )
 
-                tvWeightValue.text = "${
-                    checkLongValue(tripsData.luggageRestrictions?.weight)
+                tvHCWeightValue.text = "${
+                    checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.HandCarry, this@TripDetailCompletedActivity)
+                }$WEIGHT_SIGN"
+
+                tvSCWeightValue.text = "${
+                    checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.SuitCase,this@TripDetailCompletedActivity)
                 }$WEIGHT_SIGN"
 
                 if (tripsData?.roundTrip == true) {
@@ -526,6 +528,12 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                     tvSmokingAllowedValue.text = getString(R.string.yes)
                 } else {
                     tvSmokingAllowedValue.text = getString(R.string.no)
+                }
+
+                if (tripsData?.petPreference == true) {
+                    tvPetPreferenceValue.text = getString(R.string.yes)
+                } else {
+                    tvPetPreferenceValue.text = getString(R.string.no)
                 }
 
                 tvLanguagePreferenceValue.text = checkStringValue(

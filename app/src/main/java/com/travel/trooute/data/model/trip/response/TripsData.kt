@@ -29,6 +29,6 @@ data class TripsData(
     val whereTo_location: Location? = null,
     val bookings: List<Booking>? = null,
     val trip: Trip? = null,
-    val luggageRestrictions: LanguageRestriction? = null,
+    val luggageRestrictions: List<LuggageRestrictions?>,
     val roundTrip: Boolean,
 ) : Parcelable

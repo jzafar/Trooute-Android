@@ -74,8 +74,10 @@ import com.travel.trooute.core.util.Constants.PICKUP_PASSENGERS_STARTED
 import com.travel.trooute.core.util.Constants.PICKUP_PASSENGERS_STARTED_BODY
 import com.travel.trooute.core.util.Constants.PickupStarted
 import com.travel.trooute.data.model.common.Passenger
+import com.travel.trooute.data.model.trip.response.LuggageType
 import com.travel.trooute.data.model.trip.response.PickupStatus
 import com.travel.trooute.presentation.ui.review.ReviewsActivity
+import com.travel.trooute.presentation.utils.ValueChecker.checkLuggageRestrictionValue
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -269,11 +271,12 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                     // Trip Details
                     includeTripDetailLayout.apply {
                         trip?.luggageRestrictions?.let { luggageRestrictions ->
-                            tvTypeValue.text = checkStringValue(
-                                this@TripDetailActivity, luggageRestrictions.text
-                            )
-                            tvWeightValue.text = "${
-                                checkLongValue(luggageRestrictions.weight)
+                            tvHCWeightValue.text = "${
+                                checkLuggageRestrictionValue(luggageRestrictions, LuggageType.HandCarry, this@TripDetailActivity)
+                            }$WEIGHT_SIGN"
+
+                            tvSCWeightValue.text = "${
+                                checkLuggageRestrictionValue(luggageRestrictions, LuggageType.SuitCase, this@TripDetailActivity)
                             }$WEIGHT_SIGN"
                         }
                         tvRoundTripValue.text = if (trip?.roundTrip == true) {
@@ -286,6 +289,13 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                         } else {
                             getString(R.string.no)
                         }
+
+                        tvPetPreferenceValue.text = if (trip?.petPreference == true) {
+                            getString(R.string.yes)
+                        } else {
+                            getString(R.string.no)
+                        }
+
                         tvLanguagePreferenceValue.text = checkStringValue(
                             this@TripDetailActivity, trip?.languagePreference
                         )
@@ -456,14 +466,15 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                     tvLanguagePreferenceValue.text = checkStringValue(
                         this@TripDetailActivity, tripsData.languagePreference
                     )
-                    tvTypeValue.text = checkStringValue(
-                        this@TripDetailActivity, tripsData.luggageRestrictions?.text
-                    )
-                    tvWeightValue.text = "${
-                        checkLongValue(
-                            tripsData.luggageRestrictions?.weight
-                        )
+
+                    tvHCWeightValue.text = "${
+                        checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.HandCarry, this@TripDetailActivity)
                     }$WEIGHT_SIGN"
+
+                    tvSCWeightValue.text = "${
+                        checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.SuitCase, this@TripDetailActivity)
+                    }$WEIGHT_SIGN"
+
                     tvRoundTripValue.text = if (tripsData.roundTrip) {
                         getString(R.string.yes)
                     } else {
@@ -473,6 +484,12 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                         tvSmokingAllowedValue.text = getString(R.string.yes)
                     } else {
                         tvSmokingAllowedValue.text = getString(R.string.no)
+                    }
+
+                    if (tripsData.petPreference) {
+                        tvPetPreferenceValue.text = getString(R.string.yes)
+                    } else {
+                        tvPetPreferenceValue.text = getString(R.string.no)
                     }
                     tvLanguagePreferenceValue.text = checkStringValue(
                         this@TripDetailActivity, tripsData.languagePreference
@@ -621,6 +638,10 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                             Toast(this@TripDetailActivity).showErrorMessage(
                                 this@TripDetailActivity, getString(R.string.remaining_time_more_than_12h)
                             )
+                        } else if (it.message.toString() ==  "invalid_status") {
+                            Toast(this@TripDetailActivity).showErrorMessage(
+                                this@TripDetailActivity, getString(R.string.invalid_status)
+                            )
                         } else {
                             Toast(this@TripDetailActivity).showErrorMessage(
                                 this@TripDetailActivity, it.message.toString()
@@ -637,9 +658,23 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                     }
 
                     is Resource.SUCCESS -> {
-                        Toast(this@TripDetailActivity).showSuccessMessage(
-                            this@TripDetailActivity, it.data.message.toString()
-                        )
+                        if (it.data.message.toString() ==  "remaining_time_more_than_12h") {
+                            Toast(this@TripDetailActivity).showSuccessMessage(
+                                this@TripDetailActivity, getString(R.string.remaining_time_more_than_12h)
+                            )
+                        } else if (it.data.message.toString() == "trip_status_INPROGRESS") {
+                            Toast(this@TripDetailActivity).showSuccessMessage(
+                                this@TripDetailActivity, getString(R.string.trip_status_INPROGRESS)
+                            )
+                        } else if (it.data.message.toString() == "trip_status_Canceled") {
+                            Toast(this@TripDetailActivity).showSuccessMessage(
+                                this@TripDetailActivity, getString(R.string.trip_status_Canceled)
+                            )
+                        } else {
+                            Toast(this@TripDetailActivity).showSuccessMessage(
+                                this@TripDetailActivity, it.data.message.toString()
+                            )
+                        }
 
                         if (it.data.message == "Update trip status to In Progress") {
                             binding.apply {

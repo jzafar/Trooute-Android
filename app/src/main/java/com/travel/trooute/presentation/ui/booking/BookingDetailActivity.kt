@@ -77,8 +77,10 @@ import com.travel.trooute.core.util.Constants.SCHEDULED
 import com.travel.trooute.data.model.Enums.PickUpPassengersStatus
 import com.travel.trooute.data.model.trip.request.UpdatePickupStatusRequest
 import com.travel.trooute.data.model.trip.response.Booking
+import com.travel.trooute.data.model.trip.response.LuggageType
 import com.travel.trooute.data.model.trip.response.TripsData
 import com.travel.trooute.presentation.ui.trip.PickupPassengersActivity
+import com.travel.trooute.presentation.utils.ValueChecker.checkLuggageRestrictionValue
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.GetPickupPassengersViewModel
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.UpdatePickupStatusViewModel
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.UpdateTripStatusViewModel
@@ -1094,12 +1096,16 @@ class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
     @SuppressLint("SetTextI18n")
     private fun setUpUserSideTripDetailsViews(bookingData: BookingDetailsData) {
         binding.includeUserSideTripDetails.apply {
-            tvTypeValue.text = checkStringValue(
-                this@BookingDetailActivity, bookingData.trip?.luggageRestrictions?.text
-            )
-            tvWeightValue.text = "${
-                checkLongValue(bookingData.trip?.luggageRestrictions?.weight)
-            }$WEIGHT_SIGN"
+            bookingData.trip?.luggageRestrictions?.let { it
+                tvHCWeightValue.text = "${
+                    checkLuggageRestrictionValue(it, LuggageType.HandCarry, this@BookingDetailActivity)
+                }$WEIGHT_SIGN"
+
+                tvSCWeightValue.text = "${
+                    checkLuggageRestrictionValue(it , LuggageType.SuitCase, this@BookingDetailActivity)
+                }$WEIGHT_SIGN"
+            }
+
             tvRoundTripValue.text = if (bookingData.trip?.roundTrip == true) {
                 getString(R.string.yes)
             } else {

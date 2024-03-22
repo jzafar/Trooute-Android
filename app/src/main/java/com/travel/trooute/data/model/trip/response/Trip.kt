@@ -18,11 +18,12 @@ data class Trip(
     val note: String? = null ?: "",
     val pricePerPerson: Double? = null ?: 0.0,
     val smokingPreference: Boolean,
+    val petPreference: Boolean,
     val status: String? = null ?: "",
     val totalAmount: Double? = null ?: 0.0,
     val totalSeats: Long? = null ?: 0,
     val whereTo_address: String? = null ?: "",
     val whereTo_location: Location? = null,
-    val luggageRestrictions: LanguageRestriction? = null,
+    val luggageRestrictions: List<LuggageRestrictions?>,
     val roundTrip: Boolean
 ) : Parcelable

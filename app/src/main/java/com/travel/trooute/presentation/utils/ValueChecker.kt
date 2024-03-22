@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import com.travel.trooute.R
 import com.travel.trooute.core.util.Constants.PRICE_SIGN
+import com.travel.trooute.data.model.trip.response.LuggageRestrictions
+import com.travel.trooute.data.model.trip.response.LuggageType
 
 object ValueChecker {
     fun checkStringValue(context: Context, value: String?): String {
@@ -39,6 +41,19 @@ object ValueChecker {
             lng = it.toString()
         } ?: "0"
         return lng
+    }
+
+    fun checkLuggageRestrictionValue(value: List<LuggageRestrictions?>, type: LuggageType, context: Context): String {
+        for (luggage in value) {
+            if (luggage != null) {
+                if (luggage.type == type) {
+                    return  luggage.weight.toString()
+                }
+            } else {
+                return  context.getString(R.string.not_provided)
+            }
+        }
+        return context.getString(R.string.not_provided)
     }
 
     fun checkFloatValue(value: Float?): String {

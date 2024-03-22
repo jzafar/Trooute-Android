@@ -17,7 +17,7 @@ import com.travel.trooute.core.util.Constants
 import com.travel.trooute.core.util.GooglePlacesManager
 import com.travel.trooute.core.util.Resource
 import com.travel.trooute.data.model.trip.request.CreateTripRequest
-import com.travel.trooute.data.model.trip.response.LanguageRestriction
+import com.travel.trooute.data.model.trip.response.LuggageRestrictions
 import com.travel.trooute.databinding.ActivitySetUpYourTripBinding
 import com.travel.trooute.presentation.utils.DateAndTimeManager
 import com.travel.trooute.presentation.utils.Loader
@@ -30,6 +30,7 @@ import com.travel.trooute.presentation.utils.showSuccessMessage
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.CreateTripViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.internal.ViewUtils
+import com.travel.trooute.data.model.trip.response.LuggageType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -195,17 +196,31 @@ class SetUpYourTripActivity : AppCompatActivity() {
                 btnPostTrip.setOnClickListener {
                     Log.e(TAG, "onCreate: departureDate -> $departureDate")
                     Log.e(TAG, "onCreate: departureTime -> $departureTime")
+                    val luggageList: MutableList<LuggageRestrictions> = arrayListOf()
                     if (handCarryPreference) {
-                        isFieldValid(
+                        if (isFieldValid(
                             includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight,
                             getString(R.string.hand_carry)
-                        )
+                        )) {
+                            val handCarry = LuggageRestrictions(LuggageType.HandCarry, includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight.text.toString().toLong())
+                            luggageList.add(handCarry)
+                        } else {
+                            return@setOnClickListener
+                        }
+
+
                     }
                     if (suitCasePreference) {
-                        isFieldValid(
+                        if (isFieldValid(
                             includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeightSuitcase,
                             getString(R.string.suitcase)
-                        )
+                        )) {
+                            val suitcase = LuggageRestrictions(LuggageType.SuitCase, includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeightSuitcase.text.toString().toLong())
+                            luggageList.add(suitcase)
+                        } else {
+                            return@setOnClickListener
+                        }
+
                     }
                     if (
                         isFieldValid(
@@ -240,10 +255,7 @@ class SetUpYourTripActivity : AppCompatActivity() {
                                 ),
 
                                 languagePreference = languagePreference,
-                                luggageRestrictions = LanguageRestriction(
-                                    text =  includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight.text.toString() ,
-                                    weight = includeTripDetailsDriverItemLayout.tvLanguageRestrictionWeightSuitcase.text.toString().toLong()
-                                ),
+                                luggageRestrictions = luggageList,
                                 note = etNote.text.toString(),
                                 pricePerPerson = number,
                                 smokingPreference = smokingPreference,

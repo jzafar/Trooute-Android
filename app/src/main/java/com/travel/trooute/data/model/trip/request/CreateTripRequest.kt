@@ -1,13 +1,13 @@
 package com.travel.trooute.data.model.trip.request
 
-import com.travel.trooute.data.model.trip.response.LanguageRestriction
+import com.travel.trooute.data.model.trip.response.LuggageRestrictions
 
 data class CreateTripRequest(
     val departureDate: String?,
     val from_address: String?,
     val from_location: List<Double?>,
     val languagePreference: String?,
-    val luggageRestrictions: LanguageRestriction,
+    val luggageRestrictions: List<LuggageRestrictions?>,
     val note: String?,
     val pricePerPerson: Double?,
     val smokingPreference: Boolean,

@@ -1,6 +1,7 @@
 package com.travel.trooute.data.model.wishlist
 
 import com.travel.trooute.data.model.common.Passenger
+import com.travel.trooute.data.model.trip.response.LuggageRestrictions
 
 data class Message(
     val __v: Int,
@@ -11,7 +12,7 @@ data class Message(
     val from_address: String?,
     val from_location: FromLocation?,
     val languagePreference: String?,
-    val luggageRestrictions: LuggageRestrictions?,
+    val luggageRestrictions: List<LuggageRestrictions?>,
     val note: String?,
     val passengers: List<Passenger>?,
     val pricePerPerson: Double?,

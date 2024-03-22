@@ -31,52 +31,113 @@
                     android:textColor="@color/secondary_cadet_blue_color" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/tvTypeHandCarry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     app:divider="@drawable/divider_section_space"
                     app:showDividers="middle">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Body_6"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/type"
-                        android:textColor="@color/secondary_cadet_blue_color" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Body_6"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/type"
+                            android:textColor="@color/secondary_cadet_blue_color" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTypeValue"
-                        style="@style/Body_6"
-                        android:layout_width="0dp"
-                        android:layout_weight="3"
-                        android:text="@string/not_provided"
-                        android:textAlignment="textEnd" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Body_6"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:text="@string/hand_carry"
+                            android:textAlignment="textEnd" />
 
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Body_6"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/weight"
+                            android:textColor="@color/secondary_cadet_blue_color" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvHCWeightValue"
+                            style="@style/Body_6"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:text="@string/not_provided"
+                            android:textAlignment="textEnd" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/tvTypeSuitCase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     app:divider="@drawable/divider_section_space"
                     app:showDividers="middle">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Body_6"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/weight"
-                        android:textColor="@color/secondary_cadet_blue_color" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Body_6"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/type"
+                            android:textColor="@color/secondary_cadet_blue_color" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvWeightValue"
-                        style="@style/Body_6"
-                        android:layout_width="0dp"
-                        android:layout_weight="3"
-                        android:text="@string/not_provided"
-                        android:textAlignment="textEnd" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Body_6"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:text="@string/suitcase"
+                            android:textAlignment="textEnd" />
 
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:divider="@drawable/divider_section_space"
+                        app:showDividers="middle">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/Body_6"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/weight"
+                            android:textColor="@color/secondary_cadet_blue_color" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvSCWeightValue"
+                            style="@style/Body_6"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:text="@string/not_provided"
+                            android:textAlignment="textEnd" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
