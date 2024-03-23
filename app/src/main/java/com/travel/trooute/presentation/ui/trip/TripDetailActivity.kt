@@ -396,6 +396,9 @@ class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
                         tvUserName.text = checkStringValue(
                             this@TripDetailActivity, driver?.name
                         )
+                        gender.text = checkStringValue(
+                            this@TripDetailActivity, driver?.gender
+                        )
 
                         driver?.reviewsStats.let { review ->
                             tvAvgRating.text = checkFloatValue(review?.avgRating)

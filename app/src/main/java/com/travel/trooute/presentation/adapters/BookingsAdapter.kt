@@ -100,9 +100,11 @@ class BookingsAdapter(
 
                         ltNxSeats.isVisible = true
                         includeDivider.divider.isVisible = true
-                        val price = item.numberOfSeats!! * (item.trip?.pricePerPerson?.toLong() ?: 0)
+                        val price = (item.trip?.pricePerPerson ?: 0.0)
+                        val seats = item.numberOfSeats ?: 1.0
+                        val final = price * seats.toDouble()
                         tvNxSeats.text = checkNumOfSeatsValue(item.numberOfSeats)
-                        tvNxSeatsPrice.text = checkPriceValue(price.toDouble())
+                        tvNxSeatsPrice.text = checkPriceValue(final)
 
                         tvPricePerPerson.text = checkPriceValue(item.trip?.pricePerPerson?.toDouble())
                         tvPersonLabel.isVisible = true

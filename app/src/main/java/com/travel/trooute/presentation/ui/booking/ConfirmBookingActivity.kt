@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
 import com.travel.trooute.R
 import com.travel.trooute.core.util.Constants.CREATE_BOOKING_REQUEST
 import com.travel.trooute.core.util.Constants.GET_TRIP_DETAIL
@@ -200,9 +201,9 @@ class ConfirmBookingActivity : AppCompatActivity() {
                             Toast(this@ConfirmBookingActivity).showSuccessMessage(
                                 this@ConfirmBookingActivity, it.data.message.toString()
                             )
-                            Log.e(TAG, "bindCreateBookingObserver: Success -> " + it.data)
+                            Log.i(TAG, "bindCreateBookingObserver: Success -> " + it.data)
 
-//                            sendNotification()
+                            sendNotification()
                         }
                     }
                 }
