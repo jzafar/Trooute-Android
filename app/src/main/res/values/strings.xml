@@ -298,10 +298,6 @@
     <string name="comment_required">Comment Required</string>
     <string name="select_rating">Please select rating</string>
 
-
-
-
-
     <string name="request_rejected">(Request rejected)</string>
     <string name="restriction_weight_text">Please provide any luggage size or weight restrictions for each passenger.</string>
     <string name="hand_carry">Hand carry</string>
@@ -325,7 +321,6 @@
     <string name="pick_up_driver_details">Trooute wish you sage journey.</string>
     <string name="not_showed_up_driver_details">You have marked as driver not showed up. You can contact support from settings page.</string>
     <string name="not_showed_up_by_passenger_details">Passenger have marked you didn\'t not showed up. Please pick passenger.</string>
-
     <string name="trip_status_Canceled">Update trip status to canceled</string>
     <string name="trip_status_COMPLETED">Update trip status to completed</string>
     <string name="trip_status_INPROGRESS">Update trip status to In Progress</string>

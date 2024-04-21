@@ -50,6 +50,7 @@ import com.travel.trooute.presentation.viewmodel.notification.PushNotificationVi
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
+import com.travel.trooute.presentation.ui.review.ReviewsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -82,6 +83,20 @@ class SettingsFragment : Fragment() {
         binding.apply {
             includeUserDetailLayout.apply {
                 ltCallInboxSection.isVisible = false
+                ltComments.setOnClickListener {
+                    startActivity(Intent(requireContext(), ReviewsActivity::class.java).apply {
+                        putExtra(Constants.USER_ID, sharedPreferenceManager.getAuthIdFromPref())
+
+                    })
+                }
+                userReviews.setOnClickListener {
+                    startActivity(
+                        Intent(
+                            requireContext(),
+                            YourProfileActivity::class.java
+                        )
+                    )
+                }
             }
 
             // Show switch button if driver is approved otherwise hide

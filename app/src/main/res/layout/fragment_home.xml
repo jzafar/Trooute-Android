@@ -45,7 +45,10 @@
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imgAuthProfile"
                             style="@style/CircleProfileImageStyle"
-                            app:srcCompat="@drawable/profile_place_holder" />
+                            app:srcCompat="@drawable/profile_place_holder"
+                            app:strokeColor="@color/black"
+                            app:strokeWidth="1dp"
+                            android:padding="1dp"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvAuthName"

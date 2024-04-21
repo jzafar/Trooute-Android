@@ -29,6 +29,9 @@
                     android:layout_width="@dimen/_75sdp"
                     android:layout_height="@dimen/_75sdp"
                     app:srcCompat="@drawable/profile_place_holder"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="1dp"
+                    android:padding="1dp"
                     android:layout_gravity="center_vertical"/>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -59,6 +62,7 @@
                             tools:text=""/>
 
                         <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/ltComments"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"

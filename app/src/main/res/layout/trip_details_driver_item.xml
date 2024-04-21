@@ -176,6 +176,7 @@
                                 android:id="@+id/tvHandCarryRestrictionWeight"
                                 style="@style/TextInputEditTextStyle"
                                 android:hint="@string/luggage_weight"
+                                android:textAlignment="viewEnd"
                                 android:inputType="number" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -214,6 +215,7 @@
                                 android:id="@+id/tvLanguageRestrictionWeightSuitcase"
                                 style="@style/TextInputEditTextStyle"
                                 android:hint="@string/luggage_weight"
+                                android:textAlignment="viewEnd"
                                 android:inputType="number" />
 
                         </com.google.android.material.textfield.TextInputLayout>

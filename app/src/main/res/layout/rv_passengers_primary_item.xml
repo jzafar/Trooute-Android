@@ -12,10 +12,11 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgPassengerProfile"
-            style="@style/CircleProfileImageStyle"
+            style="@style/CircleProfileImageStyle2"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            tools:srcCompat="@drawable/profile_place_holder" />
+            tools:srcCompat="@drawable/profile_place_holder"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -44,7 +44,10 @@
                     style="@style/CircleProfileImageStyle"
                     android:layout_width="@dimen/_75sdp"
                     android:layout_height="@dimen/_75sdp"
-                    app:srcCompat="@drawable/profile_place_holder" />
+                    app:srcCompat="@drawable/profile_place_holder"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="1dp"
+                    android:padding="1dp"/>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"

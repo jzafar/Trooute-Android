@@ -86,6 +86,7 @@
                         android:drawableStart="@drawable/ic_profile"
                         android:drawableEnd="@drawable/ic_arrow_forward"
                         android:maxLines="1"
+                        android:backgroundTint="@color/black"
                         android:text="@string/your_profile" />
 
                     <androidx.appcompat.widget.AppCompatTextView

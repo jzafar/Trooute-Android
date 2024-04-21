@@ -101,8 +101,8 @@ class SignInActivity : AppCompatActivity() {
             }
 
             tvSingUp.setOnClickListener {
-                showNotification()
-                //startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
+//                showNotification()
+                startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
             }
 
             biometricLoginButton.setOnClickListener {

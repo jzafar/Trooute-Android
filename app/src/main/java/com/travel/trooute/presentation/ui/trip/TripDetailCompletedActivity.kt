@@ -510,12 +510,10 @@ class TripDetailCompletedActivity : AppCompatActivity() {
             // Trips details
             includeTripDetailLayout.apply {
 
-                tvHCWeightValue.text =
-                    checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.HandCarry, this@TripDetailCompletedActivity)
+//                tvHCWeightValue.text = checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.HandCarry, this@TripDetailCompletedActivity)
 
 
-                tvSCWeightValue.text =
-                    checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.SuitCase,this@TripDetailCompletedActivity)
+//                tvSCWeightValue.text = checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.SuitCase,this@TripDetailCompletedActivity)
 
 
                 if (tripsData?.roundTrip == true) {
