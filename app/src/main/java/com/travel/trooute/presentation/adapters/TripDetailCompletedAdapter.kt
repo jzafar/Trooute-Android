@@ -99,7 +99,7 @@ class TripDetailCompletedAdapter(
 
                         includeReviewItem.apply {
                             if(sharedPreferenceManager.driverMode()) {
-                                tvExperienceWithDriverTitle.text =  "Experience with passenger"
+                                tvExperienceWithDriverTitle.text =  tvExperienceWithDriverTitle.context.getString(R.string.experience_passenger)
                             } else {
                                 tvExperienceWithDriverTitle.text =  tvExperienceWithDriverTitle.context.getString(R.string.experience_with_driver)
                             }
@@ -126,40 +126,145 @@ class TripDetailCompletedAdapter(
                                     }
                                 }
                             }
-
-                            // Review given to driver from user
-                            booking.reviewsGivenToDriver?.let {
-                                ltUserReviews.isVisible = true
-                                includeDivider.divider.isVisible = true
-
-                                tvUserName.text = checkStringValue(
-                                    tvUserName.context,
-                                    booking.user?.name
-                                )
-                                tvComment.text = checkStringValue(
-                                    tvComment.context,
-                                    booking.reviewsGivenToDriver?.comment
-                                )
-                                rbExperienceWithDriver.rating = checkFloatValue(
-                                    booking.reviewsGivenToDriver?.rating
-                                ).toFloat()
-                            }
-
-                            // Review given to user from driver
-                            booking.reviewsGivenToUser?.let {
+                            run {
+                                ltReviewsItem.isVisible = false
                                 ltWriteReviews.isVisible = false
-                                ltDriverReview.isVisible = true
+                                ltMyReview.isVisible = false
+                                ltUserReviews.isVisible = false
+                                // it means user was driver
+                                if (booking.driverId == sharedPreferenceManager.getAuthIdFromPref()) {
+                                    // Review given to driver from user
+                                    booking.reviewsGivenToDriver?.let {
+                                        ltUserReviews.isVisible = true
+                                        includeDivider.divider.isVisible = true
 
-                                tvDriverComment.text = checkStringValue(
-                                    tvDriverComment.context,
-                                    booking.reviewsGivenToUser?.comment
-                                )
-                                rbExperience.rating = checkFloatValue(
-                                    booking.reviewsGivenToUser?.rating
-                                ).toFloat()
-                            } ?: run {
-                                ltWriteReviews.isVisible = true
-                                ltDriverReview.isVisible = false
+                                        tvUserName.text = checkStringValue(
+                                            tvUserName.context,
+                                            booking.user?.name
+                                        )
+                                        tvComment.text = checkStringValue(
+                                            tvComment.context,
+                                            booking.reviewsGivenToDriver?.comment
+                                        )
+                                        rbExperienceWithDriver.rating = checkFloatValue(
+                                            booking.reviewsGivenToDriver?.rating
+                                        ).toFloat()
+                                    }
+
+                                    // Review given to user from driver
+                                    if ( booking.reviewsGivenToUser == null) {
+                                        ltWriteReviews.isVisible = true
+                                        tvExperienceWithDriverTitle.text =  tvExperienceWithDriverTitle.context.getString(R.string.experience_passenger)
+                                    } else {
+                                        booking.reviewsGivenToUser?.let {
+                                            //check if driver review is for booking user
+                                            if (it.target == booking.user?._id) {
+                                                ltWriteReviews.isVisible = false
+                                                ltMyReview.isVisible = true
+
+                                                tvDriverComment.text = checkStringValue(
+                                                    tvDriverComment.context,
+                                                    booking.reviewsGivenToUser?.comment
+                                                )
+                                                rbExperience.rating = checkFloatValue(
+                                                    booking.reviewsGivenToUser?.rating
+                                                ).toFloat()
+                                            }
+
+                                        }
+                                    }
+                                } else {
+                                    if (booking.user?._id != booking.driverId) {
+                                        // Review given to user from user
+                                        if ( booking.reviewsGivenToUsersByUser.isEmpty()) {
+                                            ltWriteReviews.isVisible = true
+                                            tvExperienceWithDriverTitle.text =  tvExperienceWithDriverTitle.context.getString(R.string.experience_passenger)
+                                        } else {
+                                            val myReviewToOtherUser = booking.reviewsGivenToUsersByUser.firstOrNull {
+                                                it?.user == sharedPreferenceManager.getAuthIdFromPref()
+                                            }
+                                            val otherUserReviewToMe = booking.reviewsGivenToUsersByUser.firstOrNull {
+                                                it?.target == sharedPreferenceManager.getAuthIdFromPref()
+                                            }
+                                            if (myReviewToOtherUser == null) {
+                                                ltWriteReviews.isVisible = true
+                                                tvExperienceWithDriverTitle.text =  tvExperienceWithDriverTitle.context.getString(R.string.experience_passenger)
+                                            } else {
+                                                ltWriteReviews.isVisible = false
+                                                ltMyReview.isVisible = true
+
+                                                tvDriverComment.text = checkStringValue(
+                                                    tvDriverComment.context,
+                                                    myReviewToOtherUser.comment
+                                                )
+                                                rbExperience.rating = checkFloatValue(
+                                                    myReviewToOtherUser.rating
+                                                ).toFloat()
+                                            }
+
+                                            if (otherUserReviewToMe != null) {
+                                                ltUserReviews.isVisible = true
+                                                includeDivider.divider.isVisible = true
+                                                tvUserName.text = checkStringValue(
+                                                    tvUserName.context,
+                                                    booking.user?.name
+                                                )
+                                                tvComment.text = checkStringValue(
+                                                    tvComment.context,
+                                                    otherUserReviewToMe.comment
+                                                )
+                                                rbExperienceWithDriver.rating = checkFloatValue(
+                                                    otherUserReviewToMe.rating
+                                                ).toFloat()
+                                            }
+
+                                        }
+                                    } else {
+                                        // Review given to driver from user
+                                        if ( booking.reviewsGivenToDriver == null) {
+                                            ltWriteReviews.isVisible = true
+                                        } else {
+                                            ltUserReviews.isVisible = true
+                                            includeDivider.divider.isVisible = true
+
+                                            tvUserName.text = checkStringValue(
+                                                tvUserName.context,
+                                                booking.user?.name
+                                            )
+                                            tvComment.text = checkStringValue(
+                                                tvComment.context,
+                                                booking.reviewsGivenToDriver?.comment
+                                            )
+                                            rbExperienceWithDriver.rating = checkFloatValue(
+                                                booking.reviewsGivenToDriver?.rating
+                                            ).toFloat()
+                                        }
+
+                                        // Review given to user from driver
+                                        if ( booking.reviewsGivenToUser == null) {
+                                            ltWriteReviews.isVisible = true
+                                            tvExperienceWithDriverTitle.text =  tvExperienceWithDriverTitle.context.getString(R.string.experience_passenger)
+                                        } else {
+                                            booking.reviewsGivenToUser?.let {
+                                                //check if driver review is for booking user
+                                                if (it.target == booking.user?._id) {
+                                                    ltWriteReviews.isVisible = false
+                                                    ltMyReview.isVisible = true
+
+                                                    tvDriverComment.text = checkStringValue(
+                                                        tvDriverComment.context,
+                                                        booking.reviewsGivenToUser?.comment
+                                                    )
+                                                    rbExperience.rating = checkFloatValue(
+                                                        booking.reviewsGivenToUser?.rating
+                                                    ).toFloat()
+                                                }
+
+                                            }
+                                        }
+                                    }
+
+                                }
 
                                 var submitReviewRatingValue = rbSubmitExperienceWithDriver.rating
 
@@ -171,7 +276,7 @@ class TripDetailCompletedAdapter(
                                     if (
                                         shareYourThoughts.context.isFieldValid(
                                             shareYourThoughts,
-                                            "Required"
+                                            shareYourThoughts.context.getString(R.string.comment_required)
                                         )
                                     ) {
                                         // Handling on client side
@@ -226,7 +331,7 @@ class TripDetailCompletedAdapter(
         binding.apply {
             includeReviewItem.apply {
                 ltWriteReviews.isVisible = false
-                ltDriverReview.isVisible = true
+                ltMyReview.isVisible = true
                 tvDriverComment.text = checkStringValue(
                     tvDriverComment.context,
                     comment

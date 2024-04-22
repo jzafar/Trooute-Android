@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ltWriteReviews"
@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingVertical="@dimen/default_screen_vertical_space"
-            android:visibility="gone"
             app:divider="@drawable/divider_default_space"
+            android:visibility="visible"
             app:showDividers="middle">
 
             <RelativeLayout
@@ -79,19 +79,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingVertical="@dimen/default_screen_vertical_space"
-            android:visibility="gone"
+            android:visibility="visible"
             app:divider="@drawable/divider_default_space"
             app:showDividers="middle">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvUserName"
                 style="@style/HeadLine_6"
-                tools:text="Review" />
+                tools:text="@string/review" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvComment"
                 style="@style/Body_6"
-                tools:text="Not Provided" />
+                tools:text="@string/not_provided" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -111,27 +111,6 @@
 
             </RelativeLayout>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Body_6"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    android:text="@string/rate_the_vehicle" />
-
-                <RatingBar
-                    android:id="@+id/rbRateTheVehicle"
-                    style="@style/RatingBarTheme"
-                    android:visibility="gone"
-                    android:layout_marginEnd="@dimen/rating_bar_end_space"
-                    android:isIndicator="true" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <include
@@ -140,24 +119,24 @@
             android:visibility="gone" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ltDriverReview"
+            android:id="@+id/ltMyReview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingVertical="@dimen/default_screen_vertical_space"
-            android:visibility="gone"
+            android:visibility="visible"
             app:divider="@drawable/divider_default_space"
             app:showDividers="middle">
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/HeadLine_6"
-                android:text="@string/my_review" />
+                android:text="@string/review" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDriverComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Not Provided." />
+                tools:text="@string/not_provided" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

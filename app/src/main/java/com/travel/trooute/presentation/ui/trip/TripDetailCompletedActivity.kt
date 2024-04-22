@@ -271,6 +271,7 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                         bookingList.add(booking)
                     }
                 }
+                // Passengers view
                 tripDetailCompletedAdapter.submitList(bookingList)
 
             }
@@ -305,79 +306,81 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                         includeReviewItem.apply {
                             tvDriverReviewsTitle.setOnClickListener {
                                 ltReviewsItem.apply {
-                                    if (isVisible) {
-                                        isVisible = false
-                                        tvDriverReviewsTitle.setCompoundDrawablesWithIntrinsicBounds(
-                                            null, null, getDrawable(
-                                                R.drawable.ic_arrow_down
-                                            ), null
-                                        )
+                                    if (ltReviewsItem.isVisible) {
+                                        ltReviewsItem.isVisible = false
+                                        tvDriverReviewsTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawable( R.drawable.ic_arrow_down), null)
                                     } else {
-                                        isVisible = true
-                                        tvDriverReviewsTitle.setCompoundDrawablesWithIntrinsicBounds(
-                                            null, null, getDrawable(
-                                                R.drawable.ic_arrow_up
-                                            ), null
-                                        )
+                                        ltReviewsItem.isVisible = true
+                                        tvDriverReviewsTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawable(R.drawable.ic_arrow_up), null)
                                     }
                                 }
                             }
 
-                            // Review given to driver from user
-                            val userBooking: Booking? = tripsData.bookings?.filter {
-                                it.user?._id ==  sharedPreferenceManager.getAuthIdFromPref()
-                            }?.single()
-                            userBooking?.reviewsGivenToDriver?.let {
-                                ltUserReviews.isVisible = true
-                                includeDivider.divider.isVisible = true
 
-                                tvUserName.text = checkStringValue(
-                                    tvUserName.context,
-                                    userBooking.user?.name
-                                )
-                                tvComment.text = checkStringValue(
-                                    tvComment.context,
-                                    userBooking.reviewsGivenToDriver.comment
-                                )
-
-                                rbExperienceWithDriver.rating = checkFloatValue(
-                                    userBooking.reviewsGivenToDriver.rating
-                                ).toFloat()
-//                                rbRateTheVehicle.rating = checkFloatValue(
-//                                    booking.reviewsGivenToCar?.rating
-//                                ).toFloat()
-                            }
 
                             run {
-                                if (userBooking != null) {
-                                    btnSubmitReview.isVisible = false
-                                    ltWriteReviews.isVisible = false
-                                    ltDriverReview.isVisible = false
-                                } else {
-                                    btnSubmitReview.isVisible = true
+                                ltReviewsItem.isVisible = false
+                                ltWriteReviews.isVisible = false
+                                ltMyReview.isVisible = false
+                                ltUserReviews.isVisible = false
+
+                                // Review given to driver from user
+                                val userBooking: Booking? = tripsData.bookings?.filter {
+                                    it.user?._id ==  sharedPreferenceManager.getAuthIdFromPref()
+                                }?.single()
+
+                                if (userBooking?.reviewsGivenToDriver == null) {
                                     ltWriteReviews.isVisible = true
-                                    ltDriverReview.isVisible = false
-                                    var submitReviewRatingValue = rbSubmitExperienceWithDriver.rating
+                                } else {
+                                    ltWriteReviews.isVisible = false
+                                    ltUserReviews.isVisible = true
+                                    includeDivider.divider.isVisible = true
 
-                                    rbSubmitExperienceWithDriver.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-                                        submitReviewRatingValue = rating
-                                        btnSubmitReview.setOnClickListener {
-                                            if (
-                                                shareYourThoughts.context.isFieldValid(
-                                                    shareYourThoughts,
-                                                    getString(R.string.comment_required)
-                                                )
-                                            ) {
-                                                // Handling on client side
-                                                val comment = shareYourThoughts.text.toString()
+                                    tvUserName.text = checkStringValue(
+                                        tvUserName.context,
+                                        userBooking.user?.name
+                                    )
+                                    tvComment.text = checkStringValue(
+                                        tvComment.context,
+                                        userBooking.reviewsGivenToDriver.comment
+                                    )
+
+                                    rbExperienceWithDriver.rating = checkFloatValue(
+                                        userBooking.reviewsGivenToDriver.rating
+                                    ).toFloat()
+                                }
+                                // Review given to user from driver
+                                userBooking?.reviewsGivenToUser?.let { it ->
+                                    ltMyReview.isVisible = true
+                                    tvDriverComment.text = checkStringValue(
+                                        tvDriverComment.context,
+                                        it.comment
+                                    )
+                                    rbExperience.rating = checkFloatValue(
+                                        it.rating
+                                    ).toFloat()
+                                }
+
+                                var submitReviewRatingValue = rbSubmitExperienceWithDriver.rating
+
+                                rbSubmitExperienceWithDriver.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                                    submitReviewRatingValue = rating
+                                    btnSubmitReview.setOnClickListener {
+                                        if (
+                                            shareYourThoughts.context.isFieldValid(
+                                                shareYourThoughts,
+                                                getString(R.string.comment_required)
+                                            )
+                                        ) {
+                                            // Handling on client side
+                                            val comment = shareYourThoughts.text.toString()
 //                                        commentState(binding, comment, submitReviewRatingValue)
-                                                val driverId = tripsData.driver?._id
-                                                // Handling on server side
-                                                if (driverId != null) {
-                                                    submitReviewClicked(0,driverId,"Driver",comment,submitReviewRatingValue,tripsData._id)
-                                                }
-
+                                            val driverId = tripsData.driver?._id
+                                            // Handling on server side
+                                            if (driverId != null) {
+                                                submitReviewClicked(0,driverId,"Driver",comment,submitReviewRatingValue,tripsData._id)
                                             }
+
                                         }
                                     }
                                 }
@@ -510,39 +513,69 @@ class TripDetailCompletedActivity : AppCompatActivity() {
             // Trips details
             includeTripDetailLayout.apply {
 
-//                tvHCWeightValue.text = checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.HandCarry, this@TripDetailCompletedActivity)
+                if (sharedPreferenceManager.driverMode()) {
+                    tripsData.trip.let { trip ->
+                        trip?.luggageRestrictions.let { luggage ->
+                            tvHCWeightValue.text = luggage?.let { checkLuggageRestrictionValue(it, LuggageType.HandCarry, this@TripDetailCompletedActivity) }
+                        }
 
+                    }
 
-//                tvSCWeightValue.text = checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.SuitCase,this@TripDetailCompletedActivity)
+                    tripsData.trip.let { trip ->
+                        trip?.luggageRestrictions.let { luggage ->
+                            tvSCWeightValue.text = luggage?.let { checkLuggageRestrictionValue(it, LuggageType.SuitCase, this@TripDetailCompletedActivity) }
+                        }
 
+                    }
 
-                if (tripsData?.roundTrip == true) {
-                    tvRoundTripValue.text = getString(R.string.yes)
+                    if (tripsData.trip?.smokingPreference == true) {
+                        tvSmokingAllowedValue.text = getString(R.string.yes)
+                    } else {
+                        tvSmokingAllowedValue.text = getString(R.string.no)
+                    }
+
+                    if (tripsData.trip?.petPreference == true) {
+                        tvPetPreferenceValue.text = getString(R.string.yes)
+                    } else {
+                        tvPetPreferenceValue.text = getString(R.string.no)
+                    }
+
+                    tvLanguagePreferenceValue.text = checkStringValue(
+                        this@TripDetailCompletedActivity,
+                        tripsData.trip?.languagePreference
+                    )
+
+                    tvOtherRelevantDetailsValue.text = checkStringValue(
+                        this@TripDetailCompletedActivity,
+                        tripsData.trip?.note
+                    )
                 } else {
-                    tvRoundTripValue.text = getString(R.string.no)
+                    tvHCWeightValue.text = checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.HandCarry, this@TripDetailCompletedActivity)
+                    tvSCWeightValue.text = checkLuggageRestrictionValue(tripsData.luggageRestrictions, LuggageType.SuitCase,this@TripDetailCompletedActivity)
+
+                    if (tripsData.smokingPreference == true) {
+                        tvSmokingAllowedValue.text = getString(R.string.yes)
+                    } else {
+                        tvSmokingAllowedValue.text = getString(R.string.no)
+                    }
+
+                    if (tripsData.petPreference == true) {
+                        tvPetPreferenceValue.text = getString(R.string.yes)
+                    } else {
+                        tvPetPreferenceValue.text = getString(R.string.no)
+                    }
+
+                    tvLanguagePreferenceValue.text = checkStringValue(
+                        this@TripDetailCompletedActivity,
+                        tripsData.languagePreference
+                    )
+
+                    tvOtherRelevantDetailsValue.text = checkStringValue(
+                        this@TripDetailCompletedActivity,
+                        tripsData?.note
+                    )
                 }
 
-                if (tripsData?.smokingPreference == true) {
-                    tvSmokingAllowedValue.text = getString(R.string.yes)
-                } else {
-                    tvSmokingAllowedValue.text = getString(R.string.no)
-                }
-
-                if (tripsData?.petPreference == true) {
-                    tvPetPreferenceValue.text = getString(R.string.yes)
-                } else {
-                    tvPetPreferenceValue.text = getString(R.string.no)
-                }
-
-                tvLanguagePreferenceValue.text = checkStringValue(
-                    this@TripDetailCompletedActivity,
-                    tripsData?.languagePreference
-                )
-
-                tvOtherRelevantDetailsValue.text = checkStringValue(
-                    this@TripDetailCompletedActivity,
-                    tripsData?.note
-                )
             }
         }
     }
