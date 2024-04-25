@@ -67,7 +67,6 @@ class MessageActivity : AppCompatActivity() {
     @InboxCollection
     lateinit var inboxCollectionRef: CollectionReference
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         statusBarColor(R.color.white)

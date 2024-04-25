@@ -50,7 +50,7 @@ class FCMService : FirebaseMessagingService() {
         checkNotificationChannel()
 
         val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(body)
             .setContentIntent(pendingIntent)
