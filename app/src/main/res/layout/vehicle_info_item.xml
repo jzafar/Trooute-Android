@@ -149,7 +149,7 @@
                 android:orientation="vertical">
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCarReviewsTitle"
-                style="@style/HeadLine_6"
+                style="@style/HeadLine_66"
                 android:text="@string/rating"
                 android:drawableEnd="@drawable/ic_arrow_down"/>
 

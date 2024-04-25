@@ -340,23 +340,23 @@ class TripDetailCompletedActivity : AppCompatActivity() {
                                         tvUserName.context,
                                         userBooking.user?.name
                                     )
-                                    tvComment.text = checkStringValue(
-                                        tvComment.context,
+                                    tvDriverComment.text = checkStringValue(
+                                        tvDriverComment.context,
                                         userBooking.reviewsGivenToDriver.comment
                                     )
-
-                                    rbExperienceWithDriver.rating = checkFloatValue(
+                                    rbExperience.rating = checkFloatValue(
                                         userBooking.reviewsGivenToDriver.rating
                                     ).toFloat()
                                 }
                                 // Review given to user from driver
                                 userBooking?.reviewsGivenToUser?.let { it ->
                                     ltMyReview.isVisible = true
-                                    tvDriverComment.text = checkStringValue(
-                                        tvDriverComment.context,
+                                    tvComment.text = checkStringValue(
+                                        tvComment.context,
                                         it.comment
                                     )
-                                    rbExperience.rating = checkFloatValue(
+
+                                    rbExperienceWithDriver.rating = checkFloatValue(
                                         it.rating
                                     ).toFloat()
                                 }

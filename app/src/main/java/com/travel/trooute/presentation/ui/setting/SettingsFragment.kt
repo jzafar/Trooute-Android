@@ -114,7 +114,13 @@ class SettingsFragment : Fragment() {
                 }
 
                 tvCreateNewTrip.setOnClickListener {
-                    startActivity(Intent(requireContext(), SetUpYourTripActivity::class.java))
+                    var user = sharedPreferenceManager.getAuthModelFromPref()
+                    if (user?.stripeConnectedAccountId != null) {
+                        startActivity(Intent(requireContext(), SetUpYourTripActivity::class.java))
+                    } else {
+                        showConnectStripeAccountAlertAtCreateTrip()
+                    }
+
                 }
             } else if (sharedPreferenceManager.getDriverStatus()?.lowercase() == "pending") {
                 tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " " + getString(R.string.reques_pending)
@@ -236,6 +242,16 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
+    private fun showConnectStripeAccountAlertAtCreateTrip() {
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.error))
+            .setMessage(getString(R.string.connect_stripe_create_account))
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
+
+            }
+            .create()
+            .show()
+    }
     @SuppressLint("MissingInflatedId")
     private fun showRatingDialog() {
         val builder = AlertDialog.Builder(

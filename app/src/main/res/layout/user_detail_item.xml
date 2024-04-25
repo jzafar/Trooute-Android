@@ -148,11 +148,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                android:paddingTop="@dimen/_5sdp"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvDriverReviewsTitle"
-                    style="@style/HeadLine_6"
+                    style="@style/HeadLine_66"
                     android:text="@string/reviews"
                     android:drawableEnd="@drawable/ic_arrow_down"/>
 

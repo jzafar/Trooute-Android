@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -105,6 +106,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.settingsFragment -> {
                         vpMainMenu.currentItem = 3
                     }
+
                 }
                 when (vpMainMenu.currentItem) {
                     0 -> {
@@ -131,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                         setupAppBar(false, getString(R.string.home), false)
                     }
                 }
+                hideNotificationBadge()
                 return@setOnItemSelectedListener true
             }
         }
@@ -140,6 +143,72 @@ class MainActivity : AppCompatActivity() {
         // with actions named "custom-event-name".
         val lbm = LocalBroadcastManager.getInstance(this)
         lbm.registerReceiver(receiver, IntentFilter("application_active"))
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, IntentFilter("notificationIntent"))
+
+
+    }
+
+    private fun didReceiveNotification(type: String){
+        binding.apply {
+            if (type == "1"){
+                bnvMainMenu.getOrCreateBadge(R.id.inboxFragment).apply {
+                    backgroundColor = Color.RED
+                    badgeTextColor = Color.WHITE
+                    maxCharacterCount = 2
+                    number = 1
+                    isVisible = true
+                }
+            }
+            if (type == "2"){
+                bnvMainMenu.getOrCreateBadge(R.id.bookingsFragment).apply {
+                    backgroundColor = Color.RED
+                    badgeTextColor = Color.WHITE
+                    maxCharacterCount = 2
+                    number = 1
+                    isVisible = true
+                }
+            }
+        }
+
+    }
+
+    private fun hideNotificationBadge() {
+        binding.apply {
+            when (vpMainMenu.currentItem) {
+                0 -> {
+
+                }
+
+                1 -> {
+                    bnvMainMenu.getOrCreateBadge(R.id.inboxFragment).apply {
+                        backgroundColor = Color.RED
+                        badgeTextColor = Color.WHITE
+                        maxCharacterCount = 1
+                        number = 1
+                        isVisible = false
+                    }
+                }
+
+                2 -> {
+                    bnvMainMenu.getOrCreateBadge(R.id.bookingsFragment).apply {
+                        backgroundColor = Color.RED
+                        badgeTextColor = Color.WHITE
+                        maxCharacterCount = 1
+                        number = 1
+                        isVisible = false
+                    }
+                }
+
+                3 -> {
+
+                }
+
+                else -> {
+
+                }
+            }
+        }
+
     }
     override fun onBackPressed() {
         var current = binding.vpMainMenu.currentItem
@@ -214,13 +283,20 @@ class MainActivity : AppCompatActivity() {
         }.launchIn(lifecycleScope)
     }
 
-    var receiver: BroadcastReceiver = object : BroadcastReceiver() {
+    private var receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent != null) {
                 Log.i("tag","Receive notification")
                 getMeViewModel.getMe()
                 bindGetMeApi()
             }
+        }
+    }
+
+    private var broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val  type = getIntent().extras?.getString("type")
+            type?.let { didReceiveNotification(it) }
         }
     }
 

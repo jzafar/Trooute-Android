@@ -130,7 +130,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/HeadLine_6"
-                android:text="@string/review" />
+                android:text="@string/my_review" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDriverComment"

@@ -82,6 +82,6 @@ object Constants {
     const val WISH_LIST_CHECKER_CODE = 1
     const val INTENT_IS_TRIP_WISH_LISTED = "IS_TRIP_WISH_LISTED"
 
-    const val TERMS_CONDITIONS = "https://www.google.com"
+    const val TERMS_CONDITIONS = "https://trooute.com/terms-and-conditions.html"
     const val PRIVACY_POLICY = "https://www.google.com"
 }

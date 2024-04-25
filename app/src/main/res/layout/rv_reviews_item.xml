@@ -27,7 +27,7 @@
                 android:id="@+id/userImage"
                 android:layout_width="@dimen/_65sdp"
                 android:layout_height="@dimen/_65sdp"
-                app:srcCompat="@drawable/passenger_1"
+                app:srcCompat="@drawable/ic_notification"
                 app:strokeColor="@color/black"
                 app:strokeWidth="1dp"
                 android:padding="1dp"/>

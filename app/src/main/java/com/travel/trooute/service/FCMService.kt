@@ -11,6 +11,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.travel.trooute.R
 import com.travel.trooute.core.util.Constants.CHANNEL_DESCRIPTION
 import com.travel.trooute.core.util.Constants.CHANNEL_ID
@@ -66,6 +67,11 @@ class FCMService : FirebaseMessagingService() {
         notificationBuilder.flags = notificationBuilder.flags or Notification.FLAG_AUTO_CANCEL
 
         notificationManager.notify(1, notificationBuilder)
+        val notificationIntent = Intent("notificationIntent")
+        notificationIntent.setAction("updatedLocations")
+        notificationIntent.putExtra("type","1")
+        LocalBroadcastManager.getInstance(this)
+            .sendBroadcast(notificationIntent)
     }
 
 
