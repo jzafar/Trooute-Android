@@ -84,4 +84,13 @@ object Constants {
 
     const val TERMS_CONDITIONS = "https://trooute.com/terms-and-conditions.html"
     const val PRIVACY_POLICY = "https://www.google.com"
+
+    const val BROADCAST_INTENT = "broadcast_intent"
+    const val BROADCAST_TYPE = "broadcast_type"
+}
+
+enum class BroadCastType(val type: String) {
+    FETCH_ME("fetch_me"),
+    CHAT("chat"),
+    BOOKINGS("bookings")
 }

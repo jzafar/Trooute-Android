@@ -29,6 +29,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.internal.ViewUtils
 import com.google.firebase.messaging.FirebaseMessaging
 import com.travel.trooute.R
+import com.travel.trooute.core.util.BroadCastType
+import com.travel.trooute.core.util.Constants
+import com.travel.trooute.core.util.Constants.BROADCAST_INTENT
+import com.travel.trooute.core.util.Constants.BROADCAST_TYPE
 import com.travel.trooute.core.util.Resource
 import com.travel.trooute.core.util.SharedPreferenceManager
 import com.travel.trooute.data.model.auth.request.UpdateDeviceIdRequest
@@ -142,30 +146,33 @@ class MainActivity : AppCompatActivity() {
         // We are registering an observer (mMessageReceiver) to receive Intents
         // with actions named "custom-event-name".
         val lbm = LocalBroadcastManager.getInstance(this)
-        lbm.registerReceiver(receiver, IntentFilter("application_active"))
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, IntentFilter("notificationIntent"))
-
-
+        lbm.registerReceiver(receiver, IntentFilter(BROADCAST_INTENT))
     }
 
-    private fun didReceiveNotification(type: String){
+    private fun didReceiveNotification(type: BroadCastType){
         binding.apply {
-            if (type == "1"){
-                bnvMainMenu.getOrCreateBadge(R.id.inboxFragment).apply {
-                    backgroundColor = Color.RED
-                    badgeTextColor = Color.WHITE
-                    maxCharacterCount = 2
-                    number = 1
-                    isVisible = true
+            when (type) {
+                BroadCastType.CHAT -> {
+                    bnvMainMenu.getOrCreateBadge(R.id.inboxFragment).apply {
+                        backgroundColor = Color.RED
+                        badgeTextColor = Color.WHITE
+                        maxCharacterCount = 2
+                        number = 1
+                        isVisible = vpMainMenu.currentItem != 1
+                    }
                 }
-            }
-            if (type == "2"){
-                bnvMainMenu.getOrCreateBadge(R.id.bookingsFragment).apply {
-                    backgroundColor = Color.RED
-                    badgeTextColor = Color.WHITE
-                    maxCharacterCount = 2
-                    number = 1
-                    isVisible = true
+                BroadCastType.BOOKINGS -> {
+                    bnvMainMenu.getOrCreateBadge(R.id.bookingsFragment).apply {
+                        backgroundColor = Color.RED
+                        badgeTextColor = Color.WHITE
+                        maxCharacterCount = 2
+                        number = 1
+                        isVisible = vpMainMenu.currentItem != 2
+                    }
+                }
+                BroadCastType.FETCH_ME -> {
+                    getMeViewModel.getMe()
+                    bindGetMeApi()
                 }
             }
         }
@@ -287,16 +294,12 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent != null) {
                 Log.i("tag","Receive notification")
-                getMeViewModel.getMe()
-                bindGetMeApi()
+                val  type = intent.getStringExtra(BROADCAST_TYPE)
+                type?.let {
+                    val broadCastType = BroadCastType.valueOf(it)
+                    didReceiveNotification(broadCastType)
+                }
             }
-        }
-    }
-
-    private var broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val  type = getIntent().extras?.getString("type")
-            type?.let { didReceiveNotification(it) }
         }
     }
 

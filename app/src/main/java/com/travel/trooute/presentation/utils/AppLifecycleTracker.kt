@@ -6,6 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.travel.trooute.core.util.BroadCastType
+import com.travel.trooute.core.util.Constants
+import com.travel.trooute.core.util.Constants.BROADCAST_INTENT
+import com.travel.trooute.core.util.Constants.BROADCAST_TYPE
 
 
 class AppLifecycleTracker : Application.ActivityLifecycleCallbacks  {
@@ -17,8 +21,9 @@ class AppLifecycleTracker : Application.ActivityLifecycleCallbacks  {
     override fun onActivityStarted(p0: Activity) {
         if (numStarted == 0) {
             Log.i("LifeCycle","Application become active")
-            val intent = Intent("application_active")
-            LocalBroadcastManager.getInstance(p0).sendBroadcast(intent)
+            val broadcastIntent = Intent(BROADCAST_INTENT)
+            broadcastIntent.putExtra(BROADCAST_TYPE, BroadCastType.FETCH_ME.toString())
+            LocalBroadcastManager.getInstance(p0).sendBroadcast(broadcastIntent)
         }
         numStarted++
     }

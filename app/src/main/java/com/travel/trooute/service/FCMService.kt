@@ -19,6 +19,10 @@ import com.travel.trooute.core.util.SharedPreferenceManager
 import com.travel.trooute.presentation.ui.main.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.travel.trooute.core.util.BroadCastType
+import com.travel.trooute.core.util.Constants
+import com.travel.trooute.core.util.Constants.BROADCAST_INTENT
+import com.travel.trooute.core.util.Constants.BROADCAST_TYPE
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -67,15 +71,14 @@ class FCMService : FirebaseMessagingService() {
         notificationBuilder.flags = notificationBuilder.flags or Notification.FLAG_AUTO_CANCEL
 
         notificationManager.notify(1, notificationBuilder)
-        val notificationIntent = Intent("notificationIntent")
-        notificationIntent.setAction("updatedLocations")
+        val notificationIntent = Intent(BROADCAST_INTENT)
         message.data?.let {
             if (it.containsKey("dl")) {
                 val dl = it["dl"]
                 if (dl == "chat") {
-                    notificationIntent.putExtra("type","1")
+                    notificationIntent.putExtra(BROADCAST_TYPE, BroadCastType.CHAT.toString())
                 } else {
-                    notificationIntent.putExtra("type","2")
+                    notificationIntent.putExtra(BROADCAST_TYPE,BroadCastType.BOOKINGS.toString())
                 }
             }
         }
