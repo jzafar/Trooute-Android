@@ -69,7 +69,17 @@ class FCMService : FirebaseMessagingService() {
         notificationManager.notify(1, notificationBuilder)
         val notificationIntent = Intent("notificationIntent")
         notificationIntent.setAction("updatedLocations")
-        notificationIntent.putExtra("type","1")
+        message.data?.let {
+            if (it.containsKey("dl")) {
+                val dl = it["dl"]
+                if (dl == "chat") {
+                    notificationIntent.putExtra("type","1")
+                } else {
+                    notificationIntent.putExtra("type","2")
+                }
+            }
+        }
+
         LocalBroadcastManager.getInstance(this)
             .sendBroadcast(notificationIntent)
     }

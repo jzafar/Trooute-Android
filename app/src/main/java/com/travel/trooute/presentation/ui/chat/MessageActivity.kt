@@ -226,7 +226,8 @@ class MessageActivity : AppCompatActivity() {
                     mutable_content = MUTABLE_CONTENT,
                     sound = TONE
                 ),
-                to = "$TOPIC$TROOUTE_TOPIC${messageReceiverInfo?._id.toString()}"
+                to = "$TOPIC$TROOUTE_TOPIC${messageReceiverInfo?._id.toString()}",
+                data = NotificationRequest.Data(dl = "chat")
             )
         )
 
