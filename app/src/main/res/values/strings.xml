@@ -325,6 +325,5 @@
     <string name="trip_status_COMPLETED">Update trip status to completed</string>
     <string name="trip_status_INPROGRESS">Update trip status to In Progress</string>
     <string name="invalid_status">Invalid trip status</string>
-
     <string name="connect_stripe_create_account">You can\'t create trip. You must have to connect your stripe account to create trip. When we accepts you as driver, we have send you and email to connect your stripe account.</string>
 </resources>

@@ -104,11 +104,7 @@ class MessageActivity : AppCompatActivity() {
             Log.e(TAG, "onCreate: receiver data -> " + messageReceiverInfo)
 
             // Make message as read
-            messageViewModel.updateSeenStatus(
-                authModelInfo?._id.toString(),
-                messageReceiverInfo?._id.toString(),
-                true
-            )
+            markAsRead()
 
             messageViewModel.getAllMessages(
                 senderId = authModelInfo?._id.toString(),
@@ -149,6 +145,13 @@ class MessageActivity : AppCompatActivity() {
         }
     }
 
+    private fun markAsRead() {
+        messageViewModel.updateSeenStatus(
+            authModelInfo?._id.toString(),
+            messageReceiverInfo?._id.toString(),
+            true
+        )
+    }
     private fun bindGetAllMessageObserver() {
         binding.etMessage.setText("")
         lifecycleScope.launch {

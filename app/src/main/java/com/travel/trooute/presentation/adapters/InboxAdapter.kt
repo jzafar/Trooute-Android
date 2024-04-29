@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.travel.trooute.R
+import com.travel.trooute.core.util.SharedPreferenceManager
 import com.travel.trooute.data.model.chat.Inbox
 import com.travel.trooute.databinding.RvInboxItemBinding
 import com.travel.trooute.presentation.interfaces.AdapterItemClickListener
@@ -19,7 +20,8 @@ import com.travel.trooute.presentation.utils.ValueChecker.checkStringValue
 import com.travel.trooute.presentation.utils.loadProfileImage
 
 class InboxAdapter(
-    private val adapterItemClickListener: AdapterItemClickListener
+    private val adapterItemClickListener: AdapterItemClickListener,
+    private var sharedPreferenceManager: SharedPreferenceManager
 ) : ListAdapter<Inbox, InboxAdapter.ViewHolder>(DiffCallback()) {
     inner class ViewHolder(private val binding: RvInboxItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -33,18 +35,24 @@ class InboxAdapter(
                     )
 
                     Log.e("InboxAdapter", "bindViews: id -> " + item.user?._id.toString() )
-
-                    if (item.user?.seen == true) {
-                        tvUserName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-                    } else {
-                        TextViewBindingAdapter.setDrawableEnd(
-                            tvUserName,
-                            ContextCompat.getDrawable(
-                                tvUserName.context,
-                                R.drawable.ic_status_waiting
-                            )
-                        )
+                    val user = item.users?.first { user ->
+                        user._id.toString() == sharedPreferenceManager.getAuthIdFromPref()
+                            .toString()
                     }
+                    user.let {
+                        if (it?.seen == true) {
+                            tvUserName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                        } else {
+                            TextViewBindingAdapter.setDrawableEnd(
+                                tvUserName,
+                                ContextCompat.getDrawable(
+                                    tvUserName.context,
+                                    R.drawable.circle_tree_poppy
+                                )
+                            )
+                        }
+                    }
+
 
                     Log.e("InboxAdapter", "bindViews: item.lastMessage.toString() -> " + item.lastMessage.toString() )
 

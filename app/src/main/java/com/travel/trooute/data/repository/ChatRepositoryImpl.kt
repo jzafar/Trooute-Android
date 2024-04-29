@@ -34,7 +34,7 @@ class ChatRepositoryImpl @Inject constructor(
         // Registers callback to fireStore, which will be called on new events
         val subscription = inboxCollection
             .whereEqualTo("${userId.toString()}.$IS_EXIST", true)
-//            .orderBy(TIMESTAMP_FIELD_NAME, Query.Direction.DESCENDING)
+            .orderBy(TIMESTAMP_FIELD_NAME, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 Log.e("getAllInbox", "snapshot isEmpty ${snapshot?.isEmpty}")
                 Log.e("getAllInbox", "error ${error?.message}")

@@ -1,6 +1,10 @@
 package com.travel.trooute.presentation.ui.chat
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.travel.trooute.R
 import com.travel.trooute.core.util.Constants.INBOX_COLLECTION_NAME
 import com.travel.trooute.core.util.Constants.MESSAGE_USER_INFO
@@ -26,6 +31,8 @@ import com.travel.trooute.presentation.interfaces.AdapterItemClickListener
 import com.travel.trooute.presentation.utils.setRVVertical
 import com.travel.trooute.presentation.viewmodel.chatviewmodel.GetAllInboxViewModel
 import com.faltenreich.skeletonlayout.Skeleton
+import com.travel.trooute.core.util.BroadCastType
+import com.travel.trooute.core.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -51,7 +58,7 @@ class InboxFragment : Fragment(), AdapterItemClickListener {
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_inbox, container, false)
-        inboxAdapter = InboxAdapter(this)
+        inboxAdapter = InboxAdapter(this, sharedPreferenceManager)
 
         binding.apply {
             skeleton = skeletonLayout
@@ -62,16 +69,37 @@ class InboxFragment : Fragment(), AdapterItemClickListener {
                 adapter = inboxAdapter
             }
 
-            getAllInboxViewModel.getAllInbox(sharedPreferenceManager.getAuthIdFromPref().toString())
+//            getAllInboxViewModel.getAllInbox(sharedPreferenceManager.getAuthIdFromPref().toString())
             bindInboxObservers()
         }
-
+        val lbm = LocalBroadcastManager.getInstance(requireContext())
+        lbm.registerReceiver(receiver, IntentFilter(Constants.BROADCAST_INTENT))
         return binding.root
     }
 
+    private var receiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent != null) {
+                Log.i("tag","Receive notification")
+                val  type = intent.getStringExtra(Constants.BROADCAST_TYPE)
+                type?.let {
+                    val broadCastType = BroadCastType.valueOf(it)
+                    didReceiveNotification(broadCastType)
+                }
+            }
+        }
+    }
+
+    private fun getInboxMessages() {
+        getAllInboxViewModel.getAllInbox(sharedPreferenceManager.getAuthIdFromPref().toString())
+    }
+    override fun onResume() {
+        super.onResume()
+        getInboxMessages()
+    }
     private fun bindInboxObservers() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 getAllInboxViewModel.getAllInboxState.collectLatest {
                     when (it) {
                         is Resource.ERROR -> {
@@ -100,6 +128,15 @@ class InboxFragment : Fragment(), AdapterItemClickListener {
                     }
                 }
             }
+        }
+    }
+
+    private fun didReceiveNotification(type: BroadCastType){
+        when (type) {
+            BroadCastType.CHAT -> {
+                getInboxMessages()
+            }
+            else -> {}
         }
     }
 
