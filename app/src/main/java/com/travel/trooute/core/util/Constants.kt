@@ -87,6 +87,13 @@ object Constants {
 
     const val BROADCAST_INTENT = "broadcast_intent"
     const val BROADCAST_TYPE = "broadcast_type"
+
+    const val google_map_api_key = "AIzaSyCtMiBNPxwn4iYidjkj_wGeOAXSd1n1j5Y"
+
+//   "google_map_api_key" = "AIzaSyDIO_qEACm3hS8fQIVwSDOEJRm29wOWsYY"
+//
+
+//     "google_map_api_key" = AIzaSyCN6LRtc9jcbPYNTyE0fFuH-bzmus9D66c
 }
 
 enum class BroadCastType(val type: String) {

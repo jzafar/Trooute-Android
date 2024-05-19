@@ -2,21 +2,16 @@
     <string name="app_name">Trooute</string>
     <!--  TODO: Remove or change this placeholder text  -->
     <string name="hello_blank_fragment">Привет, пустой фрагмент</string>
-    <!--
-        <string name="google_map_api_key">AIzaSyDIO_qEACm3hS8fQIVwSDOEJRm29wOWsYY</string>
-    -->
-    <!-- skip a line key -->
-    <string name="google_map_api_key">AIzaSyCN6LRtc9jcbPYNTyE0fFuH-bzmus9D66c</string>
     <string name="onboarding_title_1">Добро пожаловать в Trooute!</string>
-    <string name="onboarding_desc_1">Присоединяйтесь к путешественникам, делитесь опытом. Ваше путешествие, их компания..</string>
+    <string name="onboarding_desc_1">Присоединяйтесь к путешественникам, делитесь опытом. Ваше путешествие, их компания.</string>
     <string name="onboarding_title_2">Найдите попутчиков.</string>
     <string name="onboarding_desc_2">Подберите себе попутчиков, путешествуйте вместе. Связывайтесь, путешествуйте, создавайте связи.</string>
     <string name="onboarding_title_3">Без проблем с бронированием</string>
     <string name="onboarding_desc_3">Забронируйте поездки без проблем, путешествуйте без хлопот. Ваше место всего в одном касании.</string>
     <string name="onboarding_title_4">Связывайтесь и отправляйтесь.</string>
     <string name="onboarding_desc_4">Общайтесь, планируйте, исследуйте вместе. Новые дружбы, разделяемые дороги.</string>
-    <string name="person">/Человек</string>
-    <string name="trips_around_you">Поездки рядом с вами.</string>
+    <string name="person">"/Человек"</string>
+    <string name="trips_around_you">"Поездки рядом с вами.</string>
     <string name="ongoing_trips">Текущие поездки.</string>
     <string name="destination_and_schedule">Место назначения и расписание.</string>
     <string name="trip_details">Детали поездки.</string>
@@ -189,7 +184,7 @@
     <string name="current_password">Текущий пароль</string>
     <string name="flexible">Мои даты гибки</string>
     <string name="choose_date">Выберите дату</string>
-    <string name="tc_link">Согласиться с<a href="">Условия использования</a></string>
+    <string name="tc_link">Agree to<a href="">Условия использования</a></string>
     <string name="max_passengers_allowed">Максимальное количество пассажиров составляет %1$s</string>
     <string name="distanceRange">"Расстояние в (км)"</string>
     <string name="gender">"Пол"</string>
@@ -245,7 +240,7 @@
     <string name="travel_companion">Могу ли я выбирать попутчиков по предпочтениям?</string>
     <string name="travel_companion_answer">Да, позволяет пользователям устанавливать предпочтения, такие как предпочтения для курящих/некурящих и другие предпочтения, связанные с поездками. Эта информация может помочь вам найти подходящих попутчиков.</string>
     <string name="contact_customer">Как я могу связаться со службой поддержки клиентов?</string>
-    <string name="contact_customer_answer">По любым вопросам или помощи вы можете обратиться в нашу службу поддержки клиентов по адресу trooute@outlook.com. Мы здесь, чтобы помочь вам с любыми вопросами или проблемами, которые могут у вас возникнуть.</string>
+    <string name="contact_customer_answer">По любым вопросам или помощи вы можете обратиться в нашу службу поддержки клиентов по адресу support@trooute.com. Мы здесь, чтобы помочь вам с любыми вопросами или проблемами, которые могут у вас возникнуть.</string>
     <string name="update_car_info">Обновить информацию об автомобиле</string>
     <string name="become_driver">Стать водителем</string>
     <string name="vehicle">транспортное средство</string>

@@ -230,7 +230,7 @@ class SetUpYourTripActivity : AppCompatActivity() {
                                 note = etNote.text.toString(),
                                 pricePerPerson = number,
                                 smokingPreference = smokingPreference,
-                                petsPreference = petsPreference,
+                                petPreference = petsPreference,
                                 roundTrip = roundTrip,
                                 status = "",
                                 totalSeats = totalSeats,

@@ -16,8 +16,8 @@ android {
         applicationId = "com.travel.trooute"
         minSdk = 26
         targetSdk = 34
-        versionCode = 2
-        versionName = "0.1"
+        versionCode = 6
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

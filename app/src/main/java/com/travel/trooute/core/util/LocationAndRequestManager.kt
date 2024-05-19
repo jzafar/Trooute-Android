@@ -63,10 +63,7 @@ class LocationAndRequestManager constructor(
     }
 
     fun getLocation(callBack: ((Location?) -> Unit)? = null) {
-        Log.e(
-            TAG,
-            "getLocation called"
-        )
+        Log.e(TAG, "getLocation called")
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         ) {
@@ -82,21 +79,11 @@ class LocationAndRequestManager constructor(
                             callBack?.invoke(location)
                         } else {
                             // Location is null, handle the case where the last known location is not available
-                            Toast.makeText(
-                                context,
-                                "Last known location not available",
-                                Toast.LENGTH_LONG
-                            ).show()
                             callBack?.invoke(null)
                         }
                     }
                     .addOnFailureListener { e ->
                         // Handle any errors that occurred while retrieving the last known location
-                        Toast.makeText(
-                            context,
-                            "Error getting last known location: ${e.message}",
-                            Toast.LENGTH_LONG
-                        ).show()
                         callBack?.invoke(null)
                     }
             } else {
@@ -132,45 +119,10 @@ class LocationAndRequestManager constructor(
                     }
                 }
             } else {
-                checkLocationPermission()
-                // Location permission denied
-//                Toast.makeText(context, "Location permission denied", Toast.LENGTH_LONG).show()
-
-                // Check if we are in a state where the user has denied the permission and
-                // selected Don't ask again
-//                if (!shouldShowRequestPermissionRationale(
-//                        context,
-//                        Manifest.permission.ACCESS_FINE_LOCATION
-//                    )
-//                ) {
-//                    openLocationSetting()
-//                }
+                getLocation()
             }
         }
-
-        backgroundLocationPermissionLauncher = registry.register(
-            BACKGROUND_LOCATION_PERMISSION_KEY,
-            owner,
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted ->
-            if (isGranted) {
-                // Background location permission granted
-                // Proceed with background location-related tasks
-                if (isGpsEnabled()) {
-                    getLocation()
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        showEnableGpsDialog()
-                    }
-                }
-            } else {
-                // Background location permission denied
-                Toast.makeText(context, "Background location permission denied", Toast.LENGTH_LONG)
-                    .show()
-                openLocationSetting()
-            }
-        }
-
+//
         gpsActivityResultCallback = registry.register(
             GPS_PERMISSION_KEY,
             owner,
@@ -181,6 +133,7 @@ class LocationAndRequestManager constructor(
                 getLocation()
             } else {
                 // GPS is still not enabled, handle accordingly
+                getLocation()
             }
         }
 
@@ -224,25 +177,25 @@ class LocationAndRequestManager constructor(
         }
     }
 
-    private fun checkBackgroundLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestBackgroundLocationPermission()
-        }
-    }
+//    private fun checkBackgroundLocation() {
+//        if (ActivityCompat.checkSelfPermission(
+//                context,
+//                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+////            requestBackgroundLocationPermission()
+//        }
+//    }
 
     private fun requestLocationPermission() {
-        locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
-    private fun requestBackgroundLocationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            backgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-        }
-    }
+//    private fun requestBackgroundLocationPermission() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//            backgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+//        }
+//    }
 
     @SuppressLint("ServiceCast")
     private fun isGpsEnabled(): Boolean {

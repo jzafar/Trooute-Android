@@ -17,6 +17,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.travel.trooute.core.util.Constants.google_map_api_key
 
 class GooglePlacesManager(
     private val context: FragmentActivity,
@@ -41,7 +42,7 @@ class GooglePlacesManager(
             mOwner = owner
         }
         // Get api key
-        apiKey = ContextCompat.getString(context, R.string.google_map_api_key)
+        apiKey = google_map_api_key
 
         // Initialize the SDK
         if (!Places.isInitialized()) {
