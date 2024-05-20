@@ -6,8 +6,9 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.travel.trooute.R
 import com.travel.trooute.databinding.ActivityTermsAndConditionsBinding
+import com.travel.trooute.presentation.ui.BaseActivity
 
-class TermsAndConditionsActivity : AppCompatActivity() {
+class TermsAndConditionsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityTermsAndConditionsBinding
 

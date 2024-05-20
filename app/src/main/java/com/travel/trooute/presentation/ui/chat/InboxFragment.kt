@@ -69,7 +69,7 @@ class InboxFragment : Fragment(), AdapterItemClickListener {
                 adapter = inboxAdapter
             }
 
-//            getAllInboxViewModel.getAllInbox(sharedPreferenceManager.getAuthIdFromPref().toString())
+            getAllInboxViewModel.getAllInbox(sharedPreferenceManager.getAuthIdFromPref().toString())
             bindInboxObservers()
         }
         val lbm = LocalBroadcastManager.getInstance(requireContext())

@@ -79,6 +79,7 @@ import com.travel.trooute.data.model.trip.request.UpdatePickupStatusRequest
 import com.travel.trooute.data.model.trip.response.Booking
 import com.travel.trooute.data.model.trip.response.LuggageType
 import com.travel.trooute.data.model.trip.response.TripsData
+import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.ui.trip.PickupPassengersActivity
 import com.travel.trooute.presentation.utils.ValueChecker.checkLuggageRestrictionValue
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.GetPickupPassengersViewModel
@@ -92,7 +93,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class BookingDetailActivity : AppCompatActivity() , AdapterItemClickListener {
+class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
 
     private val TAG = "BookingDetail"
 

@@ -18,6 +18,7 @@ import com.travel.trooute.core.util.Constants
 import com.travel.trooute.core.util.Constants.CREATE_BOOKING_REQUEST
 import com.travel.trooute.core.util.Constants.PLATFORM_FEE_PRICE
 import com.travel.trooute.core.util.Constants.PRICE_SIGN
+import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.utils.StatusChecker.checkStatus
 import com.travel.trooute.presentation.utils.Utils.formatDateTime
 import com.travel.trooute.presentation.utils.Utils.getSubString
@@ -33,7 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BookingConfirmedActivity : AppCompatActivity() {
+class BookingConfirmedActivity : BaseActivity() {
 
     private val TAG = "BookingConfirmed"
 

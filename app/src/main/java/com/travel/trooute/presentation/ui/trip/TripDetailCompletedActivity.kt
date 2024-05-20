@@ -45,13 +45,14 @@ import com.travel.trooute.presentation.viewmodel.tripviewmodel.GetTripDetailsVie
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
 import com.travel.trooute.data.model.trip.response.LuggageType
+import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.utils.ValueChecker.checkLuggageRestrictionValue
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TripDetailCompletedActivity : AppCompatActivity() {
+class TripDetailCompletedActivity : BaseActivity() {
 
     private val TAG = "TripDetailCompleted"
 

@@ -12,6 +12,7 @@ import com.travel.trooute.R
 import com.travel.trooute.core.util.Resource
 import com.travel.trooute.core.util.SharedPreferenceManager
 import com.travel.trooute.databinding.ActivityMakePaymentBinding
+import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.utils.WebViewUtil
 import com.travel.trooute.presentation.utils.WindowsManager.statusBarColor
 import com.travel.trooute.presentation.viewmodel.bookingviewmodel.PaymentSuccessViewModel
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MakePaymentActivity : AppCompatActivity() {
+class MakePaymentActivity : BaseActivity() {
 
     private val TAG = "MakePaymentActivity"
 

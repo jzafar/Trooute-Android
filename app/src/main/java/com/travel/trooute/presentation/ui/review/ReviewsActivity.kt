@@ -25,12 +25,13 @@ import com.travel.trooute.presentation.viewmodel.reviewviewmodel.GetReviewsViewM
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.faltenreich.skeletonlayout.createSkeleton
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ReviewsActivity : AppCompatActivity() {
+class ReviewsActivity : BaseActivity() {
 
     private val TAG = "ReviewsActivity"
 

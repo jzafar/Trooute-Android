@@ -41,6 +41,9 @@ class ChatRepositoryImpl @Inject constructor(
                 if (snapshot?.isEmpty == true) {
                     trySend(Resource.ERROR(error?.message))
                     return@addSnapshotListener
+                } else if (snapshot == null && error != null) {
+                    trySend(Resource.ERROR(error.message))
+                    return@addSnapshotListener
                 }
                 // Sends events to the flow! Consumers will get the new events
                 try {

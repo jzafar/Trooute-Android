@@ -1,6 +1,8 @@
 package com.travel.trooute.presentation.ui.onboarding
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import com.travel.trooute.R
 import com.travel.trooute.core.util.SharedPreferenceManager
 import com.travel.trooute.databinding.ActivityOnBoardingScreenBinding
 import com.travel.trooute.presentation.adapters.OnboardingVPAdapter
+import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.ui.auth.SignInActivity
 import com.travel.trooute.presentation.ui.auth.SignUpActivity
 import com.travel.trooute.presentation.utils.WindowsManager.statusBarColor
@@ -18,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OnBoardingScreenActivity : AppCompatActivity() {
+class OnBoardingScreenActivity : BaseActivity() {
 
     private val TAG = "OnBoardingScreenActivity"
 

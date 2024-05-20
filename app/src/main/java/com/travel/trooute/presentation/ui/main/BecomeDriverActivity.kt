@@ -36,6 +36,7 @@ import com.google.android.material.internal.ViewUtils
 import com.hbisoft.pickit.PickiT
 import com.hbisoft.pickit.PickiTCallbacks
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.registerImagePicker
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
@@ -43,7 +44,7 @@ import java.util.ArrayList
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BecomeDriverActivity : AppCompatActivity(), PickiTCallbacks {
+class BecomeDriverActivity : BaseActivity(), PickiTCallbacks {
 
     private val TAG = "BecomeDriverActivity"
 

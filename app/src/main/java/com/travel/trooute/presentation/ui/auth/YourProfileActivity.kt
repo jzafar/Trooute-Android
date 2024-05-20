@@ -28,6 +28,7 @@ import com.google.android.material.internal.ViewUtils
 import com.hbisoft.pickit.PickiT
 import com.hbisoft.pickit.PickiTCallbacks
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.registerImagePicker
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -35,7 +36,7 @@ import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class YourProfileActivity : AppCompatActivity(), PickiTCallbacks {
+class YourProfileActivity : BaseActivity(), PickiTCallbacks {
 
     private lateinit var binding: ActivityYourProfileBinding
     private lateinit var imagePicker: ImagePicker

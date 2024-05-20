@@ -58,6 +58,7 @@ import com.travel.trooute.databinding.ActivityTripDetailBinding
 import com.travel.trooute.presentation.adapters.DriverSidePassengersAdapter
 import com.travel.trooute.presentation.adapters.PassengersPrimaryAdapter
 import com.travel.trooute.presentation.interfaces.AdapterItemClickListener
+import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.ui.booking.BookNowActivity
 import com.travel.trooute.presentation.ui.booking.BookingDetailActivity
 import com.travel.trooute.presentation.ui.chat.MessageActivity
@@ -87,7 +88,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class TripDetailActivity : AppCompatActivity(), AdapterItemClickListener {
+class TripDetailActivity : BaseActivity(), AdapterItemClickListener {
 
     private val TAG = "TripDetailActivity"
 

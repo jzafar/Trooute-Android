@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.travel.trooute.R
 import com.travel.trooute.core.util.SharedPreferenceManager
+import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.ui.auth.SignInActivity
 import com.travel.trooute.presentation.ui.main.MainActivity
 import com.travel.trooute.presentation.utils.WindowsManager.fullScreen
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @SuppressLint("CustomSplashScreen")
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : BaseActivity() {
 
     private val TAG = "SplashScreen"
 

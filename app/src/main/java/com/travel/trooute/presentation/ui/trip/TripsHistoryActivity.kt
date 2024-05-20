@@ -25,12 +25,13 @@ import com.travel.trooute.presentation.utils.showErrorMessage
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.DriverTripsHistoryViewModel
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TripsHistoryActivity : AppCompatActivity(), AdapterItemClickListener {
+class TripsHistoryActivity : BaseActivity(), AdapterItemClickListener {
 
     private val TAG = "TripsHistory"
 

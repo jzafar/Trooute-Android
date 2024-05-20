@@ -38,6 +38,7 @@ import com.travel.trooute.core.util.SharedPreferenceManager
 import com.travel.trooute.data.model.auth.request.UpdateDeviceIdRequest
 import com.travel.trooute.databinding.ActivityMainBinding
 import com.travel.trooute.presentation.adapters.MainBNVMenuAdapter
+import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.utils.WindowsManager.statusBarColor
 import com.travel.trooute.presentation.utils.showErrorMessage
 import com.travel.trooute.presentation.utils.showWarningMessage
@@ -52,7 +53,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val TAG = "MainActivity"
     private lateinit var binding: ActivityMainBinding

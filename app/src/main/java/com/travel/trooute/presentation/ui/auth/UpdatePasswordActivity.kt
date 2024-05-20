@@ -20,12 +20,13 @@ import com.travel.trooute.presentation.utils.showErrorMessage
 import com.travel.trooute.presentation.utils.showSuccessMessage
 import com.travel.trooute.presentation.viewmodel.authviewmodel.UpdateMyPasswordVM
 import com.google.android.material.internal.ViewUtils
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class UpdatePasswordActivity : AppCompatActivity() {
+class UpdatePasswordActivity : BaseActivity() {
 
     private lateinit var binding: ActivityUpdatePasswordBinding
 

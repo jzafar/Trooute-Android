@@ -42,6 +42,7 @@ import com.travel.trooute.presentation.utils.showErrorMessage
 import com.travel.trooute.presentation.viewmodel.authviewmodel.LoginViewModel
 import com.travel.trooute.presentation.viewmodel.notification.PushNotificationViewModel
 import com.google.android.material.internal.ViewUtils
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -51,7 +52,7 @@ import java.util.concurrent.Executor
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SignInActivity : AppCompatActivity() {
+class SignInActivity : BaseActivity() {
 
     private val TAG = "SignInActivity"
     private var isBiometricSignIn = false

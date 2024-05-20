@@ -31,13 +31,14 @@ import com.travel.trooute.presentation.viewmodel.tripviewmodel.CreateTripViewMod
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.internal.ViewUtils
 import com.travel.trooute.data.model.trip.response.LuggageType
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SetUpYourTripActivity : AppCompatActivity() {
+class SetUpYourTripActivity : BaseActivity() {
 
     private val TAG = "SetUpYourTrip"
     private var totalSeats: Long = 1

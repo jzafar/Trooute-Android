@@ -6,8 +6,9 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.travel.trooute.R
 import com.travel.trooute.databinding.ActivityPrivacyPolicyBinding
+import com.travel.trooute.presentation.ui.BaseActivity
 
-class PrivacyPolicyActivity : AppCompatActivity() {
+class PrivacyPolicyActivity : BaseActivity() {
 
     private lateinit var binding: ActivityPrivacyPolicyBinding
     override fun onCreate(savedInstanceState: Bundle?) {

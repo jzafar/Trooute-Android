@@ -21,12 +21,13 @@ import com.travel.trooute.presentation.utils.showErrorMessage
 import com.travel.trooute.presentation.utils.showSuccessMessage
 import com.travel.trooute.presentation.viewmodel.authviewmodel.ForgotPasswordViewModel
 import com.google.android.material.internal.ViewUtils
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ResetPasswordActivity : AppCompatActivity() {
+class ResetPasswordActivity : BaseActivity() {
 
     private val TAG = "ResetPasswordActivity"
 

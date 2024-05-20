@@ -33,13 +33,14 @@ import com.travel.trooute.presentation.utils.showSuccessMessage
 import com.travel.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishListViewModel
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Suppress("INFERRED_TYPE_VARIABLE_INTO_POSSIBLE_EMPTY_INTERSECTION")
 @AndroidEntryPoint
-class SearchForTripsActivity : AppCompatActivity(), AdapterItemClickListener,
+class SearchForTripsActivity : BaseActivity(), AdapterItemClickListener,
     WishListEventListener {
 
     private val TAG = "SearchForTrips"

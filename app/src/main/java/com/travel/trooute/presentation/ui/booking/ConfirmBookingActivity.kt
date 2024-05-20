@@ -32,6 +32,7 @@ import com.travel.trooute.data.model.bookings.request.CreateBookingRequest
 import com.travel.trooute.data.model.notification.NotificationRequest
 import com.travel.trooute.data.model.trip.response.TripsData
 import com.travel.trooute.databinding.ActivityConfirmBookingBinding
+import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.utils.Loader
 import com.travel.trooute.presentation.utils.Utils.formatDateTime
 import com.travel.trooute.presentation.utils.ValueChecker.checkFloatValue
@@ -53,7 +54,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ConfirmBookingActivity : AppCompatActivity() {
+class ConfirmBookingActivity : BaseActivity() {
 
     private val TAG = "ConfirmBooking"
 

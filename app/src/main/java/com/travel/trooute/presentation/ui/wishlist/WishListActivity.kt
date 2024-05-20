@@ -28,11 +28,12 @@ import com.travel.trooute.presentation.viewmodel.wishlistviewmodel.AddToWishList
 import com.travel.trooute.presentation.viewmodel.wishlistviewmodel.GetMyWishListViewModel
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class WishListActivity : AppCompatActivity(), WishListEventListener, AdapterItemClickListener {
+class WishListActivity : BaseActivity(), WishListEventListener, AdapterItemClickListener {
 
     private val TAG = "WishListActivity"
 

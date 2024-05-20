@@ -31,10 +31,11 @@ import com.travel.trooute.presentation.utils.setRVOverlayHorizontal
 import com.travel.trooute.presentation.utils.showWarningMessage
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.internal.ViewUtils
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookNowActivity : AppCompatActivity() {
+class BookNowActivity : BaseActivity() {
 
     private val TAG = "BookNowActivity"
 

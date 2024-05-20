@@ -10,10 +10,11 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.travel.trooute.R
 import com.travel.trooute.databinding.ActivityFrequentlyAskedQuestionsBinding
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FrequentlyAskedQuestionsActivity : AppCompatActivity() {
+class FrequentlyAskedQuestionsActivity : BaseActivity() {
 
     private val TAG = "FrequentlyAskedQuestions"
 

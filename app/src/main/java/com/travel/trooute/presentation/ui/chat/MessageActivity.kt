@@ -37,6 +37,7 @@ import com.travel.trooute.presentation.viewmodel.chatviewmodel.MessageViewModel
 import com.travel.trooute.presentation.viewmodel.notification.PushNotificationViewModel
 import com.faltenreich.skeletonlayout.Skeleton
 import com.google.firebase.firestore.CollectionReference
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
@@ -45,7 +46,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MessageActivity : AppCompatActivity() {
+class MessageActivity : BaseActivity() {
 
     private val TAG = "MessageActivity"
 

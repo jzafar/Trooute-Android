@@ -44,12 +44,13 @@ import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
 import com.travel.trooute.core.util.Constants.PickupStarted
 import com.travel.trooute.data.model.common.Driver
+import com.travel.trooute.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PickupPassengersActivity : AppCompatActivity(), PickUpPassengersEventListener {
+class PickupPassengersActivity : BaseActivity(), PickUpPassengersEventListener {
     private val TAG = "PickupPassengersActivity"
 
     private lateinit var binding: ActivityPickupPassengersBinding
