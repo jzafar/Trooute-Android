@@ -12,7 +12,7 @@ fun Context.inviteFriend() {
         .setType("text/plain")
         .setChooserTitle("Invite a friend")
 //        .setChooserTitle("Share text with: ")
-        .setText("Hey! I want to invite you to try Trooute App. Get where you’re going with affordable, convenient rides. You can download App from this link: https://google.com")
+        .setText("Hey! I want to invite you to try Trooute App. Get where you’re going with affordable, convenient rides. You can download App from this link: https://play.google.com/store/apps/details?id=com.travel.trooute")
         .startChooser()
 }
 
