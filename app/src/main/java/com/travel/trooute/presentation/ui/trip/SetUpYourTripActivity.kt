@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.internal.ViewUtils
 import com.travel.trooute.data.model.trip.response.LuggageType
 import com.travel.trooute.presentation.ui.BaseActivity
+import com.travel.trooute.presentation.utils.Utils.combineDateAndTime
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -187,6 +188,7 @@ class SetUpYourTripActivity : BaseActivity() {
                 btnPostTrip.setOnClickListener {
                     Log.e(TAG, "onCreate: departureDate -> $departureDate")
                     Log.e(TAG, "onCreate: departureTime -> $departureTime")
+//                    var stri = combineDateAndTime(departureDate, departureTime)
                     val luggageList: MutableList<LuggageRestrictions> = arrayListOf()
                     val hcWeight =  includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight.text.toString()
                     val handCarry = LuggageRestrictions(LuggageType.HandCarry, hcWeight.toLongOrNull())
@@ -219,7 +221,7 @@ class SetUpYourTripActivity : BaseActivity() {
                         val number: Double = priceToDouble(price)
                         createTripViewModel.createTrip(
                             CreateTripRequest(
-                                departureDate = "$departureDate, $departureTime",
+                                departureDate = combineDateAndTime(departureDate, departureTime),
                                 from_address = includeDestinationAndSchedule.etStartingLocation.text.toString(),
                                 from_location = listOf(
                                     placesStartLocationLatLng?.longitude,

@@ -132,7 +132,7 @@ class ReviewsActivity : BaseActivity() {
                 )
             })"
 
-        if(reviewsData.size  > 0) {
+        if(reviewsData.size  > 0 && firstReview.user != null) {
             binding.noReviews.isVisible = false
             binding.rvReviews.isVisible = true
             reviewsAdapter.submitList(reviewsData)
