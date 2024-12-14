@@ -237,6 +237,7 @@ class ConfirmBookingActivity : BaseActivity() {
             when (state) {
                 is Resource.ERROR -> {
                     Log.e(TAG, "bindSendMessageNotificationObserver: Error -> ${state.message}")
+                    showBookingConfirmedActivity()
                 }
 
                 Resource.LOADING -> {
@@ -245,16 +246,20 @@ class ConfirmBookingActivity : BaseActivity() {
 
                 is Resource.SUCCESS -> {
                     Log.e(TAG, "bindSendMessageNotificationObserver: Success -> ${state.data}")
+                    showBookingConfirmedActivity()
 
-                    startActivity(Intent(
-                        this@ConfirmBookingActivity,
-                        BookingConfirmedActivity::class.java
-                    ).apply {
-                        putExtra(GET_TRIP_DETAIL, tripsData)
-                        putExtra(CREATE_BOOKING_REQUEST, createBookingRequest)
-                    })
                 }
             }
         }.launchIn(lifecycleScope)
+    }
+
+    private  fun showBookingConfirmedActivity() {
+        startActivity(Intent(
+            this@ConfirmBookingActivity,
+            BookingConfirmedActivity::class.java
+        ).apply {
+            putExtra(GET_TRIP_DETAIL, tripsData)
+            putExtra(CREATE_BOOKING_REQUEST, createBookingRequest)
+        })
     }
 }

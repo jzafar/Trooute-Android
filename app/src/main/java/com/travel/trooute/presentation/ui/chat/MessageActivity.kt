@@ -3,10 +3,13 @@ package com.travel.trooute.presentation.ui.chat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
+import androidx.core.view.OnApplyWindowInsetsListener
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle

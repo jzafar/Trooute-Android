@@ -94,7 +94,7 @@ class PickupPassengersActivity : BaseActivity(), PickUpPassengersEventListener {
 
             if (sharedPreferenceManager.driverMode()) {
                 btnStartTrip.setOnClickListener {
-                    val bookings = tripData?.bookings?.reversed()
+                    val bookings = tripData?.bookings?.asReversed()
                     var allMarkedAsPickedUp = true
                     if (bookings != null) {
                         for (booking in bookings) {

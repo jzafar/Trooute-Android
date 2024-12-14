@@ -36,13 +36,14 @@ class ChatRepositoryImpl @Inject constructor(
             .whereEqualTo("${userId.toString()}.$IS_EXIST", true)
             .orderBy(TIMESTAMP_FIELD_NAME, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
-                Log.e("getAllInbox", "snapshot isEmpty ${snapshot?.isEmpty}")
-                Log.e("getAllInbox", "error ${error?.message}")
+                Log.i("getAllInbox", "snapshot isEmpty ${snapshot?.isEmpty}")
+                Log.i("getAllInbox", "error ${error?.message}")
                 if (snapshot?.isEmpty == true) {
                     trySend(Resource.ERROR(error?.message))
                     return@addSnapshotListener
                 } else if (snapshot == null && error != null) {
-                    trySend(Resource.ERROR(error.message))
+                    val inbox = mutableListOf<Inbox>()
+                    trySend(Resource.SUCCESS(inbox))
                     return@addSnapshotListener
                 }
                 // Sends events to the flow! Consumers will get the new events
@@ -267,8 +268,8 @@ class ChatRepositoryImpl @Inject constructor(
                 SEEN_FIELD_NAME to currentUser?.seen
             )
 
-            Log.e("sendMessage", "isCurrentUser seen: " + currentUser?.seen)
-            Log.e("sendMessage", "isReceiver seen: " + inbox.user?.seen)
+            Log.i("sendMessage", "isCurrentUser seen: " + currentUser?.seen)
+            Log.i("sendMessage", "isReceiver seen: " + inbox.user?.seen)
 
             val receiverData = hashMapOf(
                 IS_EXIST to true,
@@ -277,8 +278,8 @@ class ChatRepositoryImpl @Inject constructor(
                 SEEN_FIELD_NAME to inbox.user?.seen
             )
 
-            Log.e("sendMessage", "senderData : " + senderData)
-            Log.e("sendMessage", "receiverData : " + receiverData)
+//            Log.i("sendMessage", "senderData : $senderData")
+//            Log.i("sendMessage", "receiverData : $receiverData")
 
             inboxCollection
                 .whereEqualTo("$currentUserID.$IS_EXIST", true)
@@ -326,6 +327,7 @@ class ChatRepositoryImpl @Inject constructor(
 
                         inboxDocRef.update(
                             receiverID, receiverData,
+                            currentUserID, senderData,
                             LAST_MESSAGE_FIELD_NAME, inbox.lastMessage,
                             TIMESTAMP_FIELD_NAME, inbox.timestamp
                         )

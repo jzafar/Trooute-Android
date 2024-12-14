@@ -96,7 +96,7 @@ class TripsHistoryActivity : BaseActivity(), AdapterItemClickListener {
                             } else {
                                 binding.rvTripHistory.isVisible = true
                                 binding.tvNoTripsHistoryAvailable.isVisible = false
-                                tripsHistoryAdapter.submitList(it.data.data.reversed())
+                                tripsHistoryAdapter.submitList(it.data.data.asReversed())
                             }
                             skeleton.showOriginal()
                         }

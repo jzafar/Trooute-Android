@@ -18,7 +18,7 @@ object URL {
     const val UPDATE_MY_PASSWORD_END_POINT = "api/v1/users/updateMyPassword"
     const val GET_ME_END_POINT = "api/v1/users/me"
     const val UPDATE_DEVICEID_END_POINT = "api/v1/users/updateDeviceId"
-
+    const val LOGOUT_END_POINT = "api/v1/users/signout"
     // TRIPS END POINT
     const val CREATE_TRIPS_END_POINT = "/api/v1/trips"
     const val GET_TRIPS_END_POINT = "/api/v1/trips"

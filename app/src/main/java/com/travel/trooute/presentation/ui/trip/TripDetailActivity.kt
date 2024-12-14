@@ -645,7 +645,7 @@ class TripDetailActivity : BaseActivity(), AdapterItemClickListener {
                             Toast(this@TripDetailActivity).showErrorMessage(
                                 this@TripDetailActivity, getString(R.string.invalid_status)
                             )
-                        } else {
+                        }else {
                             Toast(this@TripDetailActivity).showErrorMessage(
                                 this@TripDetailActivity, it.message.toString()
                             )

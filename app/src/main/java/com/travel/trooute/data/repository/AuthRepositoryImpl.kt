@@ -8,9 +8,11 @@ import com.travel.trooute.data.model.auth.request.LoginRequest
 import com.travel.trooute.data.model.auth.request.ResendVerificationCodeRequest
 import com.travel.trooute.data.model.auth.response.AuthResponse
 import com.travel.trooute.data.datasource.network.AuthAPI
+import com.travel.trooute.data.model.auth.request.LogoutRequest
 import com.travel.trooute.data.model.auth.request.UpdateDeviceIdRequest
 import com.travel.trooute.data.model.auth.request.UpdateMyPasswordRequest
 import com.travel.trooute.data.model.auth.response.DeviceIdResponse
+import com.travel.trooute.data.model.common.BaseResponse
 import com.travel.trooute.domain.repository.AuthRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -25,6 +27,14 @@ class AuthRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             safeApiCall {
                 authAPI.login(request)
+            }
+        }
+    }
+
+    override suspend fun logout(request: LogoutRequest): Resource<BaseResponse> {
+        return withContext(ioDispatcher) {
+            safeApiCall {
+                authAPI.logout(request)
             }
         }
     }

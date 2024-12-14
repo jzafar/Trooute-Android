@@ -305,7 +305,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
                                 binding.rvTrips.isVisible = true
                                 binding.tvNoTripsAvailable.isVisible = false
                                 it.data.data?.let {data ->
-                                    tripList = data.reversed()
+                                    tripList = data.asReversed()
                                     tripsAdapter.submitList(tripList)
                                 }
                             }

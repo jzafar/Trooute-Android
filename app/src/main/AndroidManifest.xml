@@ -26,6 +26,7 @@
 
     <application
         android:name=".di.application.BaseApp"
+
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -39,7 +40,7 @@
         android:theme="@style/Theme.Trooute"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
-        tools:targetApi="34">
+        tools:targetApi="35">
         <activity
             android:name=".presentation.ui.trip.PickupPassengersActivity"
             android:exported="false" />

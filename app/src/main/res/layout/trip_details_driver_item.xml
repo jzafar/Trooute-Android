@@ -347,7 +347,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tlvLanguagePreference"
                         style="@style/TextInputEditTextStyle"
-                        android:hint="E.g German"
+                        android:hint="@string/e_g_german"
                         android:enabled="false"
                         android:inputType="text|textCapWords" />
 
@@ -373,12 +373,12 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/HeadLine_6"
                         android:layout_width="wrap_content"
-                        android:text="Other relevant details" />
+                        android:text="@string/other_relevant_details" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/Body_6"
                         android:layout_width="wrap_content"
-                        android:text=" (Optional)"
+                        android:text="@string/optional"
                         android:textColor="@color/secondary_cadet_blue_color" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -389,7 +389,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etNote"
                         style="@style/MultilineTextInputEditTextStyle"
-                        android:hint="Please be on time as we have a tight schedule." />
+                        android:hint="@string/please_be_on_time_as_we_have_a_tight_schedule" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

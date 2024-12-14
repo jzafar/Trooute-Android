@@ -20,7 +20,7 @@
     <string name="end_trip">Fahrt beenden!</string>
     <string name="from">von</string>
     <string name="enter_starting_location">Startort eingeben</string>
-    <string name="where_to">wohin</string>
+    <string name="where_to">nach</string>
     <string name="enter_destination_location">Zielort eingeben</string>
     <string name="seek_out_trips">Suche nach Fahrten</string>
     <string name="enter_pickup_location">Abholort eingeben</string>
@@ -42,7 +42,7 @@
     <string name="sign_in">Anmelden</string>
     <string name="don_t_have_an_account">Kein Account vorhanden?</string>
     <string name="sign_up">Anmelden</string>
-    <string name="full_name">voller Name</string>
+    <string name="full_name">Vollständiger Name</string>
     <string name="e_g_john_smith">Z.B. John Smith</string>
     <string name="phone_number">Phone number</string>
     <string name="your_phone_number_here">Ihre Telefonnummer hier</string>
@@ -187,11 +187,11 @@
     <string name="choose_date">Datum wählen</string>
     <string name="tc_link">Agree to<a href="">Bedingungen und Konditionen</a></string>
     <string name="max_passengers_allowed">Maximal zulässige Anzahl von Fahrgästen %1$s</string>
-    <string name="distanceRange">"Entfernung in (Km)"</string>
-    <string name="gender">"Geschlecht"</string>
-    <string name="male">"Männlich"</string>
-    <string name="female">"Weiblich"</string>
-    <string name="rating">"Bewertung"</string>
+    <string name="distanceRange">Entfernung in (Km)</string>
+    <string name="gender">Geschlecht</string>
+    <string name="male">Männlich</string>
+    <string name="female">Weiblich</string>
+    <string name="rating">Bewertung</string>
     <string name="experience_passenger">Erfahrung mit Fahrgästen</string>
     <string name="authentication_error">Authentifizierung nicht möglich</string>
     <string name="enable_biometric_login">Biometrische Anmeldung aktivieren</string>
@@ -292,4 +292,36 @@ Sie können diese Buchung nicht akzeptieren. Die verbleibenden verfügbaren Plä
     <string name="trip">Fahrt</string>
     <string name="comment_required">Kommentar erforderlich</string>
     <string name="select_rating">Bitte wählen Sie eine Bewertung</string>
+    <string name="e_g_german">E.g German</string>
+
+    <string name="request_rejected">(Anfrage abgelehnt)</string>
+    <string name="restriction_weight_text">Bitte geben Sie die Größen- oder Gewichtsbeschränkungen für das Gepäck der Passagiere an.</string>
+    <string name="hand_carry">Handgepäck</string>
+    <string name="luggage_weight">Gewicht (kg)</string>
+    <string name="suitcase">Koffer</string>
+    <string name="smoking">Rauchen</string>
+    <string name="pets">Haustiere</string>
+    <string name="pets_allowed">Haustiere erlaubt</string>
+    <string name="language">Sprache</string>
+    <string name="driver">Fahrer</string>
+    <string name="remaining_time_more_than_12h">Sie können damit beginnen, Passagiere 12 Stunden vor dem Start der Reise abzuholen.</string>
+    <string name="alert">Warnung</string>
+    <string name="sure_cancel_trip">Sind Sie sicher, dass Sie diese Reise stornieren möchten? Wenn Sie diese Reise stornieren, werden Ihre bestätigten Buchungen ebenfalls erstattet.</string>
+    <string name="pickup_status">Abholstatus</string>
+    <string name="pickup_started">Abholung gestartet</string>
+    <string name="pickup_started_passenger_details">Der Fahrer hat mit der Abholung der Passagiere begonnen.</string>
+    <string name="get_ready">Machen Sie sich bereit</string>
+    <string name="get_ready_passenger_details">Der Fahrer kommt, um Sie abzuholen.</string>
+    <string name="pick_up_passenger_details">Der Fahrer hat Sie als abgeholt markiert. Falls dies korrekt ist, markieren Sie sich bitte selbst als abgeholt.</string>
+    <string name="not_showed_up_passenger_details">Der Fahrer hat Sie als nicht erschienen markiert. Falls dies nicht stimmt, können Sie den Support über die Einstellungsseite kontaktieren.</string>
+    <string name="pick_up_driver_details">Trooute wünscht Ihnen eine sichere Reise.</string>
+    <string name="not_showed_up_driver_details">Sie wurden als nicht erschienen markiert. Sie können den Support über die Einstellungsseite kontaktieren.</string>
+    <string name="not_showed_up_by_passenger_details">Der Passagier hat markiert, dass Sie nicht erschienen sind. Bitte holen Sie den Passagier ab.</string>
+    <string name="trip_status_Canceled">Reisestatus auf "Storniert" aktualisieren</string>
+    <string name="trip_status_Completed">Reisestatus auf "Abgeschlossen" aktualisieren</string>
+    <string name="trip_status_INPROGRESS">Reisestatus auf "In Bearbeitung" aktualisieren</string>
+    <string name="invalid_status">Ungültiger Reisestatus</string>
+    <string name="connect_stripe_create_account">Sie können die Reise nicht erstellen. Sie müssen Ihr Stripe-Konto verbinden, um die Reise zu erstellen. Nachdem wir Sie als Fahrer zugelassen haben, senden wir Ihnen eine E-Mail, um Ihr Stripe-Konto zu verbinden.</string>
+    <string name="optional">(Optional)</string>
+    <string name="you_might_share_the_ride">Sie könnten die Fahrt mit anderen Passagieren teilen, die in die gleiche Richtung fahren.</string>
 </resources>

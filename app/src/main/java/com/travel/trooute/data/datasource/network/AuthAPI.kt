@@ -4,6 +4,7 @@ import com.travel.trooute.core.util.URL.EMAIL_VERIFICATION_END_POINT
 import com.travel.trooute.core.util.URL.FORGOT_PASSWORD_END_POINT
 import com.travel.trooute.core.util.URL.GET_ME_END_POINT
 import com.travel.trooute.core.util.URL.LOGIN_END_POINT
+import com.travel.trooute.core.util.URL.LOGOUT_END_POINT
 import com.travel.trooute.core.util.URL.RESEND_EMAIL_VERIFICATION_END_POINT
 import com.travel.trooute.core.util.URL.SIGNUP_END_POINT
 import com.travel.trooute.core.util.URL.UPDATE_DEVICEID_END_POINT
@@ -12,6 +13,7 @@ import com.travel.trooute.core.util.URL.UPDATE_PROFILE_END_POINT
 import com.travel.trooute.data.model.auth.request.EmailVerificationRequest
 import com.travel.trooute.data.model.auth.request.ForgotPasswordRequest
 import com.travel.trooute.data.model.auth.request.LoginRequest
+import com.travel.trooute.data.model.auth.request.LogoutRequest
 import com.travel.trooute.data.model.auth.request.ResendVerificationCodeRequest
 import com.travel.trooute.data.model.auth.request.UpdateDeviceIdRequest
 import com.travel.trooute.data.model.auth.request.UpdateMyPasswordRequest
@@ -50,4 +52,8 @@ interface AuthAPI {
     suspend fun getMe(): Response<AuthResponse>
     @POST(UPDATE_DEVICEID_END_POINT)
     suspend fun updateDeviceId(@Body body: UpdateDeviceIdRequest): Response<DeviceIdResponse>
+
+    @POST(LOGOUT_END_POINT)
+    suspend fun logout(@Body body: LogoutRequest): Response<BaseResponse>
+
 }

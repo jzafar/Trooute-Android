@@ -4,12 +4,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.OnApplyWindowInsetsListener
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,7 +20,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.faltenreich.skeletonlayout.Skeleton
 import com.travel.trooute.R
+import com.travel.trooute.core.util.BroadCastType
+import com.travel.trooute.core.util.Constants
 import com.travel.trooute.core.util.Constants.INBOX_COLLECTION_NAME
 import com.travel.trooute.core.util.Constants.MESSAGE_USER_INFO
 import com.travel.trooute.core.util.Resource
@@ -30,13 +35,11 @@ import com.travel.trooute.presentation.adapters.InboxAdapter
 import com.travel.trooute.presentation.interfaces.AdapterItemClickListener
 import com.travel.trooute.presentation.utils.setRVVertical
 import com.travel.trooute.presentation.viewmodel.chatviewmodel.GetAllInboxViewModel
-import com.faltenreich.skeletonlayout.Skeleton
-import com.travel.trooute.core.util.BroadCastType
-import com.travel.trooute.core.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class InboxFragment : Fragment(), AdapterItemClickListener {
@@ -69,7 +72,7 @@ class InboxFragment : Fragment(), AdapterItemClickListener {
                 adapter = inboxAdapter
             }
 
-            getAllInboxViewModel.getAllInbox(sharedPreferenceManager.getAuthIdFromPref().toString())
+//            getAllInboxViewModel.getAllInbox(sharedPreferenceManager.getAuthIdFromPref().toString())
             bindInboxObservers()
         }
         val lbm = LocalBroadcastManager.getInstance(requireContext())
@@ -110,11 +113,11 @@ class InboxFragment : Fragment(), AdapterItemClickListener {
                         }
 
                         Resource.LOADING -> {
-                            Log.e(TAG, "bindInboxObservers: loading...")
+                            Log.i(TAG, "bindInboxObservers: loading...")
                         }
 
                         is Resource.SUCCESS -> {
-                            Log.e(TAG, "bindInboxObservers: Success -> " + it.data)
+                            Log.i(TAG, "bindInboxObservers: Success -> " + it.data)
                             if (it.data.isEmpty()) {
                                 binding.rvInbox.isVisible = false
                                 binding.tvNoInboxDataAvailable.isVisible = true

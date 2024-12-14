@@ -318,8 +318,11 @@
     <string name="not_showed_up_driver_details">You have marked as driver not showed up. You can contact support from settings page.</string>
     <string name="not_showed_up_by_passenger_details">The passenger has marked that you didn\’t show up. Please pick up the passenger.</string>
     <string name="trip_status_Canceled">Update trip status to canceled</string>
-    <string name="trip_status_COMPLETED">Update trip status to completed</string>
+    <string name="trip_status_Completed">Update trip status to completed</string>
     <string name="trip_status_INPROGRESS">Update trip status to In Progress</string>
     <string name="invalid_status">Invalid trip status</string>
     <string name="connect_stripe_create_account">You can\’t create the trip. You must have to connect your stripe account to create the trip. When we have approved you as a driver, we send you an email to connect your stripe account.</string>
+    <string name="optional">(Optional)</string>
+    <string name="e_g_german">E.g German</string>
+    <string name="you_might_share_the_ride">You might share the ride with fellow passengers heading the same way.</string>
 </resources>

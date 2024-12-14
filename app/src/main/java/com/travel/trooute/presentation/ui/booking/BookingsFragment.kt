@@ -137,7 +137,7 @@ class BookingsFragment : Fragment(), AdapterItemClickListener {
                                 binding.tvBookingNotAvailable.isVisible = false
                                 binding.rvBooking.isVisible = true
                                 if (::bookingsAdapter.isInitialized) {
-                                    bookingsAdapter.submitList(it.data.data.reversed())
+                                    bookingsAdapter.submitList(it.data.data.asReversed())
                                 }
                                 bookingsAdapter.originalList =
                                     it.data.data as ArrayList<BookingData>

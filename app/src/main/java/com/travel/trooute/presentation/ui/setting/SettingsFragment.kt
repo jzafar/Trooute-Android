@@ -50,7 +50,9 @@ import com.travel.trooute.presentation.viewmodel.notification.PushNotificationVi
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
+import com.travel.trooute.data.model.auth.request.LogoutRequest
 import com.travel.trooute.presentation.ui.review.ReviewsActivity
+import com.travel.trooute.presentation.viewmodel.authviewmodel.LogoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -68,6 +70,7 @@ class SettingsFragment : Fragment() {
     private val switchDriverModeViewModel: SwitchDriverModeViewModel by viewModels()
     private val pushNotificationViewModel: PushNotificationViewModel by viewModels()
     private val getMeViewModel: GetMeVM by viewModels()
+    private val logoutViewModel: LogoutViewModel by viewModels()
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
 
@@ -231,7 +234,9 @@ class SettingsFragment : Fragment() {
             }
 
             ltLogout.setOnClickListener {
-                notificationTopic(false, true)
+                val token = sharedPreferenceManager.getDeviceId() ?: ""
+                logoutViewModel.logout(LogoutRequest(deviceId = token))
+                bindLogoutObserver()
             }
 
             includeVehicleInfoLayout.editCarInfo.setOnClickListener {
@@ -240,6 +245,28 @@ class SettingsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun bindLogoutObserver() {
+        logoutViewModel.logoutState.onEach {
+            when (it) {
+                is Resource.ERROR -> {
+                    Log.e(TAG, "bindLogoutObserver: Error -> ${it.message}")
+                    loader.hide()
+                }
+
+                Resource.LOADING -> {
+                    Log.i(TAG, "bindLogoutObserver: Loading...")
+                    loader.show()
+                }
+
+                is Resource.SUCCESS -> {
+                    notificationTopic(false, true)
+                    loader.hide()
+                }
+            }
+        }.launchIn(lifecycleScope)
+
     }
 
     private fun showConnectStripeAccountAlertAtCreateTrip() {
@@ -296,22 +323,21 @@ class SettingsFragment : Fragment() {
             when (it) {
                 is Resource.ERROR -> {
                     Log.e(TAG, "bindTopicObserver: Error -> ${it.message}")
+                    loader.hide()
                 }
 
                 Resource.LOADING -> {
                     Log.e(TAG, "bindTopicObserver: Loading...")
+                    if (isLogout) {
+                        loader.show()
+                    }
                 }
 
                 is Resource.SUCCESS -> {
                     Log.e(TAG, "bindTopicObserver: subscribe -> $subscribe")
                     Log.e(TAG, "bindTopicObserver: isLogout -> $isLogout")
-
+                    loader.hide()
                     if (isLogout) {
-//                        Toast(requireContext()).showSuccessMessage(
-//                            requireContext(),
-//                            "Logout successfully!"
-//                        )
-
                         sharedPreferenceManager.saveAuthIdInPref(null)
                         sharedPreferenceManager.saveAuthTokenInPref(null)
                         sharedPreferenceManager.saveAuthModelInPref(null)
