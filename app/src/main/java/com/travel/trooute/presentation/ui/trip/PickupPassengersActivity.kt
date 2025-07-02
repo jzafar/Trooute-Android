@@ -295,7 +295,7 @@ class PickupPassengersActivity : BaseActivity(), PickUpPassengersEventListener {
 
                     is Resource.SUCCESS -> {
 
-                        if (it.data.message == "Update trip status to In Progress") {
+                        if (it.data.message == "trip_status_INPROGRESS") {
                             binding.apply {
                                 btnTripEnd.isVisible = true
                                 ltCancelStartTrip.isVisible = false

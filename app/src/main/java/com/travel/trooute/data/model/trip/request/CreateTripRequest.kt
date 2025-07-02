@@ -16,5 +16,6 @@ data class CreateTripRequest(
     val status: String?,
     val totalSeats: Long?,
     val whereTo_address: String?,
-    val whereTo_location: List<Double?>
+    val whereTo_location: List<Double?>,
+    val paymentTypes: List<String>
 )

@@ -108,6 +108,15 @@
                         android:text="@string/create_a_new_trip" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvConnectPaymentsAccount"
+                        style="@style/Body_6"
+                        android:autoSizeTextType="uniform"
+                        android:drawableStart="@drawable/ic_money"
+                        android:drawableEnd="@drawable/ic_arrow_forward"
+                        android:maxLines="1"
+                        android:text="@string/connect_payments_account" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTripHistory"
                         style="@style/Body_6"
                         android:autoSizeTextType="uniform"

@@ -30,6 +30,7 @@ import com.travel.trooute.presentation.utils.showSuccessMessage
 import com.travel.trooute.presentation.viewmodel.tripviewmodel.CreateTripViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.internal.ViewUtils
+import com.travel.trooute.core.util.SharedPreferenceManager
 import com.travel.trooute.data.model.trip.response.LuggageType
 import com.travel.trooute.presentation.ui.BaseActivity
 import com.travel.trooute.presentation.utils.Utils.combineDateAndTime
@@ -53,7 +54,6 @@ class SetUpYourTripActivity : BaseActivity() {
     private var placesDestinationLocationLatLng: LatLng? = null
     private var placesDestinationLocationAddress: String? = null
     private var isStartLocationRequired = false
-
     private lateinit var binding: ActivitySetUpYourTripBinding
     private lateinit var dateAndTimeManager: DateAndTimeManager
     private lateinit var googlePlacesManager: GooglePlacesManager
@@ -63,7 +63,10 @@ class SetUpYourTripActivity : BaseActivity() {
     @Inject
     lateinit var loader: Loader
 
-    @SuppressLint("SetTextI18n")
+    @Inject
+    lateinit var sharedPreferenceManager: SharedPreferenceManager
+
+    @SuppressLint("SetTextI18n", "StringFormatMatches")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         statusBarColor(R.color.white)
@@ -186,9 +189,6 @@ class SetUpYourTripActivity : BaseActivity() {
                 }
 
                 btnPostTrip.setOnClickListener {
-                    Log.e(TAG, "onCreate: departureDate -> $departureDate")
-                    Log.e(TAG, "onCreate: departureTime -> $departureTime")
-//                    var stri = combineDateAndTime(departureDate, departureTime)
                     val luggageList: MutableList<LuggageRestrictions> = arrayListOf()
                     val hcWeight =  includeTripDetailsDriverItemLayout.tvHandCarryRestrictionWeight.text.toString()
                     val handCarry = LuggageRestrictions(LuggageType.HandCarry, hcWeight.toLongOrNull())
@@ -219,6 +219,14 @@ class SetUpYourTripActivity : BaseActivity() {
                         }
                         val price =  etPrice.text.toString()
                         val number: Double = priceToDouble(price)
+                        if (!isAnyPaymentOptionEnabled()) {
+                            Toast(this@SetUpYourTripActivity).showErrorMessage(
+                                this@SetUpYourTripActivity,
+                                resources.getString(R.string.choose_atleast_one_payment)
+
+                            )
+                            return@setOnClickListener
+                        }
                         createTripViewModel.createTrip(
                             CreateTripRequest(
                                 departureDate = combineDateAndTime(departureDate, departureTime),
@@ -241,7 +249,8 @@ class SetUpYourTripActivity : BaseActivity() {
                                 whereTo_location = listOf(
                                     placesDestinationLocationLatLng?.longitude,
                                     placesDestinationLocationLatLng?.latitude
-                                )
+                                ),
+                                paymentTypes = getEnabledPaymentMethods()
                             )
                         )
 
@@ -249,8 +258,54 @@ class SetUpYourTripActivity : BaseActivity() {
                     }
                 }
             }
+
+            includeAcceptablePayments.apply {
+                switchCash.isEnabled = true
+                switchPayPal.isEnabled = sharedPreferenceManager.getAuthModelFromPref()?.payPalEmail != null
+                switchStripe.isEnabled = sharedPreferenceManager.getAuthModelFromPref()?.stripeConnectedAccountId != null
+                paypalPaymentLayout.setOnClickListener {
+                    if (!switchPayPal.isEnabled) {
+                        Toast(this@SetUpYourTripActivity).showErrorMessage(
+                            this@SetUpYourTripActivity, getString(R.string.connect_paypal_message)
+                        )
+                    }
+                }
+
+                stripePaymentLayout.setOnClickListener {
+                    if (!switchStripe.isEnabled) {
+                        Toast(this@SetUpYourTripActivity).showErrorMessage(
+                            this@SetUpYourTripActivity, getString(R.string.connect_stripe_message)
+                        )
+                    }
+                }
+            }
         }
     }
+
+    private fun isAnyPaymentOptionEnabled(): Boolean {
+        binding.apply {
+            includeAcceptablePayments.apply {
+                return switchCash.isChecked || switchPayPal.isChecked || switchStripe.isChecked
+            }
+        }
+    }
+
+    private fun getEnabledPaymentMethods(): List<String> {
+        val enabledMethods = mutableListOf<String>()
+
+        if (binding.includeAcceptablePayments.switchCash.isChecked) {
+            enabledMethods.add("cash")
+        }
+        if (binding.includeAcceptablePayments.switchPayPal.isChecked) {
+            enabledMethods.add("paypal")
+        }
+        if (binding.includeAcceptablePayments.switchStripe.isChecked) {
+            enabledMethods.add("stripe")
+        }
+
+        return enabledMethods
+    }
+
 
     private fun bindCreateTripObserver() {
         lifecycleScope.launch {

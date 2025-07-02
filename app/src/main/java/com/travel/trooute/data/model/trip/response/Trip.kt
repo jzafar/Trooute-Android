@@ -25,5 +25,6 @@ data class Trip(
     val whereTo_address: String? = null ?: "",
     val whereTo_location: Location? = null,
     val luggageRestrictions: List<LuggageRestrictions?>,
-    val roundTrip: Boolean
+    val roundTrip: Boolean,
+    val paymentTypes: List<String> = listOf("cash")
 ) : Parcelable

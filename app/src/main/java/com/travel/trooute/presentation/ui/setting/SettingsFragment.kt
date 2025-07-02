@@ -117,14 +117,16 @@ class SettingsFragment : Fragment() {
                 }
 
                 tvCreateNewTrip.setOnClickListener {
-                    var user = sharedPreferenceManager.getAuthModelFromPref()
-                    if (user?.stripeConnectedAccountId != null) {
-                        startActivity(Intent(requireContext(), SetUpYourTripActivity::class.java))
-                    } else {
-                        showConnectStripeAccountAlertAtCreateTrip()
-                    }
-
+                    startActivity(Intent(requireContext(), SetUpYourTripActivity::class.java))
                 }
+                tvConnectPaymentsAccount.setOnClickListener {
+                    startActivity(
+                        Intent(
+                            requireContext(),
+                            ConnectPaymentsActivity::class.java
+                        ).putExtra("ToolBarTitle", tvConnectPaymentsAccount.text.toString()))
+                }
+
             } else if (sharedPreferenceManager.getDriverStatus()?.lowercase() == "pending") {
                 tvBecomeADriver.text = requireContext().getString(R.string.become_a_driver) + " " + getString(R.string.reques_pending)
                 ltBecomeADriver.setOnClickListener {
@@ -367,6 +369,10 @@ class SettingsFragment : Fragment() {
                 tvWishlist.isVisible = true
                 tvCreateNewTrip.isVisible = false
             }
+
+            if (sharedPreferenceManager.getDriverStatus()?.lowercase() == "approved") {
+                tvConnectPaymentsAccount.isVisible = true
+            }
         }
     }
 
@@ -378,6 +384,7 @@ class SettingsFragment : Fragment() {
         bindGetMeApi()
     }
 
+    @SuppressLint("RestrictedApi")
     private fun refreshData(){
         sharedPreferenceManager.getAuthModelFromPref().let { user ->
             binding.apply {
@@ -390,7 +397,7 @@ class SettingsFragment : Fragment() {
                         requireContext(), user?.gender
                     )
 
-                    if (genderStr.equals(getString(R.string.not_provided))){
+                    if (genderStr == getString(R.string.not_provided)){
                         gender.isVisible = false
                     }
                     else {

@@ -23,5 +23,6 @@ data class User(
     var reviewsStats: ReviewsStats? = null,
     var carDetails: CarDetails? = null,
     var gender: String? = null,
-    var stripeConnectedAccountId: String? = null
+    var stripeConnectedAccountId: String? = null,
+    var payPalEmail: String? = null
 ) : Parcelable

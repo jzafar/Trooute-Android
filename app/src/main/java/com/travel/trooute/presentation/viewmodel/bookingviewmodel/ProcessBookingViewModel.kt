@@ -3,6 +3,7 @@ package com.travel.trooute.presentation.viewmodel.bookingviewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.travel.trooute.core.util.Resource
+import com.travel.trooute.data.model.bookings.request.ConfirmBookingsRequest
 import com.travel.trooute.data.model.common.BaseResponse
 import com.travel.trooute.domain.usecase.booking.ApproveBookingUseCase
 import com.travel.trooute.domain.usecase.booking.CancelBookingUseCase
@@ -45,10 +46,10 @@ class ProcessBookingViewModel @Inject constructor(
         }
     }
 
-    fun confirmBooking(bookingId: String) {
+    fun confirmBooking(bookingId: String, confirmBookingsRequest: ConfirmBookingsRequest) {
         viewModelScope.launch {
             _processBookingState.value = Resource.LOADING
-            _processBookingState.emit(confirmBookingUseCase.invoke(bookingId = bookingId))
+            _processBookingState.emit(confirmBookingUseCase.invoke(bookingId = bookingId, confirmBookingsRequest = confirmBookingsRequest))
         }
     }
 }

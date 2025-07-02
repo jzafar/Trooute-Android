@@ -1,6 +1,7 @@
 package com.travel.trooute.domain.repository
 
 import com.travel.trooute.core.util.Resource
+import com.travel.trooute.data.model.bookings.request.ConfirmBookingsRequest
 import com.travel.trooute.data.model.bookings.request.CreateBookingRequest
 import com.travel.trooute.data.model.bookings.response.GetBookingDetailResponse
 import com.travel.trooute.data.model.bookings.response.GetBookingsResponse
@@ -15,7 +16,7 @@ interface BookingRepository {
 
     suspend fun approveBooking(bookingID: String?): Resource<BaseResponse>
 
-    suspend fun confirmBooking(bookingID: String?): Resource<BaseResponse>
+    suspend fun confirmBooking(bookingID: String, confirmBookingsRequest: ConfirmBookingsRequest): Resource<BaseResponse>
 
     suspend fun cancelBooking(bookingID: String?): Resource<BaseResponse>
 

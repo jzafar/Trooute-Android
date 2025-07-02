@@ -7,6 +7,7 @@ import com.travel.trooute.data.model.bookings.response.GetBookingDetailResponse
 import com.travel.trooute.data.model.bookings.response.GetBookingsResponse
 import com.travel.trooute.data.model.common.BaseResponse
 import com.travel.trooute.data.datasource.network.BookingsAPI
+import com.travel.trooute.data.model.bookings.request.ConfirmBookingsRequest
 import com.travel.trooute.domain.repository.BookingRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -48,10 +49,10 @@ class BookingRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun confirmBooking(bookingID: String?): Resource<BaseResponse> {
+    override suspend fun confirmBooking(bookingID: String, confirmBookingsRequest: ConfirmBookingsRequest): Resource<BaseResponse> {
         return withContext(ioDispatcher) {
             safeApiCall {
-                bookingsAPI.confirmBooking(id = bookingID)
+                bookingsAPI.confirmBooking(id = bookingID, request = confirmBookingsRequest)
             }
         }
     }

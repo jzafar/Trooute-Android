@@ -13,6 +13,7 @@ import com.travel.trooute.core.util.Resource
 import com.travel.trooute.core.util.SharedPreferenceManager
 import com.travel.trooute.databinding.ActivityMakePaymentBinding
 import com.travel.trooute.presentation.ui.BaseActivity
+import com.travel.trooute.presentation.utils.Loader
 import com.travel.trooute.presentation.utils.WebViewUtil
 import com.travel.trooute.presentation.utils.WindowsManager.statusBarColor
 import com.travel.trooute.presentation.viewmodel.bookingviewmodel.PaymentSuccessViewModel
@@ -35,23 +36,22 @@ class MakePaymentActivity : BaseActivity() {
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
 
+    @Inject
+    lateinit var loader: Loader
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         statusBarColor(R.color.white)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_make_payment)
 
-//        webViewUtil = WebViewUtil(this) {
-//            paymentSuccessViewModel.paymentSuccess(it)
-//            bindPaymentSuccessObservers()
-//        }
-
         webViewUtil = WebViewUtil(
             this,
             sharedPreferenceManager,
             paymentSuccessViewModel,
             pushNotificationViewModel,
-            lifecycleScope
+            lifecycleScope,
+            loader,
         )
 
         binding.apply {
@@ -72,25 +72,6 @@ class MakePaymentActivity : BaseActivity() {
         }
     }
 
-    private fun bindPaymentSuccessObservers() {
-        lifecycleScope.launch {
-            paymentSuccessViewModel.paymentSuccessState.collect {
-                when (it) {
-                    is Resource.ERROR -> {
-                        Log.e(TAG, "bindPaymentSuccessObservers: Error " + it.message.toString())
-                    }
-
-                    Resource.LOADING -> {
-
-                    }
-
-                    is Resource.SUCCESS -> {
-                        Log.e(TAG, "bindPaymentSuccessObservers: success " + it.data)
-                    }
-                }
-            }
-        }
-    }
 
     @SuppressLint("GestureBackNavigation")
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

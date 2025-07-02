@@ -31,4 +31,5 @@ data class TripsData(
     val trip: Trip? = null,
     val luggageRestrictions: List<LuggageRestrictions?>,
     val roundTrip: Boolean,
+    val paymentTypes: List<String> = listOf("cash")
 ) : Parcelable

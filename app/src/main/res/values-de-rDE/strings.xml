@@ -324,4 +324,33 @@ Sie können diese Buchung nicht akzeptieren. Die verbleibenden verfügbaren Plä
     <string name="connect_stripe_create_account">Sie können die Reise nicht erstellen. Sie müssen Ihr Stripe-Konto verbinden, um die Reise zu erstellen. Nachdem wir Sie als Fahrer zugelassen haben, senden wir Ihnen eine E-Mail, um Ihr Stripe-Konto zu verbinden.</string>
     <string name="optional">(Optional)</string>
     <string name="you_might_share_the_ride">Sie könnten die Fahrt mit anderen Passagieren teilen, die in die gleiche Richtung fahren.</string>
+
+    <string name="connect_payments_account">Zahlungskonto verbinden</string>
+    <string name="PayPal">PayPal</string>
+    <string name="connect_paypal_account">PayPal verbinden</string>
+    <string name="stripe_account">Stripe</string>
+    <string name="connect_stripe_account">Stripe verbinden</string>
+    <string name="you_connect_payment_account">Du kannst dein Konto verbinden</string>
+    <string name="you_can_still_choose">Zahlungsart wählst du bei der Fahrt</string>
+    <string name="something_went_wrong">Etwas ist schiefgelaufen. Versuch’s nochmal</string>
+    <string name="acceptable_payments">Zahlungsarten</string>
+    <string name="cash_payments">Barzahlung</string>
+    <string name="paypal_payments">PayPal</string>
+    <string name="stripe_payments">Stripe</string>
+    <string name="connect_paypal_message">Bitte PayPal in den Einstellungen verbinden</string>
+    <string name="connect_stripe_message">Bitte Stripe einrichten</string>
+    <string name="choose_atleast_one_payment">Wähle mindestens eine Zahlungsart</string>
+    <string name="select_payment_method">Zahlungsart wählen</string>
+    <string name="pay_with_cash">Bar bezahlen</string>
+    <string name="pay_with_paypal">Mit PayPal zahlen</string>
+    <string name="pay_with_card">Mit Karte zahlen</string>
+    <string name="pending_driver_payment">Warten auf Fahrerzahlung</string>
+    <string name="pending_driver_payment_status">Warte auf Fahrerbestätigung</string>
+    <string name="pending_driver_side_payment_status">Warte auf deine Zahlung</string>
+    <string name="pending_driver_payment_desc">Fahrer muss noch bestätigen</string>
+    <string name="pending_driver_payment_desc_driver_dise">Servicegebühr offen – Fahrgast zahlt bar</string>
+    <string name="make_payments">Jetzt zahlen</string>
+    <string name="waiting_for_payments">Warten auf Zahlung</string>
+    <string name="payment_success">Zahlung erfolgreich</string>
+    <string name="trip_status">Fahrtstatus ändern</string>
 </resources>

@@ -325,4 +325,34 @@
     <string name="optional">(Optional)</string>
     <string name="e_g_german">E.g German</string>
     <string name="you_might_share_the_ride">You might share the ride with fellow passengers heading the same way.</string>
+
+    <string name="connect_payments_account">Connect Payments Account</string>
+    <string name="PayPal">PayPal</string>
+    <string name="connect_paypal_account">Connect PayPal Account</string>
+    <string name="stripe_account">Stripe Account</string>
+    <string name="connect_stripe_account">Connect Stripe Account</string>
+    <string name="you_connect_payment_account">You can connect your payments account.</string>
+    <string name="you_can_still_choose">You can still choose how user can pay you when you create a trip.</string>
+    <string name="something_went_wrong">Something went wrong. Please try again.</string>
+    <string name="acceptable_payments">Acceptable Payments</string>
+    <string name="cash_payments">Cash Payments</string>
+    <string name="paypal_payments">Paypal Payments</string>
+    <string name="stripe_payments">Stripe Payments</string>
+    <string name="connect_paypal_message">You need to connect your PayPal account from settings to enable this option.</string>
+    <string name="connect_stripe_message">You need to configure your Stripe account to enable this option.</string>
+    <string name="choose_atleast_one_payment">Please choose atleast one accept payment way</string>
+    <string name="select_payment_method">Select Payment Method</string>
+    <string name="pay_with_cash">Pay with Cash</string>
+    <string name="pay_with_paypal">Pay with PayPal</string>
+    <string name="pay_with_card">Card Payment</string>
+    <string name="pending_driver_payment">PendingDriverPayment</string>
+    <string name="pending_driver_payment_status">Waiting for driver\'s confirmation</string>
+    <string name="pending_driver_side_payment_status">Waiting for your payment</string>
+    <string name="pending_driver_payment_desc">We are waiting for driver confirmation.</string>
+    <string name="pending_driver_payment_desc_driver_dise">We are waiting for Platform fee. Passenger wants to pay with cash.</string>
+    <string name="make_payments">Make Payment</string>
+    <string name="waiting_for_payments">We are waiting for Payment</string>
+    <string name="payment_success">Payment Successful</string>
+    <string name="trip_status">Update trip status.</string>
+
 </resources>

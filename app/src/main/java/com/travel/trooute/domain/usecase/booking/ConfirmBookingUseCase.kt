@@ -1,12 +1,13 @@
 package com.travel.trooute.domain.usecase.booking
 
 import com.travel.trooute.core.util.Resource
+import com.travel.trooute.data.model.bookings.request.ConfirmBookingsRequest
 import com.travel.trooute.data.model.common.BaseResponse
 import com.travel.trooute.domain.repository.BookingRepository
 import javax.inject.Inject
 
 class ConfirmBookingUseCase @Inject constructor(private val bookingRepository: BookingRepository) {
-    suspend operator fun invoke(bookingId: String?): Resource<BaseResponse> {
-        return bookingRepository.confirmBooking(bookingID = bookingId)
+    suspend operator fun invoke(bookingId: String, confirmBookingsRequest: ConfirmBookingsRequest): Resource<BaseResponse> {
+        return bookingRepository.confirmBooking(bookingID = bookingId, confirmBookingsRequest = confirmBookingsRequest)
     }
 }

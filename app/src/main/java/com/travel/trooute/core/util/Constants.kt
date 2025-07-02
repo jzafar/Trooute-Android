@@ -94,6 +94,13 @@ object Constants {
 //
 
 //     "google_map_api_key" = AIzaSyCN6LRtc9jcbPYNTyE0fFuH-bzmus9D66c
+    const val PAYPAL_CLIENT_ID_SANDBOX = "AexkYHCVuMrbut4rDSO4NaB32c33O1bgPURERJZFw-kjtsKoZljPolRWDnE082pmNKYKEQKWn5A0o_Je"
+    const val PAYPAL_CLIENT_ID = "AexkYHCVuMrbut4rDSO4NaB32c33O1bgPURERJZFw-kjtsKoZljPolRWDnE082pmNKYKEQKWn5A0o_Je"
+
+    const val PAYPAL_SECRET_SANDBOX = "ECeJPJVuHHY0uOuK3aqdccinNCKWJeqRpQhkajjCf5rYA2PknIZrH4Q10rNc5LF3rAgsmh9zKoibbbr6"
+    const val PAYPAL_SECRET = "ECeJPJVuHHY0uOuK3aqdccinNCKWJeqRpQhkajjCf5rYA2PknIZrH4Q10rNc5LF3rAgsmh9zKoibbbr6"
+
+    const val PAYPAL_REDIRECT_URI = "com.travel.trooute://paypal"
 }
 
 enum class BroadCastType(val type: String) {

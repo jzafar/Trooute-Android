@@ -1,6 +1,8 @@
 package com.travel.trooute.presentation.ui.booking
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,7 +10,10 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -70,11 +75,14 @@ import com.travel.trooute.presentation.viewmodel.notification.PushNotificationVi
 import com.travel.trooute.presentation.viewmodel.reviewviewmodel.CreateReviewViewModel
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.createSkeleton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.internal.ViewUtils
 import com.travel.trooute.core.util.Constants
 import com.travel.trooute.core.util.Constants.PickupStarted
 import com.travel.trooute.core.util.Constants.SCHEDULED
 import com.travel.trooute.data.model.Enums.PickUpPassengersStatus
+import com.travel.trooute.data.model.bookings.request.ConfirmBookingsRequest
+import com.travel.trooute.data.model.bookings.response.PaymentType
 import com.travel.trooute.data.model.trip.request.UpdatePickupStatusRequest
 import com.travel.trooute.data.model.trip.response.Booking
 import com.travel.trooute.data.model.trip.response.LuggageType
@@ -110,6 +118,7 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
     private val pushNotificationViewModel: PushNotificationViewModel by viewModels()
     private val getPickupPassengersViewModel: GetPickupPassengersViewModel by viewModels()
     private val updatePickUpPassengersStatus: UpdatePickupStatusViewModel by viewModels()
+    private lateinit var makePaymentLauncher: ActivityResultLauncher<Intent>
 
     @Inject
     lateinit var loader: Loader
@@ -150,6 +159,20 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                 }
             }
         }
+
+        makePaymentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val isSuccess = result.data?.getBooleanExtra("paymentSuccess", false) == true
+                if (isSuccess) {
+                    // Handle success — refresh UI, show message, etc.
+                    getBookingDetailsViewModel.getBookingDetails(bookingId = bookingId)
+                    bindGetBookingDetailsObserver()
+                    Toast(this@BookingDetailActivity).showSuccessMessage(
+                        this@BookingDetailActivity,getString(R.string.payment_success)
+                    )
+                }
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -157,6 +180,7 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 getBookingDetailsViewModel.getBookingDetailsState.collect {
+                    loader.hide()
                     when (it) {
                         is Resource.ERROR -> {
                             skeleton.showOriginal()
@@ -167,7 +191,7 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                         }
 
                         Resource.LOADING -> {
-
+                            loader.show()
                         }
 
                         is Resource.SUCCESS -> {
@@ -236,13 +260,16 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
     @SuppressLint("SetTextI18n")
     private fun setUpBookingDetailViews(bookingData: BookingDetailsData) {
         binding.apply {
+            includePendingDriverPaymentsLayout.root.visibility = View.GONE
+            includeWaitingLayout.root.visibility = View.GONE
+            includeCancelledLayout.root.visibility = View.GONE
+            includeApprovedLayout.root.visibility = View.GONE
+            includeConfirmedLayout.root.visibility = View.GONE
+            includeCompletedLayout.root.visibility = View.GONE
             when (bookingData.status) {
                 "Waiting" -> {
+                    includeWaitingLayout.root.visibility = View.VISIBLE
                     includeWaitingLayout.mcWaitingBooking.isVisible = true
-                    includeCancelledLayout.mcCancelledBooking.isVisible = false
-                    includeApprovedLayout.mcApprovedBooking.isVisible = false
-                    includeConfirmedLayout.mcConfirmedBooking.isVisible = false
-                    includeCompletedLayout.mcCompletedBooking.isVisible = false
 
                     includeWaitingLayout.apply {
                         if (sharedPreferenceManager.driverMode()) {
@@ -289,11 +316,6 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                             }
 
                             btnAccept.setOnClickListener {
-
-                                if (bookingData.trip?.driver?.stripeConnectedAccountId == null) {
-                                    showConnectStripeAccountAlert()
-                                    return@setOnClickListener
-                                }
                                 val numberOfRequestSeats = bookingData.numberOfSeats
                                 val remainingSeats = bookingData.trip?.availableSeats
                                 if (remainingSeats != null){
@@ -336,11 +358,8 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                 }
 
                 "Confirmed" -> {
-                    includeWaitingLayout.mcWaitingBooking.isVisible = false
-                    includeCancelledLayout.mcCancelledBooking.isVisible = false
-                    includeApprovedLayout.mcApprovedBooking.isVisible = false
+                    includeConfirmedLayout.root.visibility = View.VISIBLE
                     includeConfirmedLayout.mcConfirmedBooking.isVisible = true
-                    includeCompletedLayout.mcCompletedBooking.isVisible = false
                     includeUserDetailLayout.apply {
                         ltCallInboxSection.isVisible = true
                     }
@@ -389,12 +408,8 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                 }
 
                 "Canceled" -> {
-                    includeWaitingLayout.mcWaitingBooking.isVisible = false
+                    includeCancelledLayout.root.visibility = View.VISIBLE
                     includeCancelledLayout.mcCancelledBooking.isVisible = true
-                    includeApprovedLayout.mcApprovedBooking.isVisible = false
-                    includeConfirmedLayout.mcConfirmedBooking.isVisible = false
-                    includeCompletedLayout.mcCompletedBooking.isVisible = false
-
                     includeCancelledLayout.apply {
                         tvStatus.text = ContextCompat.getString(
                             this@BookingDetailActivity, R.string.cancelled
@@ -427,11 +442,8 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                 }
 
                 "Approved" -> {
-                    includeWaitingLayout.mcWaitingBooking.isVisible = false
-                    includeCancelledLayout.mcCancelledBooking.isVisible = false
+                    includeApprovedLayout.root.visibility = View.VISIBLE
                     includeApprovedLayout.mcApprovedBooking.isVisible = true
-                    includeConfirmedLayout.mcConfirmedBooking.isVisible = false
-                    includeCompletedLayout.mcCompletedBooking.isVisible = false
 
                     includeApprovedLayout.apply {
                         tvStatus.text = if (sharedPreferenceManager.driverMode()) {
@@ -442,6 +454,11 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                             ContextCompat.getString(
                                 this@BookingDetailActivity, R.string.approved
                             )
+                        }
+                        tvStatusDesc.text = if (sharedPreferenceManager.driverMode()) {
+                            getString(R.string.waiting_for_payments)
+                        } else {
+                            getString(R.string.approved_status_desc)
                         }
                         tvBookingId.text = getString(R.string.booking) + " # ${getSubString(bookingData._id)}"
                         formatDateTime(
@@ -489,21 +506,103 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                             }
 
                             btnMakePayment.setOnClickListener {
-                                Log.e(TAG, "setUpBookingDetailViews: driver id 1 -> " + bookingData.trip?.driver?._id.toString())
-                                sharedPreferenceManager.saveMakePaymentUserId(bookingData.trip?.driver?._id.toString())
-                                Log.e(TAG, "setUpBookingDetailViews: driver id 2 -> " + sharedPreferenceManager.getMakePaymentUserIdFromPref())
-                                processBookingViewModel.confirmBooking(bookingId = bookingData._id.toString())
-                                bindProcessBookingObserver()
+                                bookingData.trip?.paymentTypes?.let { types ->
+                                    val allowedMethods = bookingData.trip?.paymentTypes
+                                        ?.mapNotNull { typeString ->
+                                            PaymentType.values().firstOrNull { it.value == typeString }
+                                        }
+                                        ?: emptyList()
+                                    if (allowedMethods.isNotEmpty()) {
+                                        showPaymentMethodDialog(allowedMethods) { selectedMethod ->
+                                            sharedPreferenceManager.saveMakePaymentUserId(bookingData.trip?.driver?._id.toString())
+                                            Log.e(TAG, "setUpBookingDetailViews: driver id 2 -> " + sharedPreferenceManager.getMakePaymentUserIdFromPref())
+                                            processBookingViewModel.confirmBooking(
+                                                bookingId = bookingData._id.toString(),
+                                                confirmBookingsRequest = ConfirmBookingsRequest(
+                                                selectedMethod.toString().lowercase()
+                                            ))
+                                            bindProcessBookingObserver()
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
 
+                "PendingDriverPayment" -> {
+                    includePendingDriverPaymentsLayout.root.visibility = View.VISIBLE
+                    includePendingDriverPaymentsLayout.apply {
+                        if (sharedPreferenceManager.driverMode()) {
+                            tvStatus.text = ContextCompat.getString(this@BookingDetailActivity, R.string.pending_driver_side_payment_status)
+                            tvStatusDesc.text = getString(R.string.pending_driver_payment_desc_driver_dise)
+                            ltCancelUserSide.isVisible = false
+                            ltCancelAccept.isVisible = true
+                        } else {
+                            tvStatus.text = ContextCompat.getString(this@BookingDetailActivity, R.string.pending_driver_payment_status)
+                            tvStatusDesc.text = getString(R.string.pending_driver_payment_desc)
+                            ltCancelUserSide.isVisible = true
+                            ltCancelAccept.isVisible = false
+                        }
+
+                        tvBookingId.text = getString(R.string.booking) + " # ${getSubString(bookingData._id)}"
+                        formatDateTime(
+                            this@BookingDetailActivity,
+                            tvDepartureDate,
+                            bookingData.trip?.departureDate.toString()
+                        )
+
+                        val platFormFee = PLATFORM_FEE_PRICE * bookingData.numberOfSeats!!
+                        val pricePerSeat = (bookingData.trip?.pricePerPerson?.toDouble() ?: 0.0) * bookingData.numberOfSeats!!
+                        tvNxSeats.text = checkNumOfSeatsValue(bookingData.numberOfSeats)
+                        tvNxSeatsPrice.text = checkPriceValue(pricePerSeat)
+
+                        ltPlatformFee.isVisible = true
+                        tvPlatformFeePrice.text = "$PRICE_SIGN$platFormFee"
+                        if (sharedPreferenceManager.driverMode()) {
+
+                            tvTotalPrice.text = checkPriceValue(pricePerSeat - platFormFee)
+
+                            btnCancelBooking.setOnClickListener {
+                                processBookingViewModel.cancelBooking(bookingId = bookingData._id.toString())
+                                bindProcessBookingObserver(
+                                    BOOKED_CANCELLED_TITLE,
+                                    BOOKED_CANCELLED_BODY,
+                                    bookingData.user?._id.toString()
+                                )
+                            }
+
+                            btnAccept.setOnClickListener {
+                                sharedPreferenceManager.saveMakePaymentUserId(bookingData.trip?.driver?._id.toString())
+                                Log.e(TAG, "setUpBookingDetailViews: driver id 2 -> " + sharedPreferenceManager.getMakePaymentUserIdFromPref())
+                                processBookingViewModel.confirmBooking(
+                                    bookingId = bookingData._id.toString(),
+                                    confirmBookingsRequest = ConfirmBookingsRequest(
+                                       "cash".lowercase()
+                                    ))
+                                bindProcessBookingObserver()
+                            }
+                        } else {
+
+                            tvTotalPrice.text = checkPriceValue(
+                                pricePerSeat + platFormFee
+                            )
+
+                            btnCancelBooking.setOnClickListener {
+                                processBookingViewModel.cancelBooking(bookingId = bookingData._id.toString())
+                                bindProcessBookingObserver(
+                                    BOOKED_CANCELLED_TITLE,
+                                    BOOKED_CANCELLED_BODY,
+                                    bookingData.trip?.driver?._id.toString()
+                                )
+                            }
+
+                        }
+                    }
+                }
+
                 "Completed" -> {
-                    includeWaitingLayout.mcWaitingBooking.isVisible = false
-                    includeCancelledLayout.mcCancelledBooking.isVisible = false
-                    includeApprovedLayout.mcApprovedBooking.isVisible = false
-                    includeConfirmedLayout.mcConfirmedBooking.isVisible = false
+                    includeCompletedLayout.root.visibility = View.VISIBLE
                     includeCompletedLayout.mcCompletedBooking.isVisible = true
 
                     includeCompletedLayout.apply {
@@ -558,6 +657,22 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
 
         }
     }
+
+    private fun showPaymentMethodDialog(allowedMethods: List<PaymentType>,
+                                onMethodSelected: (PaymentType) -> Unit) {
+        val items = allowedMethods.map { it.getLocalizedPassengersString(this) }.toTypedArray()
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.select_payment_method))
+            .setItems(items) { _, which ->
+                val selected = allowedMethods[which]
+                onMethodSelected(selected)
+            }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .show()
+    }
+
+
     @SuppressLint("RestrictedApi")
     private fun setUpViewForPassengerSidePickupStatus(bookingData: Booking){
         currentBooking = bookingData
@@ -652,6 +767,7 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 getPickupPassengersViewModel.getPickupState.collect {
+                    loader.hide()
                     when (it) {
                         is Resource.ERROR -> {
                             Log.e(
@@ -659,7 +775,9 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                             )
                         }
 
-                        Resource.LOADING -> {}
+                        Resource.LOADING -> {
+                            loader.show()
+                        }
 
                         is Resource.SUCCESS -> {
                             it.data.data?.let { tripsData ->
@@ -677,17 +795,6 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
     }
     private fun getPickupStatus(tripID: String?) {
         tripID?.let { getPickupPassengersViewModel.getPickUpStatus(it) }
-    }
-
-    private fun showConnectStripeAccountAlert() {
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.error))
-            .setMessage(getString(R.string.connect_stripe))
-            .setPositiveButton(getString(R.string.ok)) { _, _ ->
-
-            }
-            .create()
-            .show()
     }
 
     private fun showNumberOfSeatsAlertDialog() {
@@ -726,6 +833,11 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                         )
 
                         if (it.data.message?.trim()?.lowercase() == "payment session created.") {
+                            val intent = Intent(this@BookingDetailActivity, MakePaymentActivity::class.java).apply {
+                                putExtra("PaymentIntegrationUrl", it.data.url)
+                            }
+                            makePaymentLauncher.launch(intent)
+                            /*
                             startActivity(
                                 Intent(
                                     this@BookingDetailActivity,
@@ -733,6 +845,7 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                                 ).apply {
                                     putExtra("PaymentIntegrationUrl", it.data.url)
                                 })
+                             */
                         } else {
                             sendNotification(title.toString(), body.toString(), toId.toString())
                             Toast(this@BookingDetailActivity).showSuccessMessage(
@@ -815,7 +928,7 @@ class BookingDetailActivity : BaseActivity() , AdapterItemClickListener {
                         startActivity(
                             Intent(this@BookingDetailActivity,
                                 ReviewsActivity::class.java).apply {
-                                    putExtra(USER_ID, it._id)
+                                putExtra(USER_ID, it._id)
                             }
                         )
                     }

@@ -26,7 +26,6 @@
 
     <application
         android:name=".di.application.BaseApp"
-
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -42,6 +41,11 @@
         tools:replace="android:allowBackup"
         tools:targetApi="35">
         <activity
+            android:name=".presentation.ui.setting.ConnectPaymentsActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Trooute" />
+        <activity
             android:name=".presentation.ui.trip.PickupPassengersActivity"
             android:exported="false" />
         <activity
@@ -56,7 +60,6 @@
         <activity
             android:name=".presentation.ui.general.TermsAndConditionsActivity"
             android:exported="false" />
-
         <!--
  Set custom default icon. This is used when no icon is set for incoming notification messages.
      See README(https://goo.gl/l4GJaQ) for more.
@@ -96,9 +99,7 @@
         <activity
             android:name=".presentation.ui.chat.MessageActivity"
             android:exported="true"
-            android:launchMode="singleTask">
-
-        </activity>
+            android:launchMode="singleTask" />
         <activity
             android:name=".presentation.ui.review.ReviewsActivity"
             android:exported="false"
@@ -182,6 +183,20 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+
+        <activity android:name=".presentation.utils.RedirectActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="com.travel.trooute"
+                    android:host="paypal" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".service.FCMService"
             android:exported="false"

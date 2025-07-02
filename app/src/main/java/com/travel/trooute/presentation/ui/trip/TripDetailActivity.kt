@@ -304,6 +304,10 @@ class TripDetailActivity : BaseActivity(), AdapterItemClickListener {
                             this@TripDetailActivity, trip?.note
                         )
                     }
+                    includePaymentsSection.isVisible = true
+                    includePaymentsDetails.apply {
+                        tvAcceptAblePayments.text = trip?.paymentTypes?.joinToString(", ") ?:  "cash"
+                    }
                 }
 
                 imgHeart.isVisible = false
@@ -669,6 +673,10 @@ class TripDetailActivity : BaseActivity(), AdapterItemClickListener {
                             Toast(this@TripDetailActivity).showSuccessMessage(
                                 this@TripDetailActivity, getString(R.string.trip_status_INPROGRESS)
                             )
+                            binding.apply {
+                                btnTripEnd.isVisible = true
+                                ltCancelStartTrip.isVisible = false
+                            }
                         } else if (it.data.message.toString() == "trip_status_Canceled") {
                             Handler().postDelayed({
                                 finish()
@@ -676,17 +684,24 @@ class TripDetailActivity : BaseActivity(), AdapterItemClickListener {
                             Toast(this@TripDetailActivity).showSuccessMessage(
                                 this@TripDetailActivity, getString(R.string.trip_status_Canceled)
                             )
-                        } else {
+                        } else if(it.data.message.toString() == "trip_status") {
+                            Toast(this@TripDetailActivity).showSuccessMessage(
+                                this@TripDetailActivity, getString(R.string.trip_status)
+                            )
+                        } else if(it.data.message.toString() == "trip_status_Completed") {
+                            Toast(this@TripDetailActivity).showSuccessMessage(
+                                this@TripDetailActivity, getString(R.string.trip_status_Completed)
+                            )
+                            binding.apply {
+                                btnTripEnd.isVisible = false
+                                ltCancelStartTrip.isVisible = false
+                                finish()
+                            }
+                        }
+                        else {
                             Toast(this@TripDetailActivity).showSuccessMessage(
                                 this@TripDetailActivity, it.data.message.toString()
                             )
-                        }
-
-                        if (it.data.message == "Update trip status to In Progress") {
-                            binding.apply {
-                                btnTripEnd.isVisible = true
-                                ltCancelStartTrip.isVisible = false
-                            }
                         }
 
                         Log.i(

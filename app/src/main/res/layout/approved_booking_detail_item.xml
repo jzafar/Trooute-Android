@@ -39,6 +39,7 @@
                         tools:text="@string/approved" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStatusDesc"
                         style="@style/Body_6"
                         android:text="@string/approved_status_desc"
                         android:textColor="@color/secondary_cadet_blue_color" />

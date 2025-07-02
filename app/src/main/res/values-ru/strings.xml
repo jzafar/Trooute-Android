@@ -318,4 +318,33 @@
     <string name="connect_stripe_create_account">Вы не можете создать поездку. Вам необходимо подключить ваш аккаунт Stripe, чтобы создать поездку. Когда мы одобрим вас в качестве водителя, мы отправим вам электронное письмо для подключения вашего аккаунта Stripe.</string>
     <string name="optional">(Необязательно)</string>
     <string name="you_might_share_the_ride">Вы можете поделить поездку с другими пассажирами, направляющимися в том же направлении.</string>
+
+    <string name="connect_payments_account">Подключите платёжный аккаунт</string>
+    <string name="PayPal">PayPal</string>
+    <string name="connect_paypal_account">Подключите PayPal</string>
+    <string name="stripe_account">Stripe</string>
+    <string name="connect_stripe_account">Подключите Stripe</string>
+    <string name="you_connect_payment_account">Вы можете подключить платёжный аккаунт</string>
+    <string name="you_can_still_choose">Способ оплаты можно выбрать при создании поездки</string>
+    <string name="something_went_wrong">Что-то пошло не так. Попробуйте ещё раз</string>
+    <string name="acceptable_payments">Доступные способы оплаты</string>
+    <string name="cash_payments">Наличные</string>
+    <string name="paypal_payments">PayPal</string>
+    <string name="stripe_payments">Stripe</string>
+    <string name="connect_paypal_message">Подключите PayPal в настройках, чтобы включить эту опцию</string>
+    <string name="connect_stripe_message">Настройте Stripe, чтобы использовать эту опцию</string>
+    <string name="choose_atleast_one_payment">Выберите хотя бы один способ оплаты</string>
+    <string name="select_payment_method">Выберите способ оплаты</string>
+    <string name="pay_with_cash">Оплатить наличными</string>
+    <string name="pay_with_paypal">Оплатить через PayPal</string>
+    <string name="pay_with_card">Оплатить картой</string>
+    <string name="pending_driver_payment">Ожидание оплаты водителю</string>
+    <string name="pending_driver_payment_status">Ожидается подтверждение водителя</string>
+    <string name="pending_driver_side_payment_status">Ожидается ваша оплата</string>
+    <string name="pending_driver_payment_desc">Ждём подтверждения от водителя</string>
+    <string name="pending_driver_payment_desc_driver_dise">Ждём сервисный сбор. Пассажир платит наличными</string>
+    <string name="make_payments">Оплатить</string>
+    <string name="waiting_for_payments">Ожидаем оплату</string>
+    <string name="payment_success">Оплата прошла успешно</string>
+    <string name="trip_status">Обновить статус поездки</string>
 </resources>

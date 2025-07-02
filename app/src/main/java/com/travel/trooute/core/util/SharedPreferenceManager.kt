@@ -109,6 +109,7 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
         user.phoneNumber = model.phoneNumber
         user.isEmailVerified = model.isEmailVerified
         user.stripeConnectedAccountId = model.stripeConnectedAccountId
+        user.payPalEmail = model.payPalEmail
         user.gender = model.gender
         user.reviewsStats = model.reviewsStats
         saveAuthModelInPref(user)

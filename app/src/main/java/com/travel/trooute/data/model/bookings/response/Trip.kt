@@ -21,5 +21,6 @@ data class Trip(
     val languagePreference: String? = null?:"Not provided",
     val note: String? = null?:"Not provided",
     val availableSeats: Double? = null,
-    val status: String = "Scheduled"
+    val status: String = "Scheduled",
+    val paymentTypes: List<String>? = null
 ) : Parcelable

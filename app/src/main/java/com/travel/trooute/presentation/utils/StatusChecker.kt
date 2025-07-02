@@ -68,6 +68,19 @@ object StatusChecker {
 
                 tvStatus.text = ContextCompat.getString(context, R.string.completed)
             }
+
+            context.getString(R.string.pending_driver_payment) -> {
+                TextViewBindingAdapter.setDrawableStart(
+                    tvStatus,
+                    ContextCompat.getDrawable(context, R.drawable.ic_approved_check)
+                )
+                if (isDriverApproved) {
+                    tvStatus.text = ContextCompat.getString(context, R.string.pending_driver_side_payment_status)
+                } else {
+                    tvStatus.text = ContextCompat.getString(context, R.string.pending_driver_payment_status)
+                }
+
+            }
         }
     }
     @SuppressLint("RestrictedApi")

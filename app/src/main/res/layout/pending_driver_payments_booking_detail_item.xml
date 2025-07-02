@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcWaitingBooking"
+        style="@style/ElevatedCardViewStyle">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary_mirage_color"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_bottom_rounded"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_default_space"
+                app:showDividers="middle">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStatus"
+                        style="@style/Body_5"
+                        android:drawableStart="@drawable/ic_approved_check"
+                        tools:text="@string/waiting" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStatusDesc"
+                        style="@style/Body_6"
+                        android:text="@string/waiting_status_desc"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBookingId"
+                        style="@style/Body_5"
+                        tools:text="Booking # GY7OI2937KDBC80HC" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDepartureDate"
+                        style="@style/Body_6"
+                        tools:text="21 August 2023 - 10: 30 AM"
+                        android:textColor="@color/secondary_cadet_blue_color" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <RelativeLayout
+                    android:id="@+id/ltCancelUserSide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnCancelBookingUserSide"
+                        style="@style/SecondaryRoundedButton"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:maxLines="1"
+                        android:text="@string/cancel_booking" />
+
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ltCancelAccept"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    app:divider="@drawable/divider_section_space"
+                    app:showDividers="middle"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnCancelBooking"
+                        style="@style/SecondaryRoundedButton"
+                        android:layout_width="match_parent"
+                        android:maxLines="1"
+                        android:layout_weight="1"
+                        android:layout_alignParentEnd="true"
+                        android:visibility="visible"
+                        android:text="@string/cancel_booking" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnAccept"
+                        style="@style/PrimaryRoundedButton"
+                        android:layout_width="match_parent"
+                        android:maxLines="1"
+                        android:layout_weight="1"
+                        android:visibility="visible"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/make_payments" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/default_screen_horizontal_space"
+                android:paddingVertical="@dimen/default_screen_vertical_space"
+                app:divider="@drawable/divider_section_space"
+                app:showDividers="middle">
+
+                <RelativeLayout
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvNxSeats"
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/n_x_seats"
+                        android:textColor="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvNxSeatsPrice"
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        tools:text="€400"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/ltPlatformFee"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/platform_fee"
+                        android:textColor="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlatformFeePrice"
+                        style="@style/Body_6"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        tools:text="€1.0"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+                <include
+                    android:visibility="visible"
+                    layout="@layout/divider_item" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTotalPrice"
+                        style="@style/HeadLine_3"
+                        android:layout_width="wrap_content"
+                        tools:text="€200"
+                        android:textColor="@color/white" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

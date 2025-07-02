@@ -48,6 +48,10 @@ object URL {
     const val APPROVE_DRIVER_END_POINT = "/api/v1/users/driver"
     const val UPDATE_CAR_INFO_END_POINT = "/api/v1/users/driver/update-car-info"
 
+    // CONNECT PAYMENTS POINT
+    const val CONNECT_PAYPAL = "/api/v1/users/driver/connectPayPal"
+    const val CONNECT_STRIPE = "/api/v1/users/driver/connectStripe"
+
     // WISH LIST POINT
     const val ADD_TO_WISH_LIST = "api/v1/trips"
     const val GET_MY_WISH_LIST = "api/v1/users/get-my-wishlist"

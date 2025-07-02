@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.util.Log
+import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -22,13 +23,15 @@ import com.travel.trooute.presentation.viewmodel.notification.PushNotificationVi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class WebViewUtil(
     private val activity: Activity,
     private val sharedPreferenceManager: SharedPreferenceManager,
     private val paymentSuccessViewModel: PaymentSuccessViewModel,
     private val pushNotificationViewModel: PushNotificationViewModel,
-    private val lifecycleScope: LifecycleCoroutineScope
+    private val lifecycleScope: LifecycleCoroutineScope,
+    private var loader: Loader
 ) : WebViewClient() {
 
     private val TAG = "WebViewUtil"
@@ -42,8 +45,34 @@ class WebViewUtil(
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         val url = request?.url.toString()
-        view?.loadUrl(url)
-        return true
+        if (url.contains("payment-success") || url.contains("paypal-success")) {
+            val userId = sharedPreferenceManager.getAuthModelFromPref()?._id
+            val updatedUrl = url.replace("http://localhost:4000", "").let {
+                val separator = if (it.contains("?")) "&" else "?"
+                "$it${separator}userId=$userId"
+            }
+
+            // Prevent WebView from loading this URL
+            paymentSuccessViewModel.paymentSuccess(updatedUrl)
+            bindPaymentSuccessObservers()
+            return true // ← prevent loading the URL in WebView
+        }
+
+        if (url.contains("payment-failed") || url.contains("paypal-cancel")) {
+            /*
+            val intent = Intent(activity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra("paymentSuccess", false)
+            activity.startActivity(intent)
+             */
+            val resultIntent = Intent().apply {
+                putExtra("paymentSuccess", false)
+            }
+            activity.setResult(Activity.RESULT_OK, resultIntent)
+            activity.finish()
+            return true
+        }
+        return false
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
@@ -68,29 +97,44 @@ class WebViewUtil(
         Log.e(TAG, "onLoadResource: url -> $url")
 
         // Check if the URL contains "payment-success"
-        if (url?.contains("payment-success") == true) {
-            paymentSuccessViewModel.paymentSuccess(url.replace("http://localhost:4000", ""))
+        /*
+        if (url?.contains("payment-success") == true || url?.contains("paypal-success") == true) {
+            val userId =  sharedPreferenceManager.getAuthModelFromPref()?._id
+            val updatedUrl = url.replace("http://localhost:4000", "").let {
+                val separator = if (it.contains("?")) "&" else "?"
+                "$it${separator}userId=$userId"
+            }
+            paymentSuccessViewModel.paymentSuccess(updatedUrl)
             bindPaymentSuccessObservers()
         }
 
-        if (url?.contains("payment-failed") == true) {
+        if (url?.contains("payment-failed") == true || url?.contains("paypal-cancel") == true) {
+            /*
             val intent = Intent(activity, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra("paymentSuccess", false)
             activity.startActivity(intent)
+             */
+            val resultIntent = Intent().apply {
+                putExtra("paymentSuccess", false)
+            }
+            activity.setResult(Activity.RESULT_OK, resultIntent)
+            activity.finish()
         }
+         */
     }
 
     private fun bindPaymentSuccessObservers() {
         lifecycleScope.launch {
             paymentSuccessViewModel.paymentSuccessState.collect {
+                loader.hide()
                 when (it) {
                     is Resource.ERROR -> {
                         Log.e(TAG, "bindPaymentSuccessObservers: Error " + it.message.toString())
                     }
 
                     Resource.LOADING -> {
-
+                        loader.show()
                     }
 
                     is Resource.SUCCESS -> {
@@ -115,11 +159,31 @@ class WebViewUtil(
         }
     }
 
+    private fun sendNotification() {
+        pushNotificationViewModel.sendMessageNotification(
+            NotificationRequest(
+                notification = NotificationRequest.Notification(
+                    title = Constants.MAKE_PAYMENT_TITLE,
+                    body = "${Constants.MAKE_PAYMENT_BODY} ${sharedPreferenceManager.getAuthModelFromPref()?.name}.",
+                    mutable_content = Constants.MUTABLE_CONTENT,
+                    sound = Constants.TONE
+                ),
+                to = "${Constants.TOPIC}${TROOUTE_TOPIC}${sharedPreferenceManager.getMakePaymentUserIdFromPref()}"
+            )
+        )
+        bindSendMessageNotificationObserver()
+    }
+
     private fun bindSendMessageNotificationObserver() {
         pushNotificationViewModel.sendNotificationState.onEach { state ->
             when (state) {
                 is Resource.ERROR -> {
                     Log.e(TAG, "bindSendMessageNotificationObserver: Error -> ${state.message}")
+                    val resultIntent = Intent().apply {
+                        putExtra("paymentSuccess", true)
+                    }
+                    activity.setResult(Activity.RESULT_OK, resultIntent)
+                    activity.finish()
                 }
 
                 Resource.LOADING -> {
@@ -128,11 +192,17 @@ class WebViewUtil(
 
                 is Resource.SUCCESS -> {
                     Log.e(TAG, "bindSendMessageNotificationObserver: Success -> ${state.data}")
-
+                    /*
                     val intent = Intent(activity, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     intent.putExtra("paymentSuccess", true)
                     activity.startActivity(intent)
+                    */
+                    val resultIntent = Intent().apply {
+                        putExtra("paymentSuccess", true)
+                    }
+                    activity.setResult(Activity.RESULT_OK, resultIntent)
+                    activity.finish()
                 }
             }
         }.launchIn(lifecycleScope)

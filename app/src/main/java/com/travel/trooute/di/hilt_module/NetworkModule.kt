@@ -2,6 +2,7 @@ package com.travel.trooute.di.hilt_module
 
 import com.travel.trooute.data.datasource.network.AuthAPI
 import com.travel.trooute.data.datasource.network.BookingsAPI
+import com.travel.trooute.data.datasource.network.ConnectPaymentsAPI
 import com.travel.trooute.data.datasource.network.DriverAPI
 import com.travel.trooute.data.datasource.network.ReviewAPI
 import com.travel.trooute.data.datasource.network.TripsAPI
@@ -50,5 +51,11 @@ class NetworkModule {
     @Singleton
     fun provideWishListAPI(@NetworkRetrofit retrofit: Retrofit): WishListAPI {
         return retrofit.create(WishListAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideConnectPaymentsAPI(@NetworkRetrofit retrofit: Retrofit): ConnectPaymentsAPI {
+        return retrofit.create(ConnectPaymentsAPI::class.java)
     }
 }

@@ -1,8 +1,10 @@
 package com.travel.trooute.di.hilt_module
 
+import com.travel.trooute.data.datasource.network.ConnectPaymentsAPI
 import com.travel.trooute.data.repository.AuthRepositoryImpl
 import com.travel.trooute.data.repository.BookingRepositoryImpl
 import com.travel.trooute.data.repository.ChatRepositoryImpl
+import com.travel.trooute.data.repository.ConnectPaymentRepositoryImp
 import com.travel.trooute.data.repository.DriverRepositoryImpl
 import com.travel.trooute.data.repository.ReviewRepositoryImpl
 import com.travel.trooute.data.repository.TripsRepositoryImpl
@@ -10,6 +12,7 @@ import com.travel.trooute.data.repository.WishListRepositoryImpl
 import com.travel.trooute.domain.repository.AuthRepository
 import com.travel.trooute.domain.repository.BookingRepository
 import com.travel.trooute.domain.repository.ChatRepository
+import com.travel.trooute.domain.repository.ConnectPaymentsRepository
 import com.travel.trooute.domain.repository.DriverRepository
 import com.travel.trooute.domain.repository.ReviewRepository
 import com.travel.trooute.domain.repository.TripsRepository
@@ -18,6 +21,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 import javax.inject.Singleton
 
 //@Module
@@ -113,4 +118,10 @@ abstract class RepositoryModule {
     abstract fun provideWishListRepository(
         wishListRepositoryImpl: WishListRepositoryImpl
     ): WishListRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideConnectPaymentsRepository(
+        connectPaymentRepositoryImp: ConnectPaymentRepositoryImp
+    ): ConnectPaymentsRepository
 }

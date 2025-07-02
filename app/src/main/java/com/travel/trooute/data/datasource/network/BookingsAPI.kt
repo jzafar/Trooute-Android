@@ -7,6 +7,7 @@ import com.travel.trooute.core.util.URL.CONFIRM_BOOKING_END_POINT
 import com.travel.trooute.core.util.URL.CREATE_BOOKING_END_POINT
 import com.travel.trooute.core.util.URL.GET_BOOKING_DETAILS_END_POINT
 import com.travel.trooute.core.util.URL.GET_BOOKING_END_POINT
+import com.travel.trooute.data.model.bookings.request.ConfirmBookingsRequest
 import com.travel.trooute.data.model.bookings.request.CreateBookingRequest
 import com.travel.trooute.data.model.bookings.response.GetBookingDetailResponse
 import com.travel.trooute.data.model.bookings.response.GetBookingsResponse
@@ -32,7 +33,7 @@ interface BookingsAPI {
     suspend fun approveBooking(@Path("id") id: String?): Response<BaseResponse>
 
     @POST("$CONFIRM_BOOKING_END_POINT/{id}/confirm")
-    suspend fun confirmBooking(@Path("id") id: String?): Response<BaseResponse>
+    suspend fun confirmBooking(@Path("id") id: String, @Body request: ConfirmBookingsRequest): Response<BaseResponse>
 
     @POST("$CANCEL_BOOKING_END_POINT/{id}/cancel")
     suspend fun cancelBooking(@Path("id") id: String?): Response<BaseResponse>

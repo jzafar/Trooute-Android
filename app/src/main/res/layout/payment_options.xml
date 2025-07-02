@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView style="@style/ElevatedCardViewStyle">
+<LinearLayout
+    android:id="@+id/paymentOptionsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:divider="@drawable/divider_default_space"
+
+    android:padding="16dp">
+
+    <!-- Cash Payments -->
+    <RelativeLayout
+        android:id="@+id/cashPaymentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="44dp"
+        android:paddingVertical="8dp">
+
+        <TextView
+            android:id="@+id/cashLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cash_payments"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <Switch
+            android:id="@+id/switchCash"
+            style="@style/SwitchTheme"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </RelativeLayout>
+
+    <!-- PayPal Payments -->
+    <RelativeLayout
+        android:id="@+id/paypalPaymentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="44dp"
+        android:paddingVertical="8dp">
+
+        <TextView
+            android:id="@+id/paypalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/paypal_payments"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+
+        <Switch
+            android:id="@+id/switchPayPal"
+            style="@style/SwitchTheme"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </RelativeLayout>
+
+    <!-- Stripe Payments -->
+    <RelativeLayout
+        android:id="@+id/stripePaymentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="44dp"
+        android:paddingVertical="8dp">
+
+        <TextView
+            android:id="@+id/stripeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stripe_payments"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <Switch
+            android:id="@+id/switchStripe"
+            style="@style/SwitchTheme"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </RelativeLayout>
+</LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>
