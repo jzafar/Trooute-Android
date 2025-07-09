@@ -16,8 +16,8 @@ android {
         applicationId = "com.travel.trooute"
         minSdk = 26
         targetSdk = 35
-        versionCode = 8
-        versionName = "1.1"
+        versionCode = 9
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,6 +27,15 @@ android {
         viewBinding = true
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("upload-keystore.jks") // ✅ Correct Kotlin DSL
+            storePassword = "android"
+            keyAlias = "upload"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -34,8 +43,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
+
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

@@ -29,6 +29,7 @@ interface TripsAPI {
         @Query("fromCoordinates[0]") fromLongitude: Double?,
         @Query("fromCoordinates[1]") fromLatitude: Double?,
         @Query("departureDate") departureDate: String?,
+        @Query("fetchAll") fetchAll: Boolean,
     ): Response<GetTripsResponse>
 
     @GET(GET_TRIPS_END_POINT)

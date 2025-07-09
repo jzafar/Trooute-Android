@@ -27,14 +27,15 @@ class TripsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTrips(
-        fromLatitude: Double?, fromLongitude: Double?, departureDate: String?
+        fromLatitude: Double?, fromLongitude: Double?, departureDate: String?, fetchAll: Boolean
     ): Resource<GetTripsResponse> {
         return withContext(ioDispatcher) {
             safeApiCall {
                 tripsAPI.getTrips(
                     fromLatitude = fromLatitude,
                     fromLongitude = fromLongitude,
-                    departureDate = departureDate
+                    departureDate = departureDate,
+                    fetchAll = fetchAll
                 )
             }
         }

@@ -236,7 +236,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
             }
 
             locationManager.getLocation { loc ->
-                callGetTripsApi(loc)
+                callGetTripsApi(loc, true)
             }
 
             this.includeTripDestinationLayout.fromSlider.addOnChangeListener { slider, value, fromUser ->
@@ -253,7 +253,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
         }
     }
 
-    private fun callGetTripsApi(location: Location?) {
+    private fun callGetTripsApi(location: Location?, fetchAll: Boolean) {
         var departureDate: String? = null
         if (sharedPreferenceManager.driverMode()) {
             departureDate = LocalDate.now().toString()
@@ -262,7 +262,7 @@ class HomeFragment : Fragment(), AdapterItemClickListener, WishListEventListener
         location.let {
             Log.e(TAG, "callGetTripsApi: lat -> ${it?.latitude}, lng -> ${it?.longitude}")
             getTripsViewModel.getTrips(
-                fromLatitude = it?.latitude, fromLongitude = it?.longitude, departureDate =  departureDate
+                fromLatitude = it?.latitude, fromLongitude = it?.longitude, departureDate =  departureDate, fetchAll = fetchAll
             )
             bindGetTripsObserver()
         }

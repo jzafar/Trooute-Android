@@ -10,7 +10,7 @@ import com.travel.trooute.data.model.trip.response.GetTripsResponse
 interface TripsRepository {
     suspend fun createTrip(request: CreateTripRequest): Resource<BaseResponse>
     suspend fun getTrips(
-        fromLatitude: Double?, fromLongitude: Double?, departureDate: String?
+        fromLatitude: Double?, fromLongitude: Double?, departureDate: String?, fetchAll: Boolean
     ): Resource<GetTripsResponse>
 
     suspend fun getSearchedTrips(

@@ -64,7 +64,7 @@ object PayPalAuthResultHandler {
 object PayPalService {
 
     val isSandbox: Boolean
-        get() = true
+        get() = false
 
     val clientID: String
         get() = if (isSandbox) Constants.PAYPAL_CLIENT_ID_SANDBOX else Constants.PAYPAL_CLIENT_ID

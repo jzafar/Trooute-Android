@@ -23,7 +23,7 @@ class AuthInterceptor(
         val request = chain.request()
         val response = chain.proceed(request)
 
-        if (response.code == 401) {
+        if (response.code == 401 || response.code == 410) {
             val responseBody = response.peekBody(Long.MAX_VALUE).string()
             val jsonObject = JSONObject(responseBody)
             val errorMessage = jsonObject.getString("message").trim().lowercase()

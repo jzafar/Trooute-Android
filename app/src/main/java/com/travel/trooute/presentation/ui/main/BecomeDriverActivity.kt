@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.travel.trooute.R
 import com.travel.trooute.core.util.Resource
 import com.travel.trooute.core.util.SharedPreferenceManager
@@ -41,6 +42,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.ArrayList
+import java.util.Calendar
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -74,7 +76,9 @@ class BecomeDriverActivity : BaseActivity(), PickiTCallbacks {
                 requestForVehicleImg = true
                 isVehicleImageUriAvailable = true
                 binding.imgVehicle.isVisible = true
-                binding.imgVehicle.setImageURI(vehicleUri)
+                Glide.with(this@BecomeDriverActivity)
+                    .load(vehicleUri)
+                    .into(binding.imgVehicle)
                 pickiT?.getPath(vehicleUri, Build.VERSION.SDK_INT)
             }
         }
@@ -92,7 +96,9 @@ class BecomeDriverActivity : BaseActivity(), PickiTCallbacks {
                 requestForVehicleImg = false
                 isLicenseImageUriAvailable = true
                 binding.imgDrivingLicense.isVisible = true
-                binding.imgDrivingLicense.setImageURI(licenseUri)
+                Glide.with(this@BecomeDriverActivity)
+                    .load(vehicleUri)
+                    .into(binding.imgDrivingLicense)
                 pickiT?.getPath(licenseUri, Build.VERSION.SDK_INT)
             }
         }
@@ -210,32 +216,17 @@ class BecomeDriverActivity : BaseActivity(), PickiTCallbacks {
 
 
     private fun setUpYearDropDown(actYear: AutoCompleteTextView) {
-        yearArrayList.add("2024")
-        yearArrayList.add("2023")
-        yearArrayList.add("2022")
-        yearArrayList.add("2021")
-        yearArrayList.add("2020")
-        yearArrayList.add("2019")
-        yearArrayList.add("2018")
-        yearArrayList.add("2017")
-        yearArrayList.add("2016")
-        yearArrayList.add("2015")
-        yearArrayList.add("2014")
-        yearArrayList.add("2013")
-        yearArrayList.add("2012")
-        yearArrayList.add("2011")
-        yearArrayList.add("2010")
-        yearArrayList.add("2009")
-        yearArrayList.add("2008")
-        yearArrayList.add("2007")
-        yearArrayList.add("2006")
-        yearArrayList.add("2005")
-        yearArrayList.add("2004")
-        yearArrayList.add("2003")
-        yearArrayList.add("2002")
-        yearArrayList.add("2001")
-        yearArrayList.add("2000")
+        // Clear existing data if any
+        yearArrayList.clear()
 
+        // Get current year
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+
+        // Generate years from 2000 to current year
+        for (year in currentYear downTo 2016) {
+            yearArrayList.add(year.toString())
+        }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, yearArrayList)
 
